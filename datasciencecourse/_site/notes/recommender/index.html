@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Recommender</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Recommender" />
+    
+  
+     
+    <meta property="og:description" content="# Recommender Recommender systems are ubiquitous in many online sites. If you've ever been recommended an item to buy, a movie to watch, or a person to follow on social media, you have seen the results of a recommender system. The goal of recommender systems, broadly speaking, is to suggest..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/notes/recommender/" />
+    <link rel="canonical" href="http://localhost:4000/notes/recommender/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Recommender" />
+    
+  
+    
+    <meta name="twitter:description" content="# Recommender Recommender systems are ubiquitous in many online sites. If you've ever been recommended an item to buy, a movie to watch, or a person to follow on social media, you have seen the results of a recommender system. The goal of recommender systems, broadly speaking, is to suggest..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <div class="intro-header"></div>
+
+<div role="main" class="container">
+  <style type="text/css">
+.targz-btn {
+    float: right;
+    border: thin solid #999;
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+}
+</style>
+
+
+<a href="recommender.tar.gz" class="targz-btn">&#x2b73; Download Jupyter Notebook</a>
+
+<h1 id="recommender">Recommender</h1>
+
+<p>Recommender systems are ubiquitous in many online sites.  If you’ve ever been recommended an item to buy, a movie to watch, or a person to follow on social media, you have seen the results of a recommender system.  The goal of recommender systems, broadly speaking, is to suggest items to a user that the system believes this user will like.  This has obvious applications in many online stores, where both the company and the users will likely be happier if the system is able to provide high-quality recommendations.</p>
+
+<p>Broadly speaking, there are a number of sources of information we can use to make predictions about whether a user will like an item.  There is “pure user” information, such as the age, location, profession, etc, of the user; these don’t involve any of the items themselves, but just contain information about the user.  There is also “pure item” information (not related to any user, but just to the item); in the case of movies, for instance, this could include things like the movie budget, the genre, the actors, etc.  Finally, there is “user-item” information, which consists of ratings or order history between users and items.  Ideally, we would want to use all of this information to provide as high-quality recommendations as possible to the user.</p>
+
+<p>Although there are techniques that combine all these types of data, in this set of notes we are largely going to focus just on the third type, building recommendation systems that rely only on past user-item information.  This is a setting known as <em>collaborative filtering</em>, and these algorithms will form the basis of the presentation here.</p>
+
+<p>Before we begin our discussion, however, we should emphasize that there are a number of issues that we won’t touch on in these notes.  Here we will consider a standard setting where each user “rates” some (usually quite small) some subset of the items.  This is the classical recommender system setting, and forms the intuitive basis for much of the algorithmic work in this area.  However, in reality there are many challenges that arise in this setting that need to be dealt with in actual real-world recommender systems.  For example, users may rarely actually rate items, but instead the mere presence of a user-item order will be the only information we have (so we have no formal indication of the user rating, but we can typically assume that the user orders items they tend to like).  Additionally, when a new user signs up, or a new item is added, there is initially user-item history, so we likely need to integrate some of the user or item-level features in order to form “baseline” predictions in these cases; and in general, there is a question of how much “personalization” we want to offer versus how much we should recommend “generic” good items.</p>
+
+<h2 id="collaborative-filtering">Collaborative filtering</h2>
+
+<p><em>Collaborative filtering</em> is one way to build recommendation systems, that (at least by the definitions we will use here), only users user-item information in order to make recommendations.  The setting you should have in mind here is that of a matrix, where the rows of the matrix correspond to users, and the columns of the matrix correspond to items.  The entires of the matrix should be though of as ratings for each item, i.e., how much user $i$ with like item $j$.  For example, consider the following matrix</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+X \in \mathbb{R}^{m \times n} = \left [ \begin{array}{cccc}
+1 & 1 & 2 & 3 \\
+2 & 2 & 5 & 4 \\
+2 & 3 & 3 & 5 \\
+4 & 2 & 4 & 5 \\
+2 & 2 & 4 & 4
+\end{array} \right ] %]]></script>
+
+<p>For example, in this setting user 1 would assign a ratings of 1, 1, 2, 3 to items 1-4 respectively (i.e., the first row of the matrix).  Similar, item 2 has ratings of 1,2,3,2,2 from users 1-5.  The ordering of this matrix is important (rows correspond to users and items correspond to columns), so it’s important to be familiar with this notation; note that in this convention there are $m$ users and $n$ items.</p>
+
+<p>Of course, in general, we <em>won’t</em> have ratings for every user for every item (this is precisely the problem we’re trying to solve).  Rather, we only observe some sparse subset of the entries of $X$, whereas the rest are unknown (denoted by $?$ in the matrix below).</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+X = \left [ \begin{array}{cccc}
+1 & ? & ? & 3 \\
+? & 2 & 5 & ? \\
+? & 3 & ? & 5 \\
+4 & ? & 4 & ? \\
+2 & 2 & ? & ?
+\end{array} \right ] %]]></script>
+
+<p>The task of collaborative filtering, then, is to “fill in” the remaining entries of this matrix given the observed matrix.  This $X$ matrix that we observed is <em>sparse</em> but the unknown entries do not correspond to actual zeros in the matrix, but are rather just truly unknown.</p>
+
+<p>In the collaborative filtering setting, we want to fill in the remaining entries from the matrix based <em>only</em> upon the observed entries (that is, we don’t have additional context such as features for the user or items, but as mentioned above, in typical recommender systems, you <em>do</em> need to consider these other options.</p>
+
+<h3 id="example-movielens-data-set">Example: MovieLens data set</h3>
+
+<p>The example we’ll use in these notes (and which you’ll use in the homework), is the MovieLens data set, a common publicly available data set for collaborative filtering.  The full data set and information is available here: https://grouplens.org/datasets/movielens/.  Although the full MovieLens data set is fairly large, there is a smaller subset available here: http://files.grouplens.org/datasets/movielens/ml-latest-small.zip which we’ll use for this example.  We can load the data using the following calls (importantly, this is slightly different than you’ll need to implement for the homework, but it’s useful for our discussion here).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># load MovieLens ratings, keeping only movies with &gt;=5 ratings</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"ratings.csv"</span><span class="p">)</span>
+<span class="n">df_mov</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"movies.csv"</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s">"movieId"</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s">"rating"</span><span class="p">],</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">"userId"</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s">"movieId"</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span><span class="o">.</span><span class="n">todense</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>Note that we’re generating a dense matrix of user IDs by movie IDs, and for larger systems you would definitely need to keep the matrix in sparse form.  While this data set was already filtered to only include users who ranked a reasonable number of movies, we’re also going to filter it to only include movies with five or more ratings.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">valid_movies</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">5</span>
+<span class="n">movie_to_title</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_movies</span><span class="p">)),</span> <span class="n">df_mov</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">valid_movies</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="s">"title"</span><span class="p">]))</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span><span class="n">valid_movies</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+(671, 3496)
+
+</pre>
+
+<p>Note that in this format, the zero entries correspond to unknown elements, not to actual zero ratings (the ratings only go as low as 0.5).  For instance, we can compute per-user and per-item mean ratings via the following.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># form average rating for each user</span>
+<span class="n">user_means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span><span class="o">!=</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
+<span class="n">movie_means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span><span class="o">!=</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span>
+</code></pre></div></div>
+
+<p>Finally, we can get some basic sense of this dataset by looking at average ratings and average numbers of ratings.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">user_means</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Mean User Rating"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Count"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_0.svg" alt="" />
+        
+        
+    </div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">movie_means</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Mean Movie Rating"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Count"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_1.svg" alt="" />
+        
+        
+    </div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">num_reviews</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">num_reviews</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">num_reviews</span><span class="p">)),</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">num_reviews</span><span class="p">)),</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s">"log"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Number of Reviews"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Number of Movies"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_2.svg" alt="" />
+        
+        
+    </div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">num_reviews</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">num_reviews</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">num_reviews</span><span class="p">)),</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">num_reviews</span><span class="p">)),</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s">"log"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Number of Reviews"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Number of Users"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_3.svg" alt="" />
+        
+        
+    </div>
+
+<p>Finally, since I know you’re likely curious, here are the best and worst reviewed movies.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># best movies</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">movie_to_title</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">movie_means</span><span class="p">)[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]]))</span>
+</code></pre></div></div>
+
+<pre>
+Love &amp; Human Remains (1993)
+Diabolique (Les diaboliques) (1955)
+Paperman (2012)
+Ikiru (1952)
+Anne Frank Remembered (1995)
+
+</pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># worst movies</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">movie_to_title</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">movie_means</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]]))</span>
+</code></pre></div></div>
+
+<pre>
+Joe&#x27;s Apartment (1996)
+After Earth (2013)
+Battlefield Earth (2000)
+Max Payne (2008)
+Cats &amp; Dogs (2001)
+
+</pre>
+
+<h3 id="historical-note-the-netflix-prize">Historical note: the Netflix Prize</h3>
+
+<p>The field of collaborative filtering received a substantial boost in popularity during the late 2000s after the annoucement of the Netflix Prize.  This was a public competition where Netflix released a large dataset of about 100 million ratings, and challenged the public to come up with a method that improved, by 10% according to RMSE, upon their existing solution (which relied upon item-item Pearson correlation, plus some linear regression methods).</p>
+
+<p>Though there were some notable issues with the Netflix Prize, the competition had a huge impact on the field of data science.  Although there were many prior data competitions of a similar form (the KDD conference had been running the KDDCup for many years), this was the competition that really put “machine learning competitions” into the public eye.  Companies like Kaggle were started largely due to the success of this competition, and many later contests like the ImageNet challenge were likely directly or indirectly influenced by it.  Furthermore, the ubiquity of ensemble methods (not as in algorithm like boosting or bagging, but as in combining many disparate models to form overall better predictions) was heavily influenced by the competition, where all the top teams used ensemble methods.  Finally, it was an amazing stroke of luck that the target of 10% improvement seemed to be almost <em>exactly</em> what was possible combining a huge variety of methods; the competition could have easily taken a few months or still be running today if the data had offered only a slightly lower or slightly higher possible level of performance.</p>
+
+<h3 id="types-of-collaborative-filtering-algorithms">Types of collaborative filtering algorithms</h3>
+
+<p>While there are several possible algorithms for collaborative filtering, broadly speaking most of them fit into one of three different categories:</p>
+
+<ul>
+  <li><strong>User-user approaches:</strong>  In this approach we estimate a user’s rating of an item by finding “similar” users and then looking at their predictions for this item.</li>
+  <li><strong>Item-item approaches:</strong> These methods take the converse approach, and estimate a user’s rating of a item by finding similar items and then looking at the user’s rating of these similar items.</li>
+  <li><strong>Matrix factorization</strong>: Finally, the last class of approaches works a little bit differently, by aiming to construct a <em>low-rank</em> matrix that approximates the observed entries of the rating matrix.</li>
+</ul>
+
+<p>We’ll discuss each of these in turn, and look at how they can be implemented on the MovieLens data set (except for matrix factorization, which is one of the homework assignments).</p>
+
+<h2 id="user-user-methods">User-user methods</h2>
+
+<p>As mentioned above, the key idea of the user-user approach is that in order to predict an unknown user-item score, we’re going to find “similar” users, and then look at how they scored that item.  To compute similar users, we can use common techniques like correlation coefficient, cosine_similarity, etc, with the caveat that these metrics typically assume fixed-sized vectors with no unknown elements, so some changes are typically needed to apply to the collaborative filtering setting.</p>
+
+<p>To start, let’s introduce a slightly more formal bit of notation to define our problem.  Let $\hat{X}_{ij}$ denote our prediction for the $i$th user and $j$th item (i.e., this will be one of the elements that is missing from the matrix $X$, which we want to predict).  A common form for the prediction make by the user-user approach would be</p>
+
+<script type="math/tex; mode=display">\hat{X}_{ij} = \bar{x}_i + \frac{\sum_{k:X_{kj} \neq 0} w_{ik} (X_{kj} - \bar{x}_k)}{\sum_{k:X_{kj} \neq 0} \lvert w_{ik} \rvert}</script>
+
+<p>where $\bar{x}_i$ denotes the average of the observed ratings for user $i$, and $w_{ik}$ denotes a <em>similarity weight</em> between user $i$ and user $k$ (which we will define shortly).  The intuition behind this approach is the following: if we want to predict user $i$’s rating for item $j$, we look across all users that <em>do</em> have ratings for item $j$, and we average these together, weighted by a similarity function between the two users (we divide by $\sum_{k:X_{kj} \neq 0} \lvert w_{ik} \rvert$ so that we are taking a weighted average, noting that we take the absolute value because similarity weights can sometimes be positive or negative depending how we define then).  Because user’s also frequently have their own “baseline” rating (i.e., some users naturally assign lower ratings than others), it’s slightly better to do this modeling in the “difference space”, the difference between a user’s rating and their mean rating, and then add re-scale by adding a user’s mean score.</p>
+
+<p>Let’s see how this works in code.  For now, let’s suppose we have all the user/user weights in the $W \in \mathbb{R}^{m \times m}$ (remember, by our convention there are $m$ users), which we’ll discuss more shortly.  But assuming we have these weights, we can make a prediction by the following code.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="s">""" Return prediction of X_(ij). """</span>
+    <span class="k">return</span> <span class="n">user_means</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">((</span><span class="n">X</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">user_means</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,:])</span> <span class="o">/</span> 
+                            <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">((</span><span class="n">X</span><span class="p">[:,</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,:])))</span>
+</code></pre></div></div>
+
+<p>Assuming a similarity matrix of all ones, let’s see how the system predict that user 0 and user 10 would score two different movies.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"User: 0, "</span><span class="p">,</span> <span class="n">movie_to_title</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"User: 10, "</span><span class="p">,</span> <span class="n">movie_to_title</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"User: 0, "</span><span class="p">,</span> <span class="n">movie_to_title</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"User: 10, "</span><span class="p">,</span> <span class="n">movie_to_title</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</code></pre></div></div>
+
+<pre>
+User: 0,  Toy Story (1995) 2.76182595231
+User: 10,  Toy Story (1995) 4.27064948172
+User: 0,  Jumanji (1995) 2.37956820083
+User: 10,  Jumanji (1995) 3.88839173024
+
+</pre>
+
+<p>Since computing predictions one at a time is fairly slow, let’s see how we can form all the predictions for a user simultaneously (note that we add a small constant to the denominator to cover the case where there is no user (with non-zero weight), who has previously rated the item.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="s">""" Return prediction of X_(ij). """</span>
+    <span class="k">return</span> <span class="n">user_means</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">((</span><span class="n">X</span> <span class="o">-</span> <span class="n">user_means</span><span class="p">[:,</span><span class="bp">None</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,:,</span><span class="bp">None</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> 
+                            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">((</span><span class="n">X</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,:,</span><span class="bp">None</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_4.svg" alt="" />
+        
+        
+    </div>
+
+<h3 id="computing-weights">Computing weights</h3>
+
+<p>Of course (since the weights are all equal) we aren’t doing too much here, mainly just computing average scores based upon a user’s mean and the average rating that other reviewers have assigned to a movie.  Instead, for this method to be effective, we want to compute a weight matrix that somehow captures the similarity between two users.  Because the only information we have in collaborative filtering is based upon the user-item ratings (i.e., we don’t have user-centric features that could be used to compute a similarity between users), the main way that we can build a similiarty score is by looking at some kind of correlation between the two sets of ratings; but since two users haven’t necessarily rated the same movies, it is common to compute these correlations <em>only for the set of movies that both have reviewed</em>.  We’ll consider a few examples of such weighting schemes.</p>
+
+<p><strong>Pearson correlation</strong> Let’s take the standard example of Pearson correlation (one of the most common methods for defining these weights).  First, let $\mathcal{I}_{ik}$ be the set of movies that user $i$ and user $k$ both rated</p>
+
+<script type="math/tex; mode=display">\mathcal{I}_{ik} = \{ j : X_{ij} \neq 0, X_{kj} \neq 0 \}</script>
+
+<p>The Pearson correlation between two users gives the weight</p>
+
+<script type="math/tex; mode=display">W_{ik} = \frac{\sum_{j \in \mathcal{I}_{ij}} (X_{ij} - \bar{x}_i)(X_{kj} - \bar{x}_k)}
+{\sqrt{\sum_{j \in \mathcal{I}_{ij}}(X_{ij} - \bar{x}_i)^2} \sqrt{\sum_{j \in \mathcal{I}_{ij}}(X_{kj} - \bar{x}_k)^2}}</script>
+
+<p>which is just the normal Pearson correlation coefficient but only computed over the items where both users rated the item.</p>
+
+<p>The Pearson correlation can be computed via the following function (we add $10^{-12}$ to the denominator to not cause the result to be undefined when the users have no overlap in items).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pearson</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">user_means</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">j</span><span class="p">,:]</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">xi</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">I</span><span class="p">]</span> <span class="o">-</span> <span class="n">user_means</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">xj</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">I</span><span class="p">]</span> <span class="o">-</span> <span class="n">user_means</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">xi</span> <span class="err">@</span> <span class="n">xj</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">xi</span> <span class="err">@</span> <span class="n">xi</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">xj</span> <span class="err">@</span> <span class="n">xj</span><span class="p">))</span><span class="o">+</span><span class="mf">1e-12</span><span class="p">)</span>
+<span class="n">pearson</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">user_means</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>However, as before, it’s inefficient to compute these individually for each pair of users.  The following function computes the same quantity for all users via the standard matrix tricks.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">all_pearson</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">user_means</span><span class="p">):</span>
+    <span class="n">X_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">user_means</span><span class="p">[:,</span><span class="bp">None</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">X</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">X_col_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">X_norm</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="err">@</span> <span class="p">(</span><span class="n">X_norm</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">X_norm</span> <span class="err">@</span> <span class="n">X_norm</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X_col_norm</span><span class="o">*</span><span class="n">X_col_norm</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">+</span><span class="mf">1e-12</span><span class="p">)</span>
+<span class="n">W_pearson</span> <span class="o">=</span> <span class="n">all_pearson</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">user_means</span><span class="p">)</span>
+<span class="n">W</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>One downside to the standard pearson correlation as defined above is that if users have a very small number of items in common (often, just 1), then their Pearson correlation is either 1 or -1.  This is almost certainly not what is wanted, so it’s common to require some minimum number of items in common, and set the weight to zero otherwise.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">all_pearson</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="n">min_common_items</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">X_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">user_means</span><span class="p">[:,</span><span class="bp">None</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">X</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">X_col_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">X_norm</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="err">@</span> <span class="p">(</span><span class="n">X_norm</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">common_items</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="err">@</span> <span class="p">(</span><span class="n">X</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">X_norm</span> <span class="err">@</span> <span class="n">X_norm</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X_col_norm</span><span class="o">*</span><span class="n">X_col_norm</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">+</span><span class="mf">1e-12</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">common_items</span> <span class="o">&gt;=</span> <span class="n">min_common_items</span><span class="p">)</span>
+<span class="n">W_pearson</span> <span class="o">=</span> <span class="n">all_pearson</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">user_means</span><span class="p">)</span>
+<span class="n">W</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p><strong>Cosine similarity</strong> The standard cosine similarity is also fairly common to use as a weight, and differs in that (under the usual definition), we <em>don’t</em> subtract off the mean before computing the similarity.  It is defined as follows</p>
+
+<script type="math/tex; mode=display">W_{ik} = \frac{\sum_{j=1}^n X_{ij}X_{kj}}{\sqrt{\sum_{j=1}^n X_{ij}^2} \sqrt{\sum_{j=1}^n X_{kj}^2}}</script>
+
+<p>Notice that (again, in the common definition of cosine similarity for collaborative filtering) we also don’t explicitly sum over only the elements where the the user both rated an item.  Because we treat missing entries in the matrix as zeros here, these terms won’t factor in to the numerator (any items where both users did not rate an item will be zero), but the denominator <em>is</em> affected by the total number of items each user rated.  Thus, if two users both rated a large number of items but their overlap is small, the cosine similarity would be smaller than in the case where they both rated a small number of items that have the number number of overlaping items.  Thus, we usually don’t need to explicitly filter for users that have some minimum number of items in common, as we did with Pearson correlation.</p>
+
+<p>The following code will compute the cosine similarity (this time just directly adopting the setting of computing all similarities simultaneously).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">all_cosine</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">x_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">X</span> <span class="err">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">x_norm</span><span class="p">,</span> <span class="n">x_norm</span><span class="p">)</span>
+<span class="n">W_cosine</span> <span class="o">=</span> <span class="n">all_cosine</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Nearest neighbors</strong> After computing one of the above similarity measures (or other similar measures), it’s fairly common to look <em>only</em> at some $K$ users that are most similar to a given user, rather than a sum over all users.  This is equivalent to setting the lower entries of $W$ to all be zero, i.e.,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\tilde{W}_{ik} = \left \{ \begin{array}{ll}W_{ik} & \mbox{ if $\lvert W\_{ik} \rvert$ is amongst top $K$ values for user $i$} \\
+0 & \mbox{ otherwise} \end{array} \right . %]]></script>
+
+<p>Doing so effectively looks just at the most similar users (i.e., the “nearest neighbors”) of user $i$, instead of all other users.  The downside of this approach is that if our data matrix is very sparse, we may not find <em>any</em> other users that have ratings for some new item $i$, based upon only the neareast neighbors.  This could be fixed by considering only those nearest neighbors that <em>do</em> have a given item, but this is computationally more expensive, since we need to recompute neighbors for each item, instead of once per user.</p>
+
+<p>For any existing weight matrix we can limit it to the nearest neightbors with the following function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">nearest_neighbors</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+    <span class="n">W_neighbors</span> <span class="o">=</span> <span class="n">W</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">W_neighbors</span><span class="p">[</span><span class="n">W</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">W</span><span class="p">),</span> <span class="mi">100</span><span class="o">-</span><span class="mi">100</span><span class="o">*</span><span class="n">K</span><span class="o">/</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">W_neighbors</span>
+<span class="n">W_pearson_100</span> <span class="o">=</span> <span class="n">nearest_neighbors</span><span class="p">(</span><span class="n">W_pearson</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Because it’s part of the homework (at least for the case of matrix factorization), we’re not going to rigorously evaluate the performance of the approach, but we can apply the approaches by just plugging in these weights into the functions we considered above.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W_pearson</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_5.svg" alt="" />
+        
+        
+    </div>
+
+<p>Using the Pearson correlation produces a great deal more spread in the prediction than in our previous case where we had unit weights.  Note that beacuse the weights can be negative, and we’re modeling a difference, it’s completely possible to get ratings outside the allowable range (in practice, we’d simply clip them in this case).  Let’s look at the case where we use just the 100 nearest neighbors to make the prediction.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W_pearson_100</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_6.svg" alt="" />
+        
+        
+    </div>
+
+<p>What’s happening here is that if we restrict ourselves to only the 100 nearest neighbors of a given user $i$, then there are many cases were we don’t have any overlap with user who predict the for some item, so we make the mean prediction much more (this is intentially a user for this this is a large difference, other users have less difference, if they happen to have neighbors that rate a more diverse set of items).  Finally, let’s look at the cosine similarity-based predictions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W_cosine</span><span class="p">,</span> <span class="n">user_means</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_7.svg" alt="" />
+        
+        
+    </div>
+
+<h2 id="item-item-approaches">Item-item approaches</h2>
+
+<p>We’ll mention item-item approaches only very briefly here, because the math is essentially identical to the user-user case, just with the matrices transposed.  Whereas the user-user approach was based upon which <em>users</em> were similar to a given user, the item-item approach is based upon what <em>items</em> are similar to a given item.  More formally, to make a prediction about the likely rating for user $i$ and item $j$, we form a weighted combination of the other <em>item ratings</em> that user $i$ has specific, weighted by the similarity between the two items.  Formally, this is described by the equation</p>
+
+<script type="math/tex; mode=display">\hat{X}_{ij} = \bar{x}_j + \frac{\sum_{k:X_{ik} \neq 0} w_{jk} (X_{ik} - \bar{x}_k)}{\sum_{k:X_{ik} \neq 0} \lvert w_{jk} \rvert}</script>
+
+<p>where here $\bar{x}_j$ denotes the average rating for <em>item j</em> (not per-user, as it was before) and $w_{jk}$ denotes the similarity beween item $j$ and item $k$.  Notice that here $k$ sums over other items, not over other users.  The weights can be similarly defined by Pearson correlations or cosine similarity, but again here considering the similarity between items instead of users.</p>
+
+<p>One nice this above the approach is that we can reuse all the exact same functions as before, just transposing the relevant matrices.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">predict_item_item</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">item_means</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">predict_user_user</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">item_means</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+<span class="n">W_pearson</span> <span class="o">=</span> <span class="n">all_pearson</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">movie_means</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Note that to get a list of all user predictions, we’d need how to iterate over all items (i.e., form the entire $\hat{X}$ matrix).  We can do this slightly more efficiently if desired (i.e., use additional matrix tricks to compute the entire matrix in one operation), but it’s a bit more involved, so we’ll just use the “brute force” approach here (it will take a few minutes to run).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Xhat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">predict_item_item</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W_pearson</span><span class="p">,</span> <span class="n">movie_means</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span><span class="o">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">Xhat</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_8.svg" alt="" />
+        
+        
+    </div>
+
+<p>One last element to note, though, is that the similarity matrix $W$ was previously an $m \times m$ matrix (number of users by number of users), whereas now it is an $n \times n$ matrix.  Depending on the number of users and items one of these could be much larger than the other, so one should take this into account regarding memory considerations.  Finally, we’ll note that for an actual production system, neither of these matrices would be possible to form directly, so instead it’s more common to just store some set of nearest neighbors for each user/item, rather than the entire matrix.</p>
+
+<h2 id="matrix-factorization">Matrix factorization</h2>
+
+<p>Finally, we’ll going to last consider a slightly different approach to collaborative filtering, which fits better into the machine learning frameworks we have discussed so far.  For the user-user and item-item approaches, we didn’t find the notion of a hypothesis function, loss function, and optimizatin procedure, since there was really no training phase of the algorithm to speak of (the methods <em>can</em> be viewed in this way, with the weighting functions corresponding to different losses, but it’s not particularly intuitive).  But with matrix factorization, the correspondence is much more direct, so we’ll use this notation here.  The presentation here is somewhat brief, since you’ll go through the implemenation and evaluation of matrix factorization in one of the homework questions, but we’ll cover the basic ideas here.</p>
+
+<p>The core idea of the matrix factorization approach to matrix factorization is that we’re going to approximate the $X$ matrix as a product of two lower-rank matrices</p>
+
+<script type="math/tex; mode=display">X \approx \hat{X} = UV, \;\; U \in \mathbb{R}^{m \times k}, \; V \in \mathbb{R}^{k \times n}</script>
+
+<p>where $k \ll m,n$.  This is similar to other methods such as PCA that we covered in the course, but crucially, in the collaborative filtering setting we <em>only</em> look to approximate the matrix on terms that are observed in $X$.</p>
+
+<p>Let’s define this a bit more formally in terms of the specific elements rows and columns of the matrices $U$ and $V$ respectively.  For each user $i=1,\ldots,m$ we define a set of <em>user-specific weights</em>, $u_i \in \mathbb{R}^k$; and for each item $j$ we define a set of <em>item-specific weights</em>, $v_j \in \mathbb{R}^k$.  Our prediction $\hat{X}_{ij}$ (which we’ll more formally denote as our hypothesis function now), is simply given by</p>
+
+<script type="math/tex; mode=display">\hat{X}_{ij} \equiv h_\theta(i,j) = u_i^T v_j</script>
+
+<p>where here our parameters are just all the $u$ and $v$ vectors, $\theta = \{u_{1:m}, v_{1:n}\}$.  One way to interpret this is that you can think of $u_i$ and $v_j$ as being something that is <em>both</em> like a feature vector and a parameter vector.  For a given user $i$, our hypothesis function is a linear hypothesis with paramters $u_i$, and we make our predictions by taking the inner product with these parameters and the item “features” $v_j$.  Thus, the goal of matrix factorization is to simultaneously learn both the per-user coefficients and the per-item features.</p>
+
+<p>To measure the performance of a given set of parameters, we’ll use the squared loss function,</p>
+
+<script type="math/tex; mode=display">\ell(h_\theta(i,j), X_{ij}) = (h_\theta(i,j) - X_{ij})^2</script>
+
+<p>but evaluatd <em>only</em> for those entries where we have actually observed a rating in $X$.  That is, defining $S$ as the set of observed user/item ratings</p>
+
+<script type="math/tex; mode=display">S = \{(i,j) : X_{ij} \neq 0\}</script>
+
+<p>our optimization problem is to find parameters that minimize</p>
+
+<script type="math/tex; mode=display">\DeclareMathOperator*{minimize}{minimize}
+\minimize_{u_{1:m},v_{1:n}} \sum_{i,j \in S} (u_i^T v_j - X_{ij})^2.</script>
+
+<h3 id="alternating-least-squares">Alternating least squares</h3>
+<p>Finally, how do we solve this optimization problem?  There are actually a number of ways of doing so (including traditional gradient descent), but a common method in practice here is to use a technique called <em>alternating least squares</em>.  The method is common enough that it’s worth explaining in a bit of detail.  The basic idea here is that it’s difficult to solve the above optimization problem globally over both $u$ and $v$ (in fact this is a non-convex problem, so there is the possibility of local optima), if we <em>fix</em> all the $v_j$ terms then we can find the optimal $u_i$ terms using simple least-squares; and simiarly, if we fix all the $u_i$ terms we can solve globally for $v_j$.  This motivates a simple approach to solving the problem: starting with some initial values (these could even be random), alternatively solve for all the $u_i$ then all $v_j$ terms.  These updates are each simple least-squares problems (so they have an anlytical solution), and they can even exploit paralellism to a very high degree (though we won’t worry about this here).  Specifically, this algorithm results in the following repeated updates.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+u_i & := \left ( \sum_{j : (i,j) \in S} v_j v_j^T \right )^{-1} \left (\sum_{j : (i,j) \in S} v_j X_ij \right ), \;\; \ i=1,\ldots,m \\
+v_j & := \left ( \sum_{i : (i,j) \in S} u_i u_i^T \right )^{-1} \left (\sum_{i : (i,j) \in S} u_i X_ij \right ), \;\; j=1,\ldots,n
+\end{split} %]]></script>
+
+<p>where we note that these are just the analytical solutions for least squares applied to the objective above.</p>
+
+<h3 id="relation-to-pca">Relation to PCA</h3>
+<p>As mentioned above, there is a close relationship between matrix factorization for collaborative filtering and PCA.  Both are finding low-rank approximation to some matrix $X$.  But the key difference is that while PCA tries to find an approximation that matches <em>all</em> the entries of $X$ (that is, $S$ would consist of the set of all valid $i,j$ pairs), matrix factorization for collaborative filtering only considers the loss on the observed entries.  Although we won’t get into the specifics here, it turns out that this difference means that PCA can be solved optimally an eigenvalue decomposition (or equivalently, a singular value decomposition), whereas matrix factorization cannot be solved in this analytical manner, and the alternating optimization scheme we mentioned above has the potential for local optima.</p>
+
+<p>Because of this, it is somewhat common to initialize matrix factorization with $u$ and $v$ terms determined by PCA (probably subtracting the mean of the data first as in typical PCA, so we don’t try too hard <em>too</em> hard to fit the zero entries).  Doing so is not required by any means, but it is a nice way of proving a non-random initial solution to the problem, so that we can begin the matrix factorization steps.</p>
+
+
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

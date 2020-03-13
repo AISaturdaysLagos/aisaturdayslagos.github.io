@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Homework 3</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Homework 3" />
+    
+  
+     
+    <meta property="og:description" content="Homework 3 is released in three parts. To complete it, you must submit **all** parts. Here are the handouts: - [Text Classification](/assignments/hw3_text.handout.tgz) (80 points) - [Linear Regression](/assignments/hw3_linear.handout.tgz) (90 points) - [Natural Language Processing](/assignments/hw3_nlp.handout.tgz) (100 points) - Only for students in the **15-688** version of the course. Each part is a..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/assignments/homework-3/" />
+    <link rel="canonical" href="http://localhost:4000/assignments/homework-3/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Homework 3" />
+    
+  
+    
+    <meta name="twitter:description" content="Homework 3 is released in three parts. To complete it, you must submit **all** parts. Here are the handouts: - [Text Classification](/assignments/hw3_text.handout.tgz) (80 points) - [Linear Regression](/assignments/hw3_linear.handout.tgz) (90 points) - [Natural Language Processing](/assignments/hw3_nlp.handout.tgz) (100 points) - Only for students in the **15-688** version of the course. Each part is a..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+  <div id="header-big-imgs" data-num-img=1
+    
+	  
+	  
+	    
+		  data-img-src-1="/img/datascience-bg.jpg"
+		
+	  
+    
+  ></div>
+
+
+<header class="header-section has-img">
+
+<div class="big-img intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          <h1>Homework 3</h1>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class='img-desc'></span>
+</div>
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          
+          
+          <h1>Homework 3</h1>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <p>Homework 3 is released in three parts. To complete it, you must submit <strong>all</strong> parts. Here are the handouts:</p>
+
+<ul>
+  <li><a href="/assignments/hw3_text.handout.tgz">Text Classification</a> (80 points)</li>
+  <li><a href="/assignments/hw3_linear.handout.tgz">Linear Regression</a> (90 points)</li>
+  <li><a href="/assignments/hw3_nlp.handout.tgz">Natural Language Processing</a> (100 points) - Only for students in the <strong>15-688</strong> version of the course.</li>
+</ul>
+
+<p>Each part is a separate code lab in Diderot. You can (and should) submit each part as you complete it.</p>
+
+<h2 id="recitation">Recitation</h2>
+
+<p>We will hold a recitation (see <a href="/lectures/">schedule</a>) for this homework in which we will review some basic concepts for this homework. Attempt all parts of the homework before attending the recitation to make the most of it.</p>
+
+<p>Recitation notes are <a href="/notes/recitation_3/">here</a>.</p>
+
+	    
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

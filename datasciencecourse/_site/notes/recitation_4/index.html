@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Recitation 4</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Recitation 4" />
+    
+  
+     
+    <meta property="og:description" content="# Recitation 4 ### Homework Tips * Be familiar with the [What Can I Ask On Diderot?](www.diderot.one/course/10/dosts/?is_inbox=yes&amp;dost=4658) policy * Talk to other students taking the course -- they can help you and you can help them. * Feel free to meet other students during the Collaboration Space -- every Tuesday..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/notes/recitation_4/" />
+    <link rel="canonical" href="http://localhost:4000/notes/recitation_4/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Recitation 4" />
+    
+  
+    
+    <meta name="twitter:description" content="# Recitation 4 ### Homework Tips * Be familiar with the [What Can I Ask On Diderot?](www.diderot.one/course/10/dosts/?is_inbox=yes&amp;dost=4658) policy * Talk to other students taking the course -- they can help you and you can help them. * Feel free to meet other students during the Collaboration Space -- every Tuesday..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <div class="intro-header"></div>
+
+<div role="main" class="container">
+  <style type="text/css">
+.targz-btn {
+    float: right;
+    border: thin solid #999;
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+}
+</style>
+
+
+<a href="recitation_4.tar.gz" class="targz-btn">&#x2b73; Download Jupyter Notebook</a>
+
+<h1 id="recitation-4">Recitation 4</h1>
+
+<h3 id="homework-tips">Homework Tips</h3>
+
+<ul>
+  <li>Be familiar with the <a href="www.diderot.one/course/10/dosts/?is_inbox=yes&amp;dost=4658">What Can I Ask On Diderot?</a> policy</li>
+  <li>Talk to other students taking the course – they can help you and you can help them.</li>
+  <li>Feel free to meet other students during the Collaboration Space – every Tuesday in GHC 4303.</li>
+  <li>Look for the “Common Problems in Homework x” post on Diderot before asking questions online.</li>
+</ul>
+
+<h3 id="ta-hours">TA Hours</h3>
+
+<ul>
+  <li>Come this week! Don’t wait until the last week.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="n">sp</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">tabulate</span>
+</code></pre></div></div>
+
+<h2 id="numpy-broadcasting">Numpy Broadcasting</h2>
+
+<p>Numpy has some magic that allows you to perform operations with arrays of different shapes. When working with more advanced operations, understanding broadcasting is important to making sure you don’t accidentally break something. We’re going to explore those rules in a simpler manner than <a href="https://numpy.org/devdocs/user/theory.broadcasting.html">the official tutorial</a>.</p>
+
+<p>Here some pseudocode expresses these rules:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>function broadcast(a, b):
+    if a.ndim != b.ndim:
+        add one-element dimensions to a or b until they have the same number of dimensions
+
+    for i in range(a.ndim):
+        if a.shape[i] == b.shape[i]:
+            both dimensions are the same length, no broadcasting necessary
+        elif a.shape[i] == 1:
+            copy dimension [i, i+1, ...] of a until it is the same as b
+        elif b.shape[i] == 1:
+            copy dimension [i, i+1, ...] of b until it is the same as a
+        else:
+            raise "ValueError: operands could not be broadcast together"
+</code></pre></div></div>
+
+<p>(Its not actually implemented like this. See the official docs for details.)</p>
+
+<p>Note that the dimensions are not actually copied; Numpy does something that is far more efficient than that.</p>
+
+<p>From these simple rules, we get some pretty interesting behaviour:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pp</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">tabulate</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s">'html'</span><span class="p">)))</span>
+    
+<span class="k">def</span> <span class="nf">rnd</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">a</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Constant * Array:</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">rnd</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">pp</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;"> 3</td><td style="text-align: right;">10</td><td style="text-align: right;">11</td></tr>
+<tr><td style="text-align: right;"> 7</td><td style="text-align: right;"> 2</td><td style="text-align: right;"> 0</td></tr>
+<tr><td style="text-align: right;"> 1</td><td style="text-align: right;"> 8</td><td style="text-align: right;"> 9</td></tr>
+<tr><td style="text-align: right;">13</td><td style="text-align: right;"> 4</td><td style="text-align: right;">12</td></tr>
+<tr><td style="text-align: right;">14</td><td style="text-align: right;"> 5</td><td style="text-align: right;"> 6</td></tr>
+</tbody>
+</table></small></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;"> 5</td><td style="text-align: right;">12</td><td style="text-align: right;">13</td></tr>
+<tr><td style="text-align: right;"> 9</td><td style="text-align: right;"> 4</td><td style="text-align: right;"> 2</td></tr>
+<tr><td style="text-align: right;"> 3</td><td style="text-align: right;">10</td><td style="text-align: right;">11</td></tr>
+<tr><td style="text-align: right;">15</td><td style="text-align: right;"> 6</td><td style="text-align: right;">14</td></tr>
+<tr><td style="text-align: right;">16</td><td style="text-align: right;"> 7</td><td style="text-align: right;"> 8</td></tr>
+</tbody>
+</table></small></div>
+
+<p>Let’s use the pseudocode to examine why this works. We begin with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a = []     array of [2]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>Numpy treats the constant like a zero-dimensional array. In the first step, it observes that there are fewer dimensions in <code class="highlighter-rouge">a</code> than <code class="highlighter-rouge">b</code>, so pads <code class="highlighter-rouge">a</code> with size-1 dimensions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a = [1, 1] array of [2]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>Now working from left-to-right, it examines the first dimension and notices that they are of different sizes, so broadcasting is necesssary. Because the first dimension of <code class="highlighter-rouge">a</code> is 1, it can be broadcast to match the first dimension of <code class="highlighter-rouge">b</code>. After this step, the array now looks like:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a = [5, 1] array of [2, 2, 2, 2, 2]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>Now it examines the second dimension. Following the same pattern as before, it broadcasts the second dimension of <code class="highlighter-rouge">a</code> to match <code class="highlighter-rouge">b</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>a = [5, 3] array of [2, 2,...]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>Now that the arrays are the same size, they can be added element-by-element.</p>
+
+<p>Lets try this again, this time with a 1-d array to a 2-d array:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">c</span> <span class="o">=</span> <span class="n">rnd</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">pp</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">2</td><td style="text-align: right;">0</td><td style="text-align: right;">1</td></tr>
+</tbody>
+</table></small></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;"> 5</td><td style="text-align: right;">10</td><td style="text-align: right;">12</td></tr>
+<tr><td style="text-align: right;"> 9</td><td style="text-align: right;"> 2</td><td style="text-align: right;"> 1</td></tr>
+<tr><td style="text-align: right;"> 3</td><td style="text-align: right;"> 8</td><td style="text-align: right;">10</td></tr>
+<tr><td style="text-align: right;">15</td><td style="text-align: right;"> 4</td><td style="text-align: right;">13</td></tr>
+<tr><td style="text-align: right;">16</td><td style="text-align: right;"> 5</td><td style="text-align: right;"> 7</td></tr>
+</tbody>
+</table></small></div>
+
+<p>Lets look at this again. We start with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c = [3]    array of [0..2]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>After adding padding dimensions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c = [1, 3] array of [0..2]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>We broadcast the first dimension of <code class="highlighter-rouge">c</code> to match <code class="highlighter-rouge">b</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c = [5, 3] array of [0..2]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>And now it can be added!</p>
+
+<p>What if we want to add over the columns instead?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">d</span> <span class="o">=</span> <span class="n">rnd</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">pp</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">3</td><td style="text-align: right;">0</td><td style="text-align: right;">1</td><td style="text-align: right;">2</td><td style="text-align: right;">4</td></tr>
+</tbody>
+</table></small></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The trivial way of doing this doesn’t work. We start with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>d = [5]    array of [0..4]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>After adding padding dimensions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c = [1, 5] array of [0..4]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>We broadcast the first dimension of <code class="highlighter-rouge">d</code> to match <code class="highlighter-rouge">b</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>c = [5, 5] array of [0..4]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>And the second dimension does not agree, so they can’t be broadcast.</p>
+
+<p>To get it to broadcast correctly, we need to add the padding dimension in the right place ourselves. Here’s an example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">e</span> <span class="o">=</span> <span class="n">d</span><span class="p">[:,</span><span class="bp">None</span><span class="p">]</span>
+<span class="n">pp</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">3</td></tr>
+<tr><td style="text-align: right;">0</td></tr>
+<tr><td style="text-align: right;">1</td></tr>
+<tr><td style="text-align: right;">2</td></tr>
+<tr><td style="text-align: right;">4</td></tr>
+</tbody>
+</table></small></div>
+
+<p>The trivial way of doing this doesn’t work. We start with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e = [5, 1] array of [0..4]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>No padding dimensions need to be added here, and the first dimensions already agree. We broadcast the <em>second</em> dimension of <code class="highlighter-rouge">e</code> to match <code class="highlighter-rouge">b</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e = [5, 3] array of [0..4]
+b = [5, 3] array of [0..14]
+</code></pre></div></div>
+
+<p>And now they can be added.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">e</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;"> 6</td><td style="text-align: right;">13</td><td style="text-align: right;">14</td></tr>
+<tr><td style="text-align: right;"> 7</td><td style="text-align: right;"> 2</td><td style="text-align: right;"> 0</td></tr>
+<tr><td style="text-align: right;"> 2</td><td style="text-align: right;"> 9</td><td style="text-align: right;">10</td></tr>
+<tr><td style="text-align: right;">15</td><td style="text-align: right;"> 6</td><td style="text-align: right;">14</td></tr>
+<tr><td style="text-align: right;">18</td><td style="text-align: right;"> 9</td><td style="text-align: right;">10</td></tr>
+</tbody>
+</table></small></div>
+
+<p>Broadcasting can give you some pretty awesome results. Here’s an example of generating a two-dimensional array using two one-dimensional arrays. Try using our analysis to understand why this works the way it does; the official documentation explains <a href="https://numpy.org/devdocs/user/theory.broadcasting.html">this example</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+
+<span class="n">pp</span><span class="p">(</span><span class="n">p</span><span class="p">[:,</span><span class="bp">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">q</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">0</td><td style="text-align: right;">10</td><td style="text-align: right;">20</td></tr>
+<tr><td style="text-align: right;">1</td><td style="text-align: right;">11</td><td style="text-align: right;">21</td></tr>
+<tr><td style="text-align: right;">2</td><td style="text-align: right;">12</td><td style="text-align: right;">22</td></tr>
+<tr><td style="text-align: right;">3</td><td style="text-align: right;">13</td><td style="text-align: right;">23</td></tr>
+<tr><td style="text-align: right;">4</td><td style="text-align: right;">14</td><td style="text-align: right;">24</td></tr>
+<tr><td style="text-align: right;">5</td><td style="text-align: right;">15</td><td style="text-align: right;">25</td></tr>
+</tbody>
+</table></small></div>
+
+<h2 id="multiplications-in-numpy">Multiplications in Numpy</h2>
+
+<p>This is a common source of difficult. We’re going to go over each type of multiplication (both dense and sparse) and explain how its done.</p>
+
+<p>Lets begin with the most important caveat: <strong><code class="highlighter-rouge">np.array</code>, <code class="highlighter-rouge">np.matrix</code>, and <code class="highlighter-rouge">sp.sparse.*</code> handle multiplication slighly differently!</strong></p>
+
+<p>And here are some tips:</p>
+<ol>
+  <li>When working with sparse matrices, you should use Scipy operations (not Numpy ones)</li>
+  <li>When working with dense matrices, you can use either operation.</li>
+  <li>When working with <code class="highlighter-rouge">np.array</code> objects:
+    <ul>
+      <li><code class="highlighter-rouge">a * b</code> is equivalent to <code class="highlighter-rouge">np.multiply(a, b)</code></li>
+      <li><code class="highlighter-rouge">a @ b</code> is equivalent to <code class="highlighter-rouge">np.matmul(a, b)</code>.</li>
+    </ul>
+  </li>
+  <li>When working with <code class="highlighter-rouge">np.matrix</code> objects:
+    <ul>
+      <li><code class="highlighter-rouge">a * b</code> is equivalent to <code class="highlighter-rouge">np.matmul(a, b)</code>, and</li>
+      <li><code class="highlighter-rouge">a @ b</code> is equivalent to <code class="highlighter-rouge">np.matmul(a, b)</code>.</li>
+    </ul>
+  </li>
+  <li>The <code class="highlighter-rouge">matmul</code> operation has <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.matmul.html">special broadcasting rules</a>.</li>
+  <li>The syntax <code class="highlighter-rouge">(5,)</code> means a tuple of length 1 with the value <code class="highlighter-rouge">5</code>.</li>
+  <li>For <code class="highlighter-rouge">np.multiply</code>, the order of arguments does not matter.</li>
+</ol>
+
+<p>When working with these, it is important to always know what type of array or matrix you are dealing with and what the size is.</p>
+
+<p>Lets begin with the simplest operation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="n">a</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">==</span> <span class="mi">15</span>
+</code></pre></div></div>
+
+<p>Scalars can be multiplied regularly; using matrix multiplication operations on them throws an error.</p>
+
+<h3 id="1-d-array">1-D <code class="highlighter-rouge">array</code>:</h3>
+
+<p>Now we’ll scale this up to 1-d arrays.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">c</span> <span class="o">=</span> <span class="n">rnd</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">rnd</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">pp</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">pp</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">0</td><td style="text-align: right;">1</td><td style="text-align: right;">2</td><td style="text-align: right;">4</td><td style="text-align: right;">3</td></tr>
+</tbody>
+</table></small></div>
+
+<p>The <code class="highlighter-rouge">*</code> operation (equivalent to <code class="highlighter-rouge">np.multiply</code>) calculates the element-wise product of the two arrays. (This is sometimes called the Hadamard product.)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">c</span><span class="o">*</span><span class="n">d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">0</td><td style="text-align: right;">4</td><td style="text-align: right;">2</td><td style="text-align: right;">8</td><td style="text-align: right;">0</td></tr>
+</tbody>
+</table></small></div>
+
+<p>The dot product calculates the sum of the element-wise product:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">c</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>As does the matrix product:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">c</span> <span class="err">@</span> <span class="n">d</span>
+</code></pre></div></div>
+
+<h4 id="transpose">Transpose</h4>
+
+<p>The transpose of a 1-d array does not change the array.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+(5,)
+(5,)
+
+</pre>
+
+<p>If you want to convert it to a row-array, you can do it like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Add an extra dimension and then transpose:</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">[:,</span><span class="bp">None</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c"># Or just make a new dimension in the right place:</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="bp">None</span><span class="p">,:]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+(1, 5)
+(1, 5)
+
+</pre>
+
+<h3 id="row--and-column-array">Row- and column-<code class="highlighter-rouge">array</code></h3>
+
+<p>Working with the transpose of c, we see that <code class="highlighter-rouge">dot</code>, <code class="highlighter-rouge">multiply</code>/<code class="highlighter-rouge">*</code>, and <code class="highlighter-rouge">matmul</code>/<code class="highlighter-rouge">@</code> give the same values, but with an extra dimension:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">e</span> <span class="o">=</span> <span class="n">c</span><span class="p">[:,</span><span class="bp">None</span><span class="p">]</span> <span class="c"># e is c with an extra dimension.</span>
+
+<span class="n">e</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">e</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">d</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>You can also get the cross product of two vectors using matrix multiplication:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">c</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="err">@</span> <span class="n">d</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">14</td></tr>
+</tbody>
+</table></small></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">c</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span> <span class="err">@</span> <span class="n">d</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">0</td><td style="text-align: right;">3</td><td style="text-align: right;">6</td><td style="text-align: right;">12</td><td style="text-align: right;"> 9</td></tr>
+<tr><td style="text-align: right;">0</td><td style="text-align: right;">4</td><td style="text-align: right;">8</td><td style="text-align: right;">16</td><td style="text-align: right;">12</td></tr>
+<tr><td style="text-align: right;">0</td><td style="text-align: right;">1</td><td style="text-align: right;">2</td><td style="text-align: right;"> 4</td><td style="text-align: right;"> 3</td></tr>
+<tr><td style="text-align: right;">0</td><td style="text-align: right;">2</td><td style="text-align: right;">4</td><td style="text-align: right;"> 8</td><td style="text-align: right;"> 6</td></tr>
+<tr><td style="text-align: right;">0</td><td style="text-align: right;">0</td><td style="text-align: right;">0</td><td style="text-align: right;"> 0</td><td style="text-align: right;"> 0</td></tr>
+</tbody>
+</table></small></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">[:,</span><span class="bp">None</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">T</span> <span class="err">@</span> <span class="n">d</span>
+</code></pre></div></div>
+
+<h4 id="caveat-npmatrix">Caveat: <code class="highlighter-rouge">np.matrix</code></h4>
+
+<p>The <code class="highlighter-rouge">*</code> operation is equivalent to <code class="highlighter-rouge">np.matmul</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">d</span>
+</code></pre></div></div>
+
+<h3 id="1-d-and-2-d-array">1-d and 2-d <code class="highlighter-rouge">array</code></h3>
+
+<p>We begin with a (3, 5) array:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="n">rnd</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">pp</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;"> 5</td><td style="text-align: right;">2</td><td style="text-align: right;">10</td><td style="text-align: right;"> 7</td><td style="text-align: right;"> 9</td></tr>
+<tr><td style="text-align: right;"> 0</td><td style="text-align: right;">4</td><td style="text-align: right;"> 8</td><td style="text-align: right;">14</td><td style="text-align: right;">13</td></tr>
+<tr><td style="text-align: right;">12</td><td style="text-align: right;">1</td><td style="text-align: right;"> 6</td><td style="text-align: right;">11</td><td style="text-align: right;"> 3</td></tr>
+</tbody>
+</table></small></div>
+
+<p>Recall the shape of <code class="highlighter-rouge">c</code> is (5)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">3</td><td style="text-align: right;">4</td><td style="text-align: right;">1</td><td style="text-align: right;">2</td><td style="text-align: right;">0</td></tr>
+</tbody>
+</table></small></div>
+
+<h4 id="matrix-vector-product">Matrix-vector product</h4>
+
+<p>You can also perform matrix multiplication or the <code class="highlighter-rouge">dot</code> operation between the (3, 5) <code class="highlighter-rouge">f</code> and (5,) <code class="highlighter-rouge">c</code> to get a result of shape (3,):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">f</span> <span class="err">@</span> <span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">47</td><td style="text-align: right;">52</td><td style="text-align: right;">68</td></tr>
+</tbody>
+</table></small></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">47</td><td style="text-align: right;">52</td><td style="text-align: right;">68</td></tr>
+</tbody>
+</table></small></div>
+
+<h4 id="elementwise-product-by-rows">Elementwise product by rows</h4>
+
+<p>The broadcast rules will automatically broadcast <code class="highlighter-rouge">c</code> from (5) to (3, 5) by copying the rows; this results in each row of <code class="highlighter-rouge">f</code> being multiplied element-wise by <code class="highlighter-rouge">c</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">f</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">15</td><td style="text-align: right;"> 8</td><td style="text-align: right;">10</td><td style="text-align: right;">14</td><td style="text-align: right;">0</td></tr>
+<tr><td style="text-align: right;"> 0</td><td style="text-align: right;">16</td><td style="text-align: right;"> 8</td><td style="text-align: right;">28</td><td style="text-align: right;">0</td></tr>
+<tr><td style="text-align: right;">36</td><td style="text-align: right;"> 4</td><td style="text-align: right;"> 6</td><td style="text-align: right;">22</td><td style="text-align: right;">0</td></tr>
+</tbody>
+</table></small></div>
+
+<h4 id="elementwise-product-by-columns">Elementwise product by columns</h4>
+
+<p>If you want to multiply the elements each column of <code class="highlighter-rouge">f</code> by a corresponding element in an array <code class="highlighter-rouge">g</code>, the easiest way is to explicitly create a dimension of size 1 so the broadcasting engine knows to copy along that dimension.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">pp</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">1</td><td style="text-align: right;">2</td><td style="text-align: right;">3</td></tr>
+</tbody>
+</table></small></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">f</span> <span class="o">*</span> <span class="n">g</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;"> 5</td><td style="text-align: right;">2</td><td style="text-align: right;">10</td><td style="text-align: right;"> 7</td><td style="text-align: right;"> 9</td></tr>
+<tr><td style="text-align: right;"> 0</td><td style="text-align: right;">8</td><td style="text-align: right;">16</td><td style="text-align: right;">28</td><td style="text-align: right;">26</td></tr>
+<tr><td style="text-align: right;">36</td><td style="text-align: right;">3</td><td style="text-align: right;">18</td><td style="text-align: right;">33</td><td style="text-align: right;"> 9</td></tr>
+</tbody>
+</table></small></div>
+
+<p>This works because we’re multiplying <code class="highlighter-rouge">f</code> (3, 5) by <code class="highlighter-rouge">g[:, None]</code> (3, 1), shapes that can be broadcast together by the rules we’ve discussed. (This also works when the LHS is sparse and the RHS is either sparse or dense.)</p>
+
+<p>Another trick to do this is to create a diagonal matrix and left-multiply with that. You have to use matrix multiplication for that operation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;">1</td><td style="text-align: right;">0</td><td style="text-align: right;">0</td></tr>
+<tr><td style="text-align: right;">0</td><td style="text-align: right;">2</td><td style="text-align: right;">0</td></tr>
+<tr><td style="text-align: right;">0</td><td style="text-align: right;">0</td><td style="text-align: right;">3</td></tr>
+</tbody>
+</table></small></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="err">@</span> <span class="n">f</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;"> 5</td><td style="text-align: right;">2</td><td style="text-align: right;">10</td><td style="text-align: right;"> 7</td><td style="text-align: right;"> 9</td></tr>
+<tr><td style="text-align: right;"> 0</td><td style="text-align: right;">8</td><td style="text-align: right;">16</td><td style="text-align: right;">28</td><td style="text-align: right;">26</td></tr>
+<tr><td style="text-align: right;">36</td><td style="text-align: right;">3</td><td style="text-align: right;">18</td><td style="text-align: right;">33</td><td style="text-align: right;"> 9</td></tr>
+</tbody>
+</table></small></div>
+
+<p>This can be made reasonably efficient using a sparse diagonal matrix, which only includes the entries along the diagonal:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pp</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">diags</span><span class="p">(</span><span class="n">g</span><span class="p">)</span> <span class="err">@</span> <span class="n">f</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><table>
+<tbody>
+<tr><td style="text-align: right;"> 5</td><td style="text-align: right;">2</td><td style="text-align: right;">10</td><td style="text-align: right;"> 7</td><td style="text-align: right;"> 9</td></tr>
+<tr><td style="text-align: right;"> 0</td><td style="text-align: right;">8</td><td style="text-align: right;">16</td><td style="text-align: right;">28</td><td style="text-align: right;">26</td></tr>
+<tr><td style="text-align: right;">36</td><td style="text-align: right;">3</td><td style="text-align: right;">18</td><td style="text-align: right;">33</td><td style="text-align: right;"> 9</td></tr>
+</tbody>
+</table></small></div>
+
+<h2 id="optimizing-numerical-computation">Optimizing Numerical Computation</h2>
+
+<p>We’re going to go over some common techniques to speed up numerical computation. This will be very useful when optimizing code for speed.</p>
+
+<h3 id="actually-use-numpy">Actually Use Numpy</h3>
+
+<p>Instead of mixing Numpy and Python lists together, use Numpy for as much of the computation as possible. You make orders of magnitude of gain here!</p>
+
+<p>This is because Numpy operations are (1) performed in low-level C code and don’t incur python interpreter overhead and (2) vectorized.</p>
+
+<p>Here’s an example where we add 1,000,000 integers together:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">loopsum</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">rv</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="p">)):</span>
+        <span class="n">rv</span> <span class="o">+=</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">rv</span>
+
+<span class="k">def</span> <span class="nf">npsum</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">timeit</span>
+<span class="n">loopsum</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1000000</span>
+</code></pre></div></div>
+
+<pre>
+202 ms ± 8.83 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
+</pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">timeit</span>
+<span class="n">npsum</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1000000</span>
+</code></pre></div></div>
+
+<pre>
+342 µs ± 16.2 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+
+</pre>
+
+<p>We get at least 500x speedup with Numpy.</p>
+
+<h3 id="rewrite-code-to-consolidate-multiplication">Rewrite Code To Consolidate Multiplication</h3>
+
+<p>As a general rule of thumb, here are the relative costs of different multiplications:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Left</th>
+      <th>Right</th>
+      <th>Type</th>
+      <th style="text-align: center">Cost ($n$ == length)</th>
+      <th style="text-align: left">Remarks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>vector</td>
+      <td>vector</td>
+      <td>elementwise</td>
+      <td style="text-align: center">$\mathcal O (n)$</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td>vector</td>
+      <td>vector</td>
+      <td>dot</td>
+      <td style="text-align: center">$\mathcal O (n)$</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td>matrix</td>
+      <td>vector</td>
+      <td>elementwise</td>
+      <td style="text-align: center">$\mathcal O (n^2)$</td>
+      <td style="text-align: left"><em>(both row/column broadcasting)</em></td>
+    </tr>
+    <tr>
+      <td>matrix</td>
+      <td>vector</td>
+      <td>matmul</td>
+      <td style="text-align: center">$\mathcal O (n^2)$</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td>matrix</td>
+      <td>matrix</td>
+      <td>elementwise</td>
+      <td style="text-align: center">$\mathcal O (n^2)$</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td>matrix</td>
+      <td>matrix</td>
+      <td>matmul</td>
+      <td style="text-align: center">$\mathcal O (n^3)$</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Additionally, constructing a vector takes $\mathcal O(n)$ and a matrix takes $\mathcal O(n^2)$.</p>
+
+<p>You can improve the speed of your computation considerably by rewriting your algorithm to avoid more expensive operations; a good sign that you can do this is when you have multiple inputs that are larger than the size of your output.</p>
+
+<h4 id="example-1">Example 1</h4>
+
+<p>Lets work through an example. We wish to calculate $A * B * \vec v$, which are matrices/vectors of size 1000. We can compute this two ways:</p>
+
+<ol>
+  <li>$A * (B * \vec v)$</li>
+  <li>$(A * B) * \vec v$</li>
+</ol>
+
+<p>Assign a cost to each operation and figure out the size of each intermediate state to figure out which operation will be quicker.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">timeit</span>
+<span class="p">(</span><span class="n">A</span> <span class="err">@</span> <span class="n">B</span><span class="p">)</span> <span class="err">@</span> <span class="n">v</span>
+</code></pre></div></div>
+
+<pre>
+1.23 s ± 88.6 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
+</pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">timeit</span>
+<span class="n">A</span> <span class="err">@</span> <span class="p">(</span><span class="n">B</span> <span class="err">@</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+1.44 ms ± 3.81 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+
+</pre>
+
+<p>We also check that they give the same answer:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">all</span><span class="p">((</span><span class="n">A</span> <span class="err">@</span> <span class="n">B</span><span class="p">)</span> <span class="err">@</span> <span class="n">v</span> <span class="o">==</span> <span class="n">A</span> <span class="err">@</span> <span class="p">(</span><span class="n">B</span> <span class="err">@</span> <span class="n">v</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>We can see why method 1 is about a thousand times faster than method 2 by breaking down the operations:</p>
+
+<ol>
+  <li>In method 1, we first evaluate the matrix-vector product $B * \vec v$ which incurs $\mathcal O(n^2)$ time and produces a vector of length $n$. The second operation is also a matrix-vector product which takes $\mathcal O(n^2)$ time:
+  <script type="math/tex">\underbrace{A * \underbrace{(B * \vec v)}_{\mathcal O(n^2)}}_{\mathcal O(n^2)}</script>
+  The overall time is $\mathcal O(n^2)$</li>
+  <li>In method 2, we first evaluate the matrix-matrix product $(A * B)$, which takes $\mathcal O(n^3)$ time. The subsequent matrix-vector takes $\mathcal O(n^2)$ time.
+  <script type="math/tex">\underbrace{\underbrace{(A * B)}_{\mathcal O(n^3)} * \vec v)}_{\mathcal O(n^2)}</script>
+  The overall operation is dominated by the $\mathcal O(n^3)$ time.</li>
+</ol>
+
+<p>This suggests that method 2 should be slower by a factor of $n$, which is 1,000 in our example.</p>
+
+<h4 id="example-2">Example 2</h4>
+
+<p>Let’s try this again, this time a more subtle use-case.</p>
+
+<p>We wish to compute $A * \text{diag}(\vec u) * \vec v$, where $\text{diag}(\vec u)$ is an otherwise zero matrix with the diagonals set to $\vec u$. There are two ways to do this that we have already discussed:</p>
+
+<ol>
+  <li>$(A * \text{diag}(\vec u)) * \vec v$ which takes $\mathcal O(n^3)$ time</li>
+  <li>$A * (\text{diag}(\vec u) * \vec v)$ which takes $\mathcal O(n^2)$ time</li>
+</ol>
+
+<p>We observe that $\text{diag}(\vec u) * \vec v$ is the same as taking the elementwise product $\vec u \circ \vec v$. We use this to rewrite the operation:</p>
+
+<ol>
+  <li>$A * (\vec u \circ \vec v)$ which takes $\mathcal O(n^2)$ time</li>
+</ol>
+
+<p>Even though (2) and (3) are the same asymptotically, notice that (2) takes <em>three</em> $\mathcal O(n^2)$ operations but (3) only takes one. Question: <em>why three operations?</em></p>
+
+<p>At a moderate $n = 1000$, lets see which is quicker:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">timeit</span>
+<span class="c"># Method 2</span>
+<span class="n">A</span> <span class="err">@</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="err">@</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+1.77 ms ± 13.1 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+
+</pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">timeit</span>
+<span class="c"># Method 3</span>
+<span class="n">A</span> <span class="err">@</span> <span class="p">(</span><span class="n">u</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+723 µs ± 10.8 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+
+</pre>
+
+<p>By saving the extra $\mathcal O(n^2)$ operations, we speed our computation up considerably. We check that the output is the same:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">all</span><span class="p">(</span><span class="n">A</span> <span class="err">@</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="err">@</span> <span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="n">A</span> <span class="err">@</span> <span class="p">(</span><span class="n">u</span> <span class="o">*</span> <span class="n">v</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Great!</p>
+
+
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

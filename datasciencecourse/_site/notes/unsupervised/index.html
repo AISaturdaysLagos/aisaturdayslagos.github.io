@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Unsupervised</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Unsupervised" />
+    
+  
+     
+    <meta property="og:description" content="# Unsupervised Thus far, we have presented machine learning methods largely in the context of _supervised_ learning. This means we talked about machine learning data sets as having inputs $x$, outputs $y$, and the goal of a machine learning algorithm is to learn how to predict $y$ from $x$. In..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/notes/unsupervised/" />
+    <link rel="canonical" href="http://localhost:4000/notes/unsupervised/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Unsupervised" />
+    
+  
+    
+    <meta name="twitter:description" content="# Unsupervised Thus far, we have presented machine learning methods largely in the context of _supervised_ learning. This means we talked about machine learning data sets as having inputs $x$, outputs $y$, and the goal of a machine learning algorithm is to learn how to predict $y$ from $x$. In..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <div class="intro-header"></div>
+
+<div role="main" class="container">
+  <style type="text/css">
+.targz-btn {
+    float: right;
+    border: thin solid #999;
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+}
+</style>
+
+
+<a href="unsupervised.tar.gz" class="targz-btn">&#x2b73; Download Jupyter Notebook</a>
+
+<h1 id="unsupervised">Unsupervised</h1>
+
+<p>Thus far, we have presented machine learning methods largely in the context of <em>supervised</em> learning.  This means we talked about machine learning data sets as having inputs $x$, outputs $y$, and the goal of a machine learning algorithm is to learn how to predict $y$ from $x$.  In my experience, supervised learning does traditionally dominate the majority of practical data science applications, but in this lecture and in a few layer ones, we’ll discuss approaches that differ from this.  In particular, in this set of notes we’ll consider the setting of unsupervised learning, we are <em>not</em> given corresponding input/output pairs, but where we are <em>just</em> given the inputs $x$.  Of course, this raises the obvious question: if we aren’t given a target output, what exactly are we supposed to predict? And indeed, the task of unsupervised learning is ambigous on some level.  However the general philosophy of unsupervised learning is that we want to discover some kind of structure in the data.  Different unsupervised learning methods work in very different ways, and discover very different kinds of structure, but they all have this similar element.</p>
+
+<p>We’re going to focus here on first defining unsupervised learning in a generic manner, using the same notions of hypothesis functions, loss functions, and optimization procedures that we used for supervised learning.  It will turn out that despite the very different context, virtually all unsupervised learning methods can also be viewed in this manner.  But naturally, the way we define hypotheses and loss functions will have to change to account for the fact that we no longer have a well-defined target we are trying to fit.  After definite unsupervised learning in this generic context, we’ll desribe two particular unsupervised learning algorithms, and illustrate how they fit into this framework: the k-means clustering algorithm, and the principal component analysis (PCA) algorithm.</p>
+
+<h2 id="an-ml-framework-for-unsupervised-learning">An ML framework for unsupervised learning</h2>
+
+<p>Recall from our presentations on supervised learnign that the three aspects of a supervised learning algorithm are: 1) a hypothesis function; 2) a loss function; and 3) a method for minimizing the average loss over the training data.  When we transition to the unsupervised setting, it is not clear what these should involve.  How do we define a hypothesis function when there aren’t targets to predict?  Similarly how can we define a loss function when there is no target output to compare with.  And although there are different ways of viewing unsupervised learning in this context, the approach that follows can capture a surprisingly large number of the unsupervised learning methods out there.</p>
+
+<ul>
+  <li>
+    <p><strong>Hypothesis function:</strong>  In the unsupervised setting, the hypothesis function is a mapping from input $\mathbb{R}^n$ <em>back</em> into this input space: $h_{\theta} : \mathbb{R}^n \rightarrow \mathbb{R}^n$.  The goal of this hypothesis class is to <em>approximately reconstruct</em> the input, i.e., we want $x^{(i)} \approx h_{\theta}(x^{(i)})$, just like we wanted $y^{(i)} \approx h_{\theta}(x^{(i)})$ in the supervised case.  This may seem a bit odd, because of course we could choose the “easy” function $h_\theta(x) = x$, and “reconstruct” the input perfectly.  But as we will see, the precise setting of unsupervised learning algorithms is that we will restrict our class of hypothesis functions so that they <em>cannot</em> simply output in input to the function, but instead need to effectively recover some amount of strucutre in the data in order to approximate their input well.</p>
+  </li>
+  <li>
+    <p><strong>Loss function:</strong> As hinted at by the discussion above, the goal of an unsupervised learning loss function is to measure the difference between the hypothesis function and the <em>input</em> itself.  That is, the loss function $\ell : \mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}_+$ is a measure of how different the prediction is from the original input.  As an example, a common loss function (which, as we will see, underlies both the k-means and principal component analysis algorithms) is just the least-squares loss</p>
+  </li>
+</ul>
+
+<script type="math/tex; mode=display">\ell(h_\theta(x),x) = \|h_\theta(x) - x\|_2^2.</script>
+
+<ul>
+  <li><strong>Optimization procedure:</strong> As before, the final ingredient of a machine learning algorithm is a method for solving the optimization problem</li>
+</ul>
+
+<script type="math/tex; mode=display">\DeclareMathOperator*{minimize}{minimize}
+\minimize_\theta \; \frac{1}{m} \sum_{i=1}^m \ell(h_\theta(x^{(i)}), x^{(i)})</script>
+
+<p>i.e. minimizing the average loss over the training set, with the only distinction now being that the hypothesis function and loss are as defined above.  One additional distinction, however, is that unlike the supervised setting, where we could typically just apply methods like gradient descent to solve this optimization problem, in the unsupervised setting there (just empirically) is a bit more variation in the methods people use to solve this optimization problem.  This is because the hypothesis functions themselves often involve discrete terms or other similar elements that cannot be differentiated (we’ll see this is the case of k-means clustering), or because particular optimization methods can provide exact solution (which we’ll see in the case of PCA).  Thus, the optimization procedure itself is usually a more “core” part of unsupervised learning methods.</p>
+
+<h2 id="k-means-clustering">K-means clustering</h2>
+
+<p>As our first example of an supervised learning algorithm, we’re going to consider the k-means clustering algorithm, as see how it fits into the framework above.  Before presenting the formal setting, though, we’ll consider k-means cluster from a more visual/geometric standpoint, just as a way to cluster data points.</p>
+
+<p>Consider the following set of 100 data points.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_0.svg" alt="" />
+        
+        
+    </div>
+
+<p>Even if you weren’t to look at the code that generated these points, it should be fairly apparent that there are two different clusters of points here.   The goal of the k-means algorithm is to find a set of $k$ “centers” (that is, points $\mu^{(i)} \in \mathbb{R}^n$) such that every data point is close to at least one center.  By doing so, we can also associate each point with it’s closest center, and use this as an indication of which cluster it belong to.  Let’s see this graphically for our example above, using the knowledge that we generated the data to have two explicit clusters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">mu1</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="mi">50</span><span class="p">,:]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">mu2</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">50</span><span class="p">:,:]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:</span><span class="mi">50</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:</span><span class="mi">50</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s">'C0'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">50</span><span class="p">:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="mi">50</span><span class="p">:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s">'C1'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">mu1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s">"o"</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">"k"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">mu2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mu2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s">"o"</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">"k"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">mu1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.15</span><span class="p">,</span> <span class="s">"$</span><span class="err">\</span><span class="s">mu^{(1)}$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">mu2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">mu2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.15</span><span class="p">,</span> <span class="s">"$</span><span class="err">\</span><span class="s">mu^{(2)}$"</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_1.svg" alt="" />
+        
+        
+    </div>
+
+<h3 id="formal-definition-of-the-k-means-algorithm">Formal definition of the K-means algorithm</h3>
+
+<p>Let’s see how this works in the formal setting we have described above.</p>
+
+<p><strong>Hypothesis function</strong> First let’s discuss the hypothesis function.  The parameters $\theta$ of our hypothesis function just include the centers themselves</p>
+
+<script type="math/tex; mode=display">\theta = \{\mu^{(1)}, \ldots, \mu^{(k)}\}</script>
+
+<p>with each $\mu^{(i)} \in \mathbb{R}^n$ (note that, as will be a pattern from now on, we’re still referring to <em>all</em> the parameters of our hypothesis using the notation $\theta$, but more and more this will refer to a collection of parameters rather than just a single parameter vector).  Defined by these parameters, hypothesis function itself, $h_\theta(x)$, just <em>outputs the center than is closest to the point $x$</em>.  Written formally</p>
+
+<script type="math/tex; mode=display">\DeclareMathOperator*{argmin}{argmin}
+h_\theta(x) = \argmin_{\mu \in \{\mu^{(1)}, \ldots, \mu^{(k)}\} } \|\mu - x\|_2^2</script>
+
+<p>where the $\argmin$ operator returns the argument that minimizes the expression (as opposed to the $\min$ operator which just returns the minimum value), i.e., the expression just outputs whichever center $\mu^{(1)},\ldots,\mu^{(k)}$ is closest to $x$.</p>
+
+<p><strong>Loss function</strong> The loss function used by k-means is simply the squared loss we mentioned earlier</p>
+
+<script type="math/tex; mode=display">\ell(h_\theta(x), x) = \|h_\theta(x) - x\|_2^2.</script>
+
+<p>Recalling that the hypothesis function simply outputs the closest mean to the given point $x$, this is equivalent to saying the loss for any point is simply the squared distance between the closest center and that point, i.e.,</p>
+
+<script type="math/tex; mode=display">\ell(h_\theta(x), x) = \min_{\mu \in \{\mu^{(1)}, \ldots, \mu^{(k)}\}} \|\mu - x\|_2^2.</script>
+
+<p><strong>Optimization</strong> Finally, let’s now consider the ML optimization problem that results from the hypothesis and loss above,</p>
+
+<script type="math/tex; mode=display">\minimize_\theta \;\; \frac{1}{m} \sum_{i=1}^m \min_{\mu \in \{\mu^{(1)}, \ldots, \mu^{(k)}\}} \|\mu - x^{(i)}\|_2^2.</script>
+
+<p>Unlike the settings we have seen before in supervised learning, in this case it is not standard to simply optimize this loss using gradient descent (though we emphasize that this <em>could</em> be done).  Instead, a common strategy is to iteratively “assign” each point to its closest center (i.e., compute the term that achieves the $\min$ for each training point), then update each center to be the mean of these assigned points (this assignment is precisely the one that minimizes the loss assuming that center assignments are fixed), and repeat this process until convergence.  This is sometimes called Lloyd’s algorithm, but more typically it just is referred to as “k-means”, since it’s the standard method for training k-means models.  There are many ways to initially assign cluster centers, but a common strategy is simply to choose $k$ of the data points at random.  Formally, the algorithm proceeds as follows.</p>
+
+<hr />
+
+<p><strong>Algorithm</strong>: K-means</p>
+
+<p><strong>Given:</strong> Data set $x^{(i)}, i=1,\ldots,m$</p>
+
+<p><strong>Initialize:</strong></p>
+
+<ul>
+  <li>$\mu^{(j)} := \mbox{RandomChoice}(x^{(1:m)}), \; j=1,\ldots,k$</li>
+</ul>
+
+<p><strong>Repeat until convergence:</strong></p>
+
+<ul>
+  <li>Assign point clusters: $y^{(i)} := \argmin_j \|\mu^{(j)} - x^{(i)}\|_2^2, \; i=1,\ldots,m$</li>
+  <li>Compute new centers: $\displaystyle \mu^{(j)} := \sum_{i=1}^m \frac{x^{(i)} \mathrm{1}\{y^{(i)} = j\}}{\mathrm{1}\{y^{(i)} = j\}}, \;\; j=1,\ldots,k$</li>
+</ul>
+
+<hr />
+
+<p>Although we won’t prove this formally here, at each step the algorithm is guaranteed to <em>decrease</em> the loss function (the intuition is that each step, both cluster re-assignment, and computing new centers, can only decrease the total loss, and so the overall loss will only decrease in this manner).  Further, because there are only a finite number of possible clusterings (exponentially large, of course, but still finite), we know the algorithm <em>will</em> converge after a finite number of steps (i.e., the cluster assignments will stay constant from one iteration to the next, which means the centers will also not change, and the algorithm has reached a fixed point).</p>
+
+<h3 id="illustration-of-k-means">Illustration of k-means</h3>
+
+<p>Let’s see how this works in practice  The following is a reasonably efficient implementation of the algorithm. The key aspect that makes this efficient is that we compute the distances between all the points and all the centers using matrix operations (the same strategy was used previously when creating RBF features in our nonlinear classification setting).  For simplicity here we run the algorithm for a fixed number of iterations rather than checking for convergence explicitly.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">kmeans</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">rand_seed</span><span class="p">)</span>
+    <span class="n">Mu</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">k</span><span class="p">),:]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">X</span><span class="nd">@Mu.T</span> <span class="o">+</span> <span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span><span class="bp">None</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">Mu</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">Mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="n">i</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">)])</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">Mu</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),:])</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Mu</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">loss</span>
+</code></pre></div></div>
+
+<p>The first line randomly assigns centers to $k$ of the data points.  We then repeat for <code class="highlighter-rouge">max_iter</code> iterations, each time:</p>
+
+<ol>
+  <li>Computing the distance between all points and all clusters, <code class="highlighter-rouge">D</code></li>
+  <li>Computing the cluster assignment of each point, <code class="highlighter-rouge">y</code></li>
+  <li>Recomputing the centers to be the average of their points</li>
+</ol>
+
+<p>We finally return these clusters plus the squared loss itself.</p>
+
+<p>Lets see how this looks on a three-cluster example.  Our synthetic data will be generated from three different clusters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="n">m</span><span class="p">,</span><span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="mf">0.4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+<span class="n">Mu0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">X</span> <span class="o">+=</span> <span class="n">Mu0</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">m</span><span class="p">),:]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_2.svg" alt="" />
+        
+        
+    </div>
+
+<p>We’ll also extend the code above for this particular example to plot the cluster means at their assignments at each iteration of the algorithm.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s">"C0"</span><span class="p">,</span> <span class="s">"C1"</span><span class="p">,</span> <span class="s">"C2"</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">kmeans_visualize</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">max_iter</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">4.6</span><span class="o">*</span><span class="n">max_iter</span><span class="p">))</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">rand_seed</span><span class="p">)</span>
+    <span class="n">Mu</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">k</span><span class="p">),:]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">X</span><span class="nd">@Mu.T</span> <span class="o">+</span> <span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span><span class="bp">None</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">Mu</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">y</span><span class="p">])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Mu</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Mu</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s">'k'</span><span class="p">)</span>
+        
+        <span class="n">Mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="n">i</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">)])</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">Mu</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">D</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),:])</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">Mu</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">loss</span>
+</code></pre></div></div>
+
+<p>Let’s run this on our simple three-cluster setting.  Here we show the first four iterations of the algorithm, after which time it is already converged.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">kmeans_visualize</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">rand_seed</span> <span class="o">=</span> <span class="mi">3</span><span class="p">);</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_3.svg" alt="" />
+        
+        
+    </div>
+
+<p>However, note that k-means is particularly susceptible to getting stuck in local optima.  For example, with a different random initialization, we may get the following behavior instead.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">kmeans_visualize</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">13</span><span class="p">);</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_4.svg" alt="" />
+        
+        
+    </div>
+
+<h3 id="k-means">K-means++</h3>
+
+<p>To counteract the possibility of local optima, there are a number of schemes for initializing the centers of the k-means algorithm.  One of the most popular strategies is the <a href="http://ilpubs.stanford.edu:8090/778/1/2006-13.pdf">k-means++ algorithm</a>.  The basic idea of this approach is that instead of simply choosing the centers to be random points, we sample the initial centers iteratively, each time putting higher probability on points that are <em>far</em> from any existing center.  Formally, the algorithm proceeds as follows.</p>
+
+<hr />
+
+<p><strong>Algorithm</strong>: K-means++</p>
+
+<p><strong>Given:</strong> Data set $x^{(i)}, i=1,\ldots,m$</p>
+
+<p><strong>Initialize:</strong></p>
+
+<ul>
+  <li>$\mu^{(1)} := \mbox{RandomChoice}(x^{(1:m)})$</li>
+</ul>
+
+<p><strong>For $j=2,\ldots,k$</strong></p>
+
+<ul>
+  <li>Computing probabilities of selecting each point</li>
+</ul>
+
+<script type="math/tex; mode=display">% <![CDATA[
+p^{(i)} = \frac{\min_{j'<j} \|\mu^{(j')} - x^{(i)}\|_2^2}{\sum_{i'=1}^m \min_{j'<j} \|\mu^{(j')} - x^{(i')}\|_2^2} %]]></script>
+
+<ul>
+  <li>Select next center given the appropriate probabilities</li>
+</ul>
+
+<script type="math/tex; mode=display">\mu^{(j)} := \mbox{RandomChoice}(x^{(1:m)}, p^{(1:m)})</script>
+
+<hr />
+
+<p>You’ll implement this algorithm in your homework, so we don’t include it here, but essentially, because we select points based upon how far they are from any existing center, the chance of a “bad” initialization like the one we saw above is very low.  Once we have initialized the centers in this manner, we run the k-means algorithm as normal.</p>
+
+<h3 id="selecting-k">Selecting $k$</h3>
+
+<p>One obvious question that arises with this method is: how do we choose hyperparameters for the k-means++ algorithm, such as the number of centers $k$?  Much like in supervised learning, there is no way to directly assess this from the training loss itself; modulo the possibility of local optima, the loss should continue to decrease for larger numbers of centers (the more centers, the closer any given point will be to them).  But unlike supervised learning, there is not even a good analogue of cross-validation that we can use here: this property of lower loss will typically <em>also</em> apply to a validation set as well.</p>
+
+<p>For this reason, the process of selecting the number of clusters is typically an imprecise art, and it is <em>very</em> difficult to infer anything about the “real” number of clusters in the data from running k-means (in fact, you should really never try to do this).  A common strategy is rather just to plot the loss versus the number of clusters and try to find a point that is “good enough” in terms of loss versus the number of cluster (i.e., where adding additional clusters doesn’t help much).</p>
+
+<p>Let’s do this first on our synthetic examples.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">losses</span> <span class="o">=</span> <span class="p">[</span><span class="n">kmeans</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">losses</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Number of clusters $k$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Average loss"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_5.svg" alt="" />
+        
+        
+    </div>
+
+<p>In this case, it seems reasonable to choose 3 clusters, as the loss decreases quite rapidly to that point, and only decreases slowly after that.  But again, we’ll emphasize that except in extremely contrived examples like this (where there really are a small number of clusters generating the data), it is almost never possible to determine the “true” number of clusters from such analysis.</p>
+
+<h3 id="example-handwritten-digits">Example: handwritten digits</h3>
+
+<p>As as example, let’s consider the task of clustering images of handwritten digits from the MNIST data set.  This data set has been used extensively as a benchmark in the ML community, to the extent that it actually isn’t that instructive when it comes to the task of e.g. actual digit recognition at this point, but it still serves as a nice graphical illustration of a technique like k-means.  We can gather this data using one of the scikit learn built in functions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_mldata</span>
+<span class="n">mnist</span> <span class="o">=</span> <span class="n">fetch_mldata</span><span class="p">(</span><span class="s">'MNIST original'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The data looks like the following.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dat</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">50</span><span class="p">)]</span>
+<span class="k">def</span> <span class="nf">plot_mnist</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+    <span class="n">digits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">N</span><span class="o">+</span><span class="n">j</span><span class="p">,:],(</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">))</span> 
+                                   <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">)])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="mi">255</span><span class="o">-</span><span class="n">digits</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">"gray"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plot_mnist</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_6.svg" alt="" />
+        
+        
+    </div>
+
+<p>Let’s run k-means with 30 centers on this data set, and plot the resulting centers (remember, these centers are averaging together images, so the centers themselves will look like reasonable images).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Mu</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">kmeans</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plot_mnist</span><span class="p">(</span><span class="n">Mu</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_7.svg" alt="" />
+        
+        
+    </div>
+
+<p>Again, though, we should emphasize that this is a very bad method for “inferring” the number of true clusters in the data (which in this case case is 10 different images).  Let’s see what happens when we try to run k-means with 10 clusters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Mu</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">kmeans</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plot_mnist</span><span class="p">(</span><span class="n">Mu</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_8.svg" alt="" />
+        
+        
+    </div>
+
+<p>The “5” seems to be mostly missing (possibly combined with the “3”, and there is some mix of “4”, “7”, “9” characters.  If we were to look at the loss over the number of clusters.  Essentially, what happened in our example with some centers being contained within a single class, while others are spread over multiple classes, is exactl what is happening here.  A better initialization like k-means++ and running for more iterations can help a little bit, but doesn’t fix the fundamental problem.  Rather, what’s happening is simply the fact that in the pixel space of these images, it isn’t neccessarily the case that the different images cluster as we would like: a “1” could be much closer in image distance to some “7” than to another “1”.</p>
+
+<p>We can plot the loss over the different number of clusers</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">losses</span> <span class="o">=</span> <span class="p">[</span><span class="n">kmeans</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rand_seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">)]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">),</span> <span class="n">losses</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_9.svg" alt="" />
+        
+        
+    </div>
+
+<p>We would definitely not be able to tell there were 10 actual classes just by looking at this plot.  The take-home messsage here is that if anyone tries to claim that they ran k-means (or really most any clustering algorithm) to determine that there “are” X number of clusters in the data, you should be skeptical.  Most likely they simply ran a clustering algorithm <em>with</em> X clusters, and the algorithm happily obliged.</p>
+
+
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Recitation 1</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Recitation 1" />
+    
+  
+     
+    <meta property="og:description" content="# Recitation 1 ### Homework Tips * start early; you should already be mostly through `hw1_scraper` * once the environment is set up, `hw1_get_started` should take you ~10 minutes to finish * 20 minutes reading documentation will save you 8 hours of writing code * write your own tests! The..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/notes/recitation_1/" />
+    <link rel="canonical" href="http://localhost:4000/notes/recitation_1/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Recitation 1" />
+    
+  
+    
+    <meta name="twitter:description" content="# Recitation 1 ### Homework Tips * start early; you should already be mostly through `hw1_scraper` * once the environment is set up, `hw1_get_started` should take you ~10 minutes to finish * 20 minutes reading documentation will save you 8 hours of writing code * write your own tests! The..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <div class="intro-header"></div>
+
+<div role="main" class="container">
+  <style type="text/css">
+.targz-btn {
+    float: right;
+    border: thin solid #999;
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+}
+</style>
+
+
+<a href="recitation_1.tar.gz" class="targz-btn">&#x2b73; Download Jupyter Notebook</a>
+
+<h1 id="recitation-1">Recitation 1</h1>
+
+<h3 id="homework-tips">Homework Tips</h3>
+
+<ul>
+  <li>start early; you should already be mostly through <code class="highlighter-rouge">hw1_scraper</code></li>
+  <li>once the environment is set up, <code class="highlighter-rouge">hw1_get_started</code> should take you ~10 minutes to finish</li>
+  <li>20 minutes reading documentation will save you 8 hours of writing code</li>
+  <li>write your own tests! The tests we give you clarify what the code should output, not (sufficiently) show that your code is correct.</li>
+  <li>The last TA hours before an assignment due is always the most crowded. Don’t rely on those to complete your assignment.</li>
+  <li>Talk to other students taking the course – they can help you and you can help them.</li>
+  <li>Look for the “Common Problems in Homework x” post on Diderot before asking questions online.</li>
+</ul>
+
+<h3 id="autograder">Autograder</h3>
+
+<ul>
+  <li>The autograder status is announced on Diderot: if it is down, the announcement is pinned and I provide updates every few hours.</li>
+  <li>Autograder changes are also announced and (briefly) pinned. I will announce changes in some detail. I will likely <em>not</em> regrade assignments that have received full scores.</li>
+  <li>Currently we have no submission limit. Compute power is a finite resource and ~200 students share it; if someone abuses it we will limit the number of submissions.</li>
+  <li>You should be able to see the Autograder output. Use the output to guide your debugging.</li>
+</ul>
+
+<h3 id="ta-hours">TA Hours</h3>
+
+<ul>
+  <li>Come early, come often. You learn a lot by listening to others problems and discussing your problems with them</li>
+  <li>We triage problems, group students, and deal with groups. For large classes, this is vastly more efficient.
+    <ul>
+      <li>We will correct misunderstandings, but will not directly give you the correct answer</li>
+      <li>TAs may direct you to other students with similar problems and ask you to work together until we can see you</li>
+      <li>Students are <em>not</em> seen in a first-come-first-serve queue</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="environment-setup">Environment Setup</h3>
+
+<p>Python environments take a little practice to get exactly right. It is very easy to spectacularly mess it up, as Randall Munroe illustrates on xkcd:</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="https://imgs.xkcd.com/comics/python_environment.png" alt="" />
+        
+        
+            <p class="image-caption"></p>
+        
+    </div>
+
+<p>We encourage you to use Vagrant because it sets up a clean, repeatable environment in a virtual machine. You may also wish to use Anaconda (a popular all-in-one solution), or Windows Subsystem for Linux (run Ubuntu/Fedora/Debian as a Windows app).</p>
+
+<p>Also, <strong>never run <code class="highlighter-rouge">sudo pip install ...</code></strong>. Instead, try <code class="highlighter-rouge">pip --user install ...</code></p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="https://i.imgur.com/T1fubRO.png" alt="" />
+        
+        
+            <p class="image-caption"></p>
+        
+    </div>
+
+<p>Running <code class="highlighter-rouge">sudo pip install ...</code> gives random people on the internet, and me, root access to your machine. That is a Very Bad Idea.</p>
+
+<h2 id="writing-tests">Writing Tests</h2>
+
+<p>Writing good tests requires you understand the problem domain and <em>what can go wrong</em>. Typically, you learn what can go wrong by making those mistakes over and over.</p>
+
+<h3 id="approach">Approach</h3>
+<p>When writing your tests, there are two approaches:</p>
+
+<ul>
+  <li>bottom-up/unit testing, where you test the smallest part of your code for correctness and gradually move up the function hierarchy. These are easy to write at low levels but get expensive as the output becomes more complex.</li>
+  <li>top-down/global/functional/integration testing, where you have some input (ideally real-world input) and manually verified output. These are (generally) expensive to build, though you can trade quality for time by writing synthetic tests.</li>
+</ul>
+
+<p>We give you both tests, and our grader runs both types of tests on your code, but we generally weigh top-down tests much more. If you cannot pass a test, it is likely that there is an <a href="https://en.wikipedia.org/wiki/Johari_window">unknown unknown</a> factor at play and you should try your code on more tests.</p>
+
+<h3 id="complexity">Complexity</h3>
+
+<p>Also, you don’t write a single test so much as a suite of tests. Instead of just writing many large tests, begin by writing the smallest possible test to check a feature then copy it and add complexity to it. If you discover a bug, the tests that pass give you valuable information on what must be causing it.</p>
+
+<h3 id="regression">Regression</h3>
+
+<p>Write <em>regression</em> tests. When you discover a bug</p>
+
+<ol>
+  <li>write a test that should fail</li>
+  <li>check that the test does fail</li>
+  <li>fix the bug</li>
+  <li>check that the test now passes</li>
+</ol>
+
+<p>This way you will catch similar bugs in the future.</p>
+
+<p>For <code class="highlighter-rouge">hw1_xml_parser</code>, we have a thread where you can share your tests; regression tests are especially valuable because if you made a mistake it is likely that others will as well.</p>
+
+<h2 id="scraping-with-requests">Scraping with <code class="highlighter-rouge">requests</code></h2>
+
+<p>Read the <a href="http://docs.python-requests.org/en/master/">documentation</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+</code></pre></div></div>
+
+<h3 id="what-is-http">What is HTTP?</h3>
+
+<p>A <em>protocol</em> for automatically requesting (and getting) data from text-based servers. The using human-readable text</p>
+
+<p>When you navigate to <a href="www.example.com">www.example.com</a>, here’s what my browser sends as plain (UTF-8) text:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET / HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+</code></pre></div></div>
+
+<p>We begin with the request type (<code class="highlighter-rouge">GET</code>), the path (<code class="highlighter-rouge">/</code>), and the protocol version (<code class="highlighter-rouge">HTTP/1.1</code>). The browser then identifies itself and advertises its capabilities.</p>
+
+<p>The server sends back:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HTTP/1.1 200 OK
+Content-Encoding: gzip
+Content-Type: text/html; charset=UTF-8
+Last-Modified: Fri, 09 Aug 2013 23:54:35 GMT
+Server: ECS (phd/FD6D)
+Content-Length: 606
+
+<span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+...
+</code></pre></div></div>
+
+<p>The response begins with the headers: the protocol version <code class="highlighter-rouge">HTTP/1.1</code> and that the request succeeded (<code class="highlighter-rouge">200 OK</code>). Then it gives you information about the response and the server. Finally, it leaves a blank line and then gives you the <em>response body</em>.</p>
+
+<p><code class="highlighter-rouge">requests</code> is a library that handles the heavy lifting of this process. It</p>
+
+<ul>
+  <li>constructs request headers, including handling encoding</li>
+  <li>establishes a conection</li>
+  <li>transfers the request (and respects the fiddly little protocol details)</li>
+  <li>receives the response</li>
+  <li>exposes the response headers and body to the programmer</li>
+</ul>
+
+<h3 id="using-requests">Using Requests</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"http://www.google.com/search"</span><span class="p">,</span>
+                        <span class="n">params</span><span class="o">=</span><span class="p">{</span> <span class="s">"query"</span><span class="p">:</span> <span class="s">"python metaclass"</span><span class="p">,</span> <span class="s">"source"</span><span class="p">:</span><span class="s">"chrome"</span> <span class="p">})</span>
+</code></pre></div></div>
+
+<p>We send request headers that look something like this:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /?query=python%20metaclass&amp;source=chrome HTTP/1.1
+Host: www.google.com
+Accept-Encoding: gzip, deflate, compress
+Accept: */*
+User-Agent: python-requests/2.1.0 CPython/3.6.7 Linux/3.2.0-23-generic-pae
+</code></pre></div></div>
+
+<p>Note how the GET parameters are added to the requested filename, and they are encoded to remove some characters. <code class="highlighter-rouge">requests</code> handles this for you automatically.</p>
+
+<p>Lets examine the response we get. We can get the response url and the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">status code</a> as properties:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span><span class="o">.</span><span class="n">url</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="c"># `200` means the request was successful</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span> <span class="c"># Pretty-printer</span>
+<span class="n">pprint</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">))</span>
+</code></pre></div></div>
+
+<pre>
+{&#x27;Cache-Control&#x27;: &#x27;private, max-age=0&#x27;,
+ &#x27;Content-Encoding&#x27;: &#x27;gzip&#x27;,
+ &#x27;Content-Type&#x27;: &#x27;text/html; charset=ISO-8859-1&#x27;,
+ &#x27;Date&#x27;: &#x27;Thu, 05 Sep 2019 03:58:08 GMT&#x27;,
+ &#x27;Expires&#x27;: &#x27;-1&#x27;,
+ &#x27;P3P&#x27;: &#x27;CP=&quot;This is not a P3P policy! See g.co/p3phelp for more info.&quot;&#x27;,
+ &#x27;Server&#x27;: &#x27;gws&#x27;,
+ &#x27;Set-Cookie&#x27;: &#x27;1P_JAR=2019-09-05-03; expires=Sat, 05-Oct-2019 03:58:08 GMT; &#x27;
+               &#x27;path=/; domain=.google.com; SameSite=none, CGIC=IgMqLyo; &#x27;
+               &#x27;expires=Tue, 03-Mar-2020 03:58:08 GMT; path=/complete/search; &#x27;
+               &#x27;domain=.google.com; HttpOnly, CGIC=IgMqLyo; expires=Tue, &#x27;
+               &#x27;03-Mar-2020 03:58:08 GMT; path=/search; domain=.google.com; &#x27;
+               &#x27;HttpOnly, &#x27;
+               &#x27;NID=188=kT-c41uxIh8UsAuyXVBzg6CukUgfuwceNA2AyFvaosgsM_B0X9lps4MwweFhF2VwzbEOoX_hD6e4tHRKFfuKF-dNO0u0Rl1RUiUCILdSw9aQvnWdOXPlKg0ZeG-sfiMkPwX3YKhgx7XMTXMBpye1rZgNWkcbCA2ZKjEAmYjpoOQ; &#x27;
+               &#x27;expires=Fri, 06-Mar-2020 03:58:08 GMT; path=/; &#x27;
+               &#x27;domain=.google.com; HttpOnly&#x27;,
+ &#x27;Transfer-Encoding&#x27;: &#x27;chunked&#x27;,
+ &#x27;X-Frame-Options&#x27;: &#x27;SAMEORIGIN&#x27;,
+ &#x27;X-XSS-Protection&#x27;: &#x27;0&#x27;}
+
+</pre>
+
+<h3 id="response-body-and-encoding">Response body and encoding.</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">100</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">),</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">[:</span><span class="mi">100</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>Notice that the returned type is different between <code class="highlighter-rouge">.text</code> and <code class="highlighter-rouge">.content</code>.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">.content</code> returns a <code class="highlighter-rouge">bytes</code> object that represents binary data.</li>
+  <li><code class="highlighter-rouge">.text</code> returns a <code class="highlighter-rouge">str</code> object which contains characters, decoded from <code class="highlighter-rouge">.content</code> using the <code class="highlighter-rouge">encoding</code> field from the <code class="highlighter-rouge">'Content-Type'</code> header.</li>
+</ul>
+
+<h4 id="content-type-conflicts">Content-type conflicts</h4>
+
+<p>Notice there’s a conflict in the <code class="highlighter-rouge">Content-Type</code> header and in the HTML itself:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">"Content-Type"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">[</span><span class="mi">37</span><span class="p">:</span><span class="mi">59</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>This happens very, very often. BeautifulSoup4 and many other libraries accept the bytes directly and automatically figure out the encoding. (This was the autograder bug.) Here’s what happens when you use the wrong encoding:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Bytes:"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="s">'</span><span class="se">\xf0\x9f\x92\xa9</span><span class="s">'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Using the Content-Type encoding: [ISO-8859-1]"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="s">'</span><span class="se">\xf0\x9f\x92\xa9</span><span class="s">'</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"ISO-8859-1"</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Using the &lt;meta&gt; tag encoding: [UTF-8]"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="s">'</span><span class="se">\xf0\x9f\x92\xa9</span><span class="s">'</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"UTF-8"</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<pre>
+Bytes:
+b&#x27;\xf0\x9f\x92\xa9&#x27;
+Using the Content-Type encoding: [ISO-8859-1]
+ð©
+Using the &lt;meta&gt; tag encoding: [UTF-8]
+💩
+
+</pre>
+
+<h2 id="regular-expressions">Regular Expressions</h2>
+
+<p>Before you use regular expressions, <a href="https://blog.codinghorror.com/regular-expressions-now-you-have-two-problems/">read this</a>. If you’re interested in practicing with RegExes, you can <a href="https://nbviewer.jupyter.org/url/norvig.com/ipython/xkcd1313.ipynb">read about Regex Golf</a> and then <a href="http://alf.nu/RegexGolf">try it yourself</a>.</p>
+
+<p>Regular expressions are a way to find or extract text from strings. For this tutorial, you should keep open one of these cheat sheets: <a href="http://web.mit.edu/hackl/www/lab/turkshop/slides/regex-cheatsheet.pdf">MIT</a>, <a href="http://regexlib.com/cheatsheet.aspx">RegexLib</a> and an online RegEx tester (<a href="https://regex101.com/">recommended</a>).</p>
+
+<p>There are many flavors of RegExps; they handle the basics the same way but have subtle differences around backreferences.</p>
+
+<p>We’ll set up some a testing function and use it to run <code class="highlighter-rouge">re.match(...)</code> on some regular expressions and examples.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">Latex</span>
+
+<span class="c"># FEEL FREE TO IGNORE THIS CODE</span>
+
+<span class="k">def</span> <span class="nf">_match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">example</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">search</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+        <span class="n">st</span><span class="p">,</span> <span class="n">en</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">f</span><span class="s">"{example[:st]}&lt;u&gt;{example[st:en]}&lt;/u&gt;{example[en:]}"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">f</span><span class="s">"&lt;s&gt;{example}&lt;/s&gt;"</span>
+
+<span class="k">def</span> <span class="nf">pm</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="n">regexes</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">):</span>
+    <span class="n">examples</span> <span class="o">=</span> <span class="n">examples</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">examples</span><span class="p">]</span>
+    <span class="n">regexes</span> <span class="o">=</span> <span class="n">regexes</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">regexes</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">regexes</span><span class="p">]</span>
+    <span class="n">output</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">regex</span> <span class="ow">in</span> <span class="n">regexes</span><span class="p">:</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="n">f</span><span class="s">"**re.{search.__name__} {regex} :** "</span> <span class="o">+</span> <span class="s">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">example</span><span class="p">,</span> <span class="n">search</span><span class="p">)</span> <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">)))</span>
+        
+<span class="k">def</span> <span class="nf">pmg</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="n">regex</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">):</span>
+    <span class="n">examples</span> <span class="o">=</span> <span class="n">examples</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">examples</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="n">f</span><span class="s">"**re.{match.__name__}(..., {example}) :** "</span> <span class="o">+</span> <span class="s">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">f</span><span class="s">"'{m}'"</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">groups</span><span class="p">()))))</span>
+</code></pre></div></div>
+
+<p>Lets begin with a warmup. Here’s how you match one character:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="p">([</span><span class="s">"bat"</span><span class="p">,</span> <span class="s">"bit"</span><span class="p">,</span> <span class="s">"bot"</span><span class="p">,</span> <span class="s">"but"</span><span class="p">,</span> <span class="s">"batty"</span><span class="p">,</span> <span class="s">"bitty"</span><span class="p">,</span> <span class="s">"and"</span><span class="p">,</span> <span class="s">"or"</span><span class="p">,</span> <span class="s">"not"</span><span class="p">],</span>
+   <span class="s">"b[aeiou]t"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>And here’s how you match distinct options. Note how the <code class="highlighter-rouge">a</code> in <code class="highlighter-rouge">batty</code> is matched – most RegExp engines will find the first match.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="p">([</span><span class="s">"bat"</span><span class="p">,</span> <span class="s">"bit"</span><span class="p">,</span> <span class="s">"bot"</span><span class="p">,</span> <span class="s">"but"</span><span class="p">,</span> <span class="s">"batty"</span><span class="p">,</span> <span class="s">"bitty"</span><span class="p">,</span> <span class="s">"and"</span><span class="p">,</span> <span class="s">"or"</span><span class="p">,</span> <span class="s">"not"</span><span class="p">],</span>
+   <span class="p">[</span><span class="s">"(tt|a)"</span><span class="p">,</span> <span class="s">"(tt|a)"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">re.search</code> starts from any position; you can use <code class="highlighter-rouge">re.match</code> to check the string starting from a position. (There are other options, like <code class="highlighter-rouge">re.findall</code>)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="p">([</span><span class="s">"bot"</span><span class="p">,</span> <span class="s">"talbot"</span><span class="p">,</span> <span class="s">"botobot"</span><span class="p">],</span> <span class="p">[</span><span class="s">"bot"</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">)</span>
+<span class="n">pm</span><span class="p">([</span><span class="s">"bot"</span><span class="p">,</span> <span class="s">"talbot"</span><span class="p">,</span> <span class="s">"botobot"</span><span class="p">],</span> <span class="p">[</span><span class="s">"bot"</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">)</span>
+<span class="n">pm</span><span class="p">([</span><span class="s">"bot"</span><span class="p">,</span> <span class="s">"talbot"</span><span class="p">,</span> <span class="s">"botobot"</span><span class="p">],</span> <span class="p">[</span><span class="s">"bot"</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Matching some occurences can be controlled using this syntax:</p>
+
+<ul>
+  <li>To match <code class="highlighter-rouge">a</code> exactly once, use <code class="highlighter-rouge">a</code></li>
+  <li>To match <code class="highlighter-rouge">a</code> zero or one times, use <code class="highlighter-rouge">a?</code></li>
+  <li>To match <code class="highlighter-rouge">a</code> zero or more times, use <code class="highlighter-rouge">a*</code></li>
+  <li>To match <code class="highlighter-rouge">a</code> one or more times, use <code class="highlighter-rouge">a+</code></li>
+  <li>To match <code class="highlighter-rouge">a</code> exactly <code class="highlighter-rouge">n</code> times, use <code class="highlighter-rouge">a{n}</code>.</li>
+  <li>To match <code class="highlighter-rouge">a</code> between <code class="highlighter-rouge">n</code> and <code class="highlighter-rouge">m</code> times, use <code class="highlighter-rouge">a{n,m}</code>.</li>
+  <li>To match <code class="highlighter-rouge">a</code> at least <code class="highlighter-rouge">n</code>, use <code class="highlighter-rouge">a{n,}</code>.</li>
+  <li>To match <code class="highlighter-rouge">a</code> at most <code class="highlighter-rouge">m</code>, use <code class="highlighter-rouge">a{,m}</code>.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="p">([</span><span class="s">"bt"</span><span class="p">,</span> <span class="s">"bat"</span><span class="p">,</span> <span class="s">"baat"</span><span class="p">,</span> <span class="s">"baaat"</span><span class="p">,</span> <span class="s">"baaaat"</span><span class="p">],</span>
+   <span class="p">[</span><span class="s">"bat"</span><span class="p">,</span> <span class="s">"ba?t"</span><span class="p">,</span> <span class="s">"ba+t"</span><span class="p">,</span> <span class="s">"ba*t"</span><span class="p">,</span> <span class="s">"ba{2,3}t"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>There is plenty more syntax:</p>
+
+<ul>
+  <li>Any character (except special characters, <code class="highlighter-rouge">".$*+?{}\[]|() </code>), just matches itself</li>
+  <li>Putting a group of characters within brackets <code class="highlighter-rouge">[abc]</code> will match any of the characters a, b, or c</li>
+  <li>Putting a caret within the bracket matches anything but these characters, i.e., <code class="highlighter-rouge">[^abc]</code> matches any character except a, b, or c.</li>
+  <li>The special character <code class="highlighter-rouge">\d</code> will match any digit, i.e. <code class="highlighter-rouge">[0-9]</code></li>
+  <li>The special character <code class="highlighter-rouge">\w</code> will match any alphanumeric character plus the underscore; i.e., it is equivalent to <code class="highlighter-rouge">[a-zA-Z0-9_]</code>.</li>
+  <li>The special character <code class="highlighter-rouge">\s</code> will match whitespace, any of <code class="highlighter-rouge">[ \t\n\r\f\v]</code> (a space, tab, and various newline characters)</li>
+  <li>The special character <code class="highlighter-rouge">.</code> (the period) matches any character. In their original versions, regular expressions were often applies line-by-line to a file, so by default <code class="highlighter-rouge">.</code> will not match the newline character. If you want it to match newlines, you pass <code class="highlighter-rouge">re.DOTALL</code> to the “flags” argument of the various regular expression calls.</li>
+</ul>
+
+<p>There are more details; consult the <a href="https://docs.python.org/3/library/re.html">documentation</a>. Also, note that the Python 3 <code class="highlighter-rouge">re</code> module does not guarantee Unicode support.</p>
+
+<h3 id="capture-groups">Capture Groups</h3>
+
+<p>This is how we extract parts of structured data:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pmg</span><span class="p">([</span><span class="s">"10:00 am"</span><span class="p">,</span> <span class="s">"10:20 am"</span><span class="p">,</span> <span class="s">"3:11 pm"</span><span class="p">],</span>
+    <span class="s">r"((\d\d?):(\d\d)) (am|pm)"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="greedy-matching">Greedy Matching</h3>
+
+<p>RegExes’ multi-selectors (<code class="highlighter-rouge">*+</code>) match <em>the longest possible string</em> by default. For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="p">([</span><span class="s">"(1 + 2) * (3 + 4)"</span><span class="p">],</span>
+   <span class="p">[</span><span class="s">r"\(.*\)"</span><span class="p">,</span> <span class="s">"</span><span class="err">\</span><span class="s">(.+</span><span class="err">\</span><span class="s">)"</span><span class="p">,</span> <span class="s">"</span><span class="err">\</span><span class="s">(.{2,}</span><span class="err">\</span><span class="s">)"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>You can make them match the shortest possible string instead using <code class="highlighter-rouge">?</code>. This is called <em>lazy matching</em>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pm</span><span class="p">([</span><span class="s">"(1 + 2) * (3 + 4)"</span><span class="p">],</span>
+   <span class="p">[</span><span class="s">r"\(.*?\)"</span><span class="p">,</span> <span class="s">"</span><span class="err">\</span><span class="s">(.+?</span><span class="err">\</span><span class="s">)"</span><span class="p">,</span> <span class="s">"</span><span class="err">\</span><span class="s">(.{2,}?</span><span class="err">\</span><span class="s">)"</span><span class="p">])</span>
+</code></pre></div></div>
+
+
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

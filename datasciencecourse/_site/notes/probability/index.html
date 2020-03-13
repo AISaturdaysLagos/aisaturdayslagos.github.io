@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Probability</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Probability" />
+    
+  
+     
+    <meta property="og:description" content="# Probability ## Introduction Up until this point in the course, we have largely ignored formal probabilistic statements or formal definitions of probability. This may seem somewhat surprising: the topic of probability is naturally tightly intertwined with data science and machine learning, and it may seem odd to have gotten..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/notes/probability/" />
+    <link rel="canonical" href="http://localhost:4000/notes/probability/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Probability" />
+    
+  
+    
+    <meta name="twitter:description" content="# Probability ## Introduction Up until this point in the course, we have largely ignored formal probabilistic statements or formal definitions of probability. This may seem somewhat surprising: the topic of probability is naturally tightly intertwined with data science and machine learning, and it may seem odd to have gotten..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <div class="intro-header"></div>
+
+<div role="main" class="container">
+  <style type="text/css">
+.targz-btn {
+    float: right;
+    border: thin solid #999;
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+}
+</style>
+
+
+<a href="probability.tar.gz" class="targz-btn">&#x2b73; Download Jupyter Notebook</a>
+
+<h1 id="probability">Probability</h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Up until this point in the course, we have largely ignored formal probabilistic statements or formal definitions of probability.  This may seem somewhat surprising: the topic of probability is naturally tightly intertwined with data science and machine learning, and it may seem odd to have gotten so deep into these topics (it is also not quite true, since we did use probability in an informal way when discussion n-gram models for free text).  But we previously largedly considered machine learning from an optimization context, in terms of minimizing loss function, and even our presentation of generalization and overfitting only mentioned probability informally.</p>
+
+<p>From this point on, this will no longer be the case.  While it is useful to understand machine learning from the optimization standpoint, machine learning as a field is also deep tied to probability and statistics, and the goal of these notes is to provide a basic introduction to some of the principles behind probability.  As a concrete example of why understanding and modeling probabilities can be so important in data science (this is of course just one example), let’s return to considering previous example of high temperature vs. peak demand.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"temp_demand.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">"Date"</span><span class="p">)</span>
+<span class="n">df_summer</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s">"06"</span><span class="p">,</span> <span class="s">"07"</span><span class="p">,</span> <span class="s">"08"</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">))]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_summer</span><span class="p">[</span><span class="s">"Temp"</span><span class="p">],</span> <span class="n">df_summer</span><span class="p">[</span><span class="s">"Load"</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"High Temperature"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Peak Demand"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_0.svg" alt="" />
+        
+        
+    </div>
+
+<p>Although there <em>is</em> a clear linear pattern to this data, there is also the sense in which we <em>don’t</em> expect to be able to predict the peak demand exactly.  After all, peak electrical demand is something that <em>I</em> even have some control over (I could choose to turn a lightswitch on or off tomorrow, which would affect the peak demand, albeit in a very limited manner).  So while we can reduce the uncertainty somewhat (remember, for example, that including a “weekday” versus “weekend” feature did exactly this), we don’t expect to eliminate the uncertainty completely, at least not at the level that we are ever going to be able to observe the data.  This is a critical point: <em>many machine learning tasks cannot be “solved” in the sense of getting perfect predictions, but the correct solution is instead just to accurately quantify the distribution over possible outputs</em>.</p>
+
+<p>With this in mind, we’re going to begin our discussion on basic probability, with the next section additionally covering some basic statistics.  This distinction is actually quite important, and for the purposes of this course you can think of it as the following: probability covers the basic rules of random variables manipulating expressions related to them, while statistics involves the incorporation of data (i.e., fitting probability distributions to observations).  These notes will be covering the former category, understanding the rules behind random variables and how we make statements about them.</p>
+
+<h2 id="random-variables">Random Variables</h2>
+
+<p>The basic building block of probability is the random variable.  If you take a more formal course in probability theory, you will see a much more rigorous definition of a random variable (i.e., random variables as functions), and even some introductory courses describe them from a more formal standpoint (talking about outcome spaces, the axioms of probability, etc).  In this course (because this is just a single lecture, after all), we’re going to eschew all this formality, and present random variables at the level that I believe to be intuitive and useful for data science.  In particular, the main thing you’ll do with probabilities in data science tasks is use some basic properties of probability to manipulate probabilistic expressions, and describe random variables using some basic well-known distributions.  We’ll talk about both these elements here.</p>
+
+<p>For our purposes, you can think of a random variable as just a variable “whose value is not yet known”.  Rather, each value that the variable may take on has some probability of occuring (yes, this is a circular definition, but we’re presuming you have an intuitive notion of probability at this level).  For example, “Weather” could be a random variable representing the weather that will occur tomorrow, which can take values in {“sunny”, “rainy”, “cloudy”, “snowy”), each with some associated probability</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+p(\mbox{Weather} = \mbox{sunny}) & = 0.3\\
+p(\mbox{Weather} = \mbox{rainy}) & = 0.2\\
+\vdots
+\end{split} %]]></script>
+
+<p>We’ll need a slightly different notation for continuous random variable, which we’ll discuss later.</p>
+
+<h3 id="notation-for-random-variables">Notation for random variables</h3>
+
+<p>One of the hardest parts about understanding what is meant by certain notation.  And we fully admit that the notation for probability <em>is</em> often quite confusing, and seems somewhat odd at first.  But underlying this are some fairly simple rules, which we will stick to at least for this set of notes.  The potentially annoying aspect is that this notation can and does change when we shift back to talk about machine learning, for example (and we will also change the notation back to be what is common in those areas), but hopefully at that point you’ll have a sufficient understanding of the topic to understand what is meant in different situations.</p>
+
+<p>In general, we will use captial letters, $X$ to represent random variables.  Or if the random variable is a quantity like weather, we will use the capitalized $\mbox{Weather}$ to denote the random variable.  For a random variable $X$ taking on values, say in $\{1,2,3\}$, the notation</p>
+
+<script type="math/tex; mode=display">p(X)</script>
+
+<p>represent the <em>entire probability distribution</em> of the random variable $X$.  In other words, you should think of $p(X)$ really as representing a function mapping from the different values that $X$ can take on to their associated probabilities.  In Python, you could implement this as a dictionary for instance.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pX</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mf">0.4</span><span class="p">}</span>
+<span class="n">pWeather</span> <span class="o">=</span> <span class="p">{</span><span class="s">"sunny"</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s">"rainy"</span><span class="p">:</span><span class="mf">0.2</span><span class="p">,</span> <span class="s">"cloudy"</span><span class="p">:</span><span class="mf">0.4</span><span class="p">,</span> <span class="s">"snowy"</span><span class="p">:</span><span class="mf">0.1</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>This notation $p(X)$ is somewhat unfortunate, because $p(X)$ does not really represented a function <em>of</em> $X$, but an entire function mapping values that $X$ takes on to positive numbers (which need to sum to one).  Yet we also won’t use notation like $p(X)(1)$ either, but instead using something like $p(X=1)$, so this seems a bit ambiguous.  A better notation would be something like $p_X$, but this is less common, so we’ll stick to the usual $p(X)$, as long as you understand that this really refers to the entire distribution.</p>
+
+<p>If we <em>do</em> want to refer to a specific value that $X$ takes on, we’ll use the lowercase $x$, i.e., in the above case to represent one of the values that $X$ takes on, $x \in \{1,2,3\}$.  When then use the notation</p>
+
+<script type="math/tex; mode=display">p(X=x) \;\; \mbox{or just} \;\; p(x)</script>
+
+<p>to represent the probability (i.e., the numerical value) of that particular probability.  Again in code, this would look something like the following.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pX</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">pWeather</span><span class="p">[</span><span class="s">"sunny"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="joint-distributions-and-factors">Joint distributions and factors</h3>
+
+<p>Given two random variables $X_1$ (taking values in $\{1,2,3\}$) and $X_2$ (taking values in $\{1,2\}$), their <em>joint distribution</em>, written $p(X_1,X_2)$ is a probability distribution mapping all possible values that both variables can take on to the respective probability.  For example, again in Python:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pX1X2</span> <span class="o">=</span> <span class="p">{(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span> <span class="mf">0.3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span><span class="mf">0.1</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span><span class="mf">0.05</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span> <span class="mf">0.25</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span><span class="mf">0.15</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span><span class="mf">0.15</span><span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pX1X2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+{(1, 1): 0.3, (1, 2): 0.1, (2, 1): 0.05, (2, 2): 0.25, (3, 1): 0.15, (3, 2): 0.15}
+
+</pre>
+
+<p>Then as above, $p(x_1, x_2)$ would represent a <em>number</em> corresponding to a single entry in this distribution (the probability that $X_1 = x_1$ and $X_2 = x_2$).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pX1X2</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<p>Where this gets a bit tricky in when we <em>combine</em> both types of expressions.  For example $p(X_1,x_2)$ would correspond to the entries in the above probability take for <em>all</em> values of $X_2$, but only for a particular value of $X_2$.  In other words, it would be a function mapping from values in $X_1$ to real numbers.  In Python, this would essentially reduce to creating a new dictionary over all values of $X_1$, for a particular assignment to $x_2$.  Importantly, however, $p(X_1, x_2)$ is <em>not</em> a true probability distribution over $X_1$, because the values do not sum to one.  Instead, these terms are generally referred to as <em>factors</em>, which you can think of like probability distributions (mappings from variables assignments to values), except that their entries need not sum to one.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fX1</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">pX1X2</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">fX1</span>
+</code></pre></div></div>
+
+<p>As a more concrete example, let’s consider two random variables: $\mbox{Weather}$ (the weather tomorrow, for now taking values in $\{\mbox{sunny}, \mbox{rainy}, \mbox{cloudy}\}$ ) and $\mbox{Cavity}$ (whether or not I have a cavity, taking values in $\{\mbox{yes}, \mbox{no}$); there are some old adages about people being able to predict the weather from pain in their teeth, so maybe there is some relation between these variables.  Let’s first look at the complete joint distribution:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+p(\mbox{Weather}, \mbox{Cavity}) = \left \{
+\begin{array}{llr}
+\mbox{sunny} & \mbox{yes} & 0.07 \\
+\mbox{sunny} & \mbox{no} & 0.63 \\
+\mbox{rainy} & \mbox{yes} & 0.02 \\
+\mbox{rainy} & \mbox{no} & 0.18 \\
+\mbox{cloudy} & \mbox{yes} & 0.01 \\
+\mbox{cloudy} & \mbox{no} & 0.09
+\end{array} \right . %]]></script>
+
+<p>If we want to refer to a single entry, we just have</p>
+
+<script type="math/tex; mode=display">p(\mbox{Weather} = \mbox{sunny}, \mbox{Cavity} = \mbox{yes}) = 0.07.</script>
+
+<p>Or if we want to look at a partial factor</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+p(\mbox{Weather}, \mbox{Cavity} = \mbox{yes}) = \left \{
+\begin{array}{lr}
+\mbox{sunny} & 0.07 \\
+\mbox{rainy} & 0.02 \\
+\mbox{cloudy} & 0.01 \\
+\end{array} \right . %]]></script>
+
+<p>Again as Python code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pWeatherCavity</span> <span class="o">=</span> <span class="p">{(</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"yes"</span><span class="p">):</span><span class="mf">0.07</span><span class="p">,</span>
+                  <span class="p">(</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"no"</span><span class="p">):</span><span class="mf">0.63</span><span class="p">,</span>
+                  <span class="p">(</span><span class="s">"rainy"</span><span class="p">,</span> <span class="s">"yes"</span><span class="p">):</span><span class="mf">0.02</span><span class="p">,</span>
+                  <span class="p">(</span><span class="s">"rainy"</span><span class="p">,</span> <span class="s">"no"</span><span class="p">):</span><span class="mf">0.18</span><span class="p">,</span>
+                  <span class="p">(</span><span class="s">"cloudy"</span><span class="p">,</span> <span class="s">"yes"</span><span class="p">):</span><span class="mf">0.01</span><span class="p">,</span>
+                  <span class="p">(</span><span class="s">"cloudy"</span><span class="p">,</span> <span class="s">"no"</span><span class="p">):</span><span class="mf">0.09</span><span class="p">}</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="p">[(</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"yes"</span><span class="p">)])</span>
+<span class="n">fWeather</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">pWeatherCavity</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">"yes"</span><span class="p">}</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">fWeather</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+{(&#x27;cloudy&#x27;, &#x27;no&#x27;): 0.09,
+ (&#x27;cloudy&#x27;, &#x27;yes&#x27;): 0.01,
+ (&#x27;rainy&#x27;, &#x27;no&#x27;): 0.18,
+ (&#x27;rainy&#x27;, &#x27;yes&#x27;): 0.02,
+ (&#x27;sunny&#x27;, &#x27;no&#x27;): 0.63,
+ (&#x27;sunny&#x27;, &#x27;yes&#x27;): 0.07}
+0.07
+{&#x27;cloudy&#x27;: 0.01, &#x27;rainy&#x27;: 0.02, &#x27;sunny&#x27;: 0.07}
+
+</pre>
+
+<h3 id="probabilityfactor-operations">Probability/factor operations</h3>
+
+<p>The last topic to discuss if we we perform operations on probabilities/factors.  That is, for instance if $X_1$, $X_2$, and $X_3$ are all random variables (for simplicity say they are all binary, so taking values in $\{0,1\}$), then what does the following operation signify</p>
+
+<script type="math/tex; mode=display">p(X_1,X_2)p(X_2,X_3)?</script>
+
+<p>The above product would actually be a <em>new</em> factor over all the variables involved in term (that is, a factor over $X_1,X_2,X_3$) whose values are found by just substituting the values into each expression.  Calling this factor $f$ (we typically won’t name factors, because we don’t need to write them explicitly, and we just do it here to signify the notation)</p>
+
+<script type="math/tex; mode=display">f(X_1 = x_1, X_2 = x_2, X_3 = x_3) = p(X_1 = x_1, X_2 = x_2)p(X_2 = x_2,X_3 = x_3)</script>
+
+<p>This seems confusing initially, but it is actually probably what you had in mind intuitively anyway.  Put another way, $p(X_1,X_2)p(X_2,X_3)$ is a factor where for any set of values $x_1,x_2,x_3$, to compute the value $p(x_1,x_2)p(x_2,x_3)$; and if you want to compute the full underlying factor (the value for all possible assignments of the variables), you just compute this term for all possible assignments to $x_1, x_2, x_3$.</p>
+
+<p>The following code shows how to compute a factor product like this in Python.  We use the <code class="highlighter-rouge">itertools.product</code> call to iterate over all combinations of terms in the factors, multiply together the probability values, but then filter out only those elements where the second key of the first product ($x_2$ in the first probability) equals the first key of the second product ($x_2$ in the second probability).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pX1X2</span> <span class="o">=</span> <span class="p">{(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span><span class="mf">0.1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span><span class="mf">0.2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span><span class="mf">0.3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span><span class="mf">0.4</span><span class="p">}</span>
+<span class="n">pX2X3</span> <span class="o">=</span> <span class="p">{(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span><span class="mf">0.2</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span><span class="mf">0.3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span><span class="mf">0.3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span><span class="mf">0.2</span><span class="p">}</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="p">{(</span><span class="n">k1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">k2</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span><span class="n">v1</span><span class="o">*</span><span class="n">v2</span>
+     <span class="k">for</span> <span class="p">(</span><span class="n">k1</span><span class="p">,</span><span class="n">v1</span><span class="p">),(</span><span class="n">k2</span><span class="p">,</span><span class="n">v2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">pX1X2</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span><span class="n">pX2X3</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+     <span class="k">if</span> <span class="n">k1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">k2</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+{(0, 0, 0): 0.020000000000000004,
+ (0, 0, 1): 0.03,
+ (0, 1, 0): 0.06,
+ (0, 1, 1): 0.04000000000000001,
+ (1, 0, 0): 0.06,
+ (1, 0, 1): 0.09,
+ (1, 1, 0): 0.12,
+ (1, 1, 1): 0.08000000000000002}
+
+</pre>
+
+<h3 id="aside-a-generic-python-implementation">(Aside) A generic Python implementation</h3>
+
+<p>The above notation (directly representing probability distributions as dictionaries), gets somewhat cumbersome.  When we wanted to multiply two distributions, we needed to manually remember which variable corresponded to which key in each factor.  Fortunately, we can pretty easily build a class that automates all of this, explicitly storing both the variables and their values as a complete Python dictionary.  Note that without some very heavy optimization, I would not recommend using this class directly, because it always represents factors explicitly in terms of all of their full joint distribution, but as an illustrative tool, it can be useful.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">operator</span>
+
+<span class="k">class</span> <span class="nc">Factor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factors</span> <span class="o">=</span> <span class="p">{(</span><span class="n">k</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">k</span><span class="p">,)):</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="p">{</span><span class="n">var</span><span class="p">:</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])}</span>
+    
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">var</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">var</span><span class="p">]</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_vars</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">}</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">new_vars</span><span class="p">,</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">new_vars</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+            <span class="k">return</span> <span class="n">Factor</span><span class="p">(</span><span class="o">*</span><span class="n">new_vars</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="p">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span><span class="bp">self</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">})</span>
+    
+    <span class="k">def</span> <span class="nf">op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Factor</span><span class="p">):</span>
+            <span class="n">new_vars</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span> <span class="o">**</span><span class="n">f</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">new_vars</span><span class="p">,</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">new_vars</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+            <span class="k">return</span> <span class="n">Factor</span><span class="p">(</span><span class="o">*</span><span class="n">new_vars</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="p">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span><span class="n">op</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="o">**</span><span class="n">k</span><span class="p">),</span><span class="n">f</span><span class="p">(</span><span class="o">**</span><span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Factor</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">op</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+    
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s">"Factor("</span> <span class="o">+</span> <span class="s">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="s">") = {</span><span class="se">\n</span><span class="s">"</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">factors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s">"  "</span> 
+            <span class="n">string</span> <span class="o">+=</span> <span class="s">", "</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">"{} = {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">k</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)])</span> 
+            <span class="n">string</span> <span class="o">+=</span> <span class="s">": {}</span><span class="se">\n</span><span class="s">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">+=</span> <span class="s">"}"</span>
+        <span class="k">return</span> <span class="n">string</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__str__</span><span class="p">()</span>
+    
+    <span class="k">def</span> <span class="nf">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">truediv</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+
+    
+</code></pre></div></div>
+
+<p>You’re welcome to go through the code in detail (there isn’t much of it), but it’s also a bit dense and it isn’t important that you understand the detail here so much as you understand how to use it.</p>
+
+<p>Let’s use this code to set up the example we saw previously.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pWeatherCavity</span> <span class="o">=</span> <span class="n">Factor</span><span class="p">(</span><span class="s">"Weather"</span><span class="p">,</span> <span class="s">"Cavity"</span><span class="p">,</span> <span class="p">{(</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"yes"</span><span class="p">):</span><span class="mf">0.07</span><span class="p">,</span>
+                                              <span class="p">(</span><span class="s">"sunny"</span><span class="p">,</span> <span class="s">"no"</span><span class="p">):</span><span class="mf">0.63</span><span class="p">,</span>
+                                              <span class="p">(</span><span class="s">"rainy"</span><span class="p">,</span> <span class="s">"yes"</span><span class="p">):</span><span class="mf">0.02</span><span class="p">,</span>
+                                              <span class="p">(</span><span class="s">"rainy"</span><span class="p">,</span> <span class="s">"no"</span><span class="p">):</span><span class="mf">0.18</span><span class="p">,</span>
+                                              <span class="p">(</span><span class="s">"cloudy"</span><span class="p">,</span> <span class="s">"yes"</span><span class="p">):</span><span class="mf">0.01</span><span class="p">,</span>
+                                              <span class="p">(</span><span class="s">"cloudy"</span><span class="p">,</span> <span class="s">"no"</span><span class="p">):</span><span class="mf">0.09</span><span class="p">})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+Factor(Weather, Cavity) = {
+  Weather = sunny, Cavity = yes: 0.07
+  Weather = sunny, Cavity = no: 0.63
+  Weather = rainy, Cavity = yes: 0.02
+  Weather = rainy, Cavity = no: 0.18
+  Weather = cloudy, Cavity = yes: 0.01
+  Weather = cloudy, Cavity = no: 0.09
+}
+
+</pre>
+
+<p>The <code class="highlighter-rouge">p.variables</code> attribute is a dictionary that maps variables to all their possible values.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+{&#x27;Weather&#x27;: (&#x27;rainy&#x27;, &#x27;sunny&#x27;, &#x27;cloudy&#x27;), &#x27;Cavity&#x27;: (&#x27;yes&#x27;, &#x27;no&#x27;)}
+
+</pre>
+
+<p>And the <code class="highlighter-rouge">p.factors</code> is the actual dictionary of factors, that we entered above.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="o">.</span><span class="n">factors</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+{(&#x27;cloudy&#x27;, &#x27;no&#x27;): 0.09,
+ (&#x27;cloudy&#x27;, &#x27;yes&#x27;): 0.01,
+ (&#x27;rainy&#x27;, &#x27;no&#x27;): 0.18,
+ (&#x27;rainy&#x27;, &#x27;yes&#x27;): 0.02,
+ (&#x27;sunny&#x27;, &#x27;no&#x27;): 0.63,
+ (&#x27;sunny&#x27;, &#x27;yes&#x27;): 0.07}
+
+</pre>
+
+<p>We can specify variable settings by calling the factor with keyword argument.  If we specify all the variables, then we return the number in the factor.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pWeatherCavity</span><span class="p">(</span><span class="n">Weather</span><span class="o">=</span><span class="s">"rainy"</span><span class="p">,</span> <span class="n">Cavity</span><span class="o">=</span><span class="s">"yes"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>If we specify only some of the variables, then we return a factor over the remaining variables.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pWeatherCavity</span><span class="p">(</span><span class="n">Cavity</span><span class="o">=</span><span class="s">"yes"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Finally, we can perform factor operations like multiplication just by multiplying the associated factors.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pCavityDentist</span> <span class="o">=</span> <span class="n">Factor</span><span class="p">(</span><span class="s">"Cavity"</span><span class="p">,</span> <span class="s">"Dentist"</span><span class="p">,</span> <span class="p">{(</span><span class="s">"yes"</span><span class="p">,</span> <span class="s">"yes"</span><span class="p">):</span><span class="mf">0.099</span><span class="p">,</span> 
+                                              <span class="p">(</span><span class="s">"yes"</span><span class="p">,</span><span class="s">"no"</span><span class="p">):</span><span class="mf">0.001</span><span class="p">,</span> 
+                                              <span class="p">(</span><span class="s">"no"</span><span class="p">,</span><span class="s">"yes"</span><span class="p">):</span><span class="mf">0.8</span><span class="p">,</span> 
+                                              <span class="p">(</span><span class="s">"no"</span><span class="p">,</span><span class="s">"no"</span><span class="p">):</span><span class="mf">0.1</span><span class="p">})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pCavityDentist</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="o">*</span><span class="n">pCavityDentist</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+Factor(Cavity, Dentist) = {
+  Cavity = yes, Dentist = yes: 0.099
+  Cavity = yes, Dentist = no: 0.001
+  Cavity = no, Dentist = yes: 0.8
+  Cavity = no, Dentist = no: 0.1
+}
+Factor(Weather, Cavity, Dentist) = {
+  Weather = cloudy, Cavity = yes, Dentist = yes: 0.00099
+  Weather = cloudy, Cavity = yes, Dentist = no: 1e-05
+  Weather = cloudy, Cavity = no, Dentist = yes: 0.072
+  Weather = cloudy, Cavity = no, Dentist = no: 0.009
+  Weather = rainy, Cavity = yes, Dentist = yes: 0.00198
+  Weather = rainy, Cavity = yes, Dentist = no: 2e-05
+  Weather = rainy, Cavity = no, Dentist = yes: 0.144
+  Weather = rainy, Cavity = no, Dentist = no: 0.018
+  Weather = sunny, Cavity = yes, Dentist = yes: 0.006930000000000001
+  Weather = sunny, Cavity = yes, Dentist = no: 7.000000000000001e-05
+  Weather = sunny, Cavity = no, Dentist = yes: 0.504
+  Weather = sunny, Cavity = no, Dentist = no: 0.063
+}
+
+</pre>
+
+<p>We’ll use this code to illustrate some of the basic concepts in probability, and hopefully it makes some of the formula more concrete in practice.  However, if it ultimately adds more confusion than it helps, then don’t worry about how to use this, and instead just focus on the underlying concepts.</p>
+
+<h2 id="basics-properties-of-probability">Basics properties of probability</h2>
+
+<p>Rather than try to explain probability from first principles (which is not that difficult, but which is not necessarily that useful in pracie), these notes will focus on the typical defintions/operations that are most useful in actually manipulating probabilities.</p>
+
+<h3 id="marginalization">Marginalization</h3>
+
+<p>For random variables $X_1$, $X_2$ with joint distribution $p(X_1,X_2)$, we can obtain the distribution over one of these random variables, $p(X_1)$ or $p(X_2)$, sometimes called the <em>marginal distribution</em>, by summing over the remaining variable.</p>
+
+<script type="math/tex; mode=display">p(X_1) = \sum_{x_2} p(X_1,x_2)</script>
+
+<p>Note that the notation $\sum_{x_2}$ (with lower case $x_2$ here means that we sum over all the actual values that the random variable $X_2$ takes on).</p>
+
+<p>We can generalize this to the joint distribution over many variables $p(X_1, \ldots, X_n)$.</p>
+
+<script type="math/tex; mode=display">p(X_1, \ldots, X_i) = \sum_{x_{i+1}, \ldots, x_n} P(X_1,\ldots,X_i, x_{i+1}, \ldots, x_n)</script>
+
+<p>Finally, in order to be a proper probaiblity (instead of just an arbitrary factor), the sum over all the variables must equal one.</p>
+
+<script type="math/tex; mode=display">\sum_{x_{1}, \ldots, x_n} P(x_1, \ldots, x_n) = 1.</script>
+
+<p>Let’s see how this works with our Factor class.  If we wanted to computer $p(\mathrm{Cavity})$ from our first factor (question to think about: does this have to be the same as for the second factor? what happens if these two probabilities are different?), we can sum over all values of the $\mathrm{Weather}$ variables.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pCavity</span> <span class="o">=</span> <span class="n">pWeatherCavity</span><span class="p">(</span><span class="n">Weather</span> <span class="o">=</span> <span class="s">"sunny"</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span><span class="p">(</span><span class="n">Weather</span><span class="o">=</span><span class="s">"cloudy"</span><span class="p">)</span> <span class="o">+</span> <span class="n">p</span><span class="p">(</span><span class="n">Weather</span><span class="o">=</span><span class="s">"rainy"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pCavity</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+Factor(Cavity) = {
+  Cavity = yes: 0.1
+  Cavity = no: 0.8999999999999999
+}
+
+</pre>
+
+<p>More generally, we can easily definite a <code class="highlighter-rouge">marginalize</code> function that sums over some of the variables in a factor.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">marginalize</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">variables</span><span class="p">):</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">variables</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">])]</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">(</span><span class="o">**</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">)</span>
+    
+<span class="k">print</span><span class="p">(</span><span class="n">marginalize</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="p">,</span> <span class="s">"Weather"</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">marginalize</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="p">,</span> <span class="s">"Cavity"</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">marginalize</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="p">,</span> <span class="s">"Weather"</span><span class="p">,</span> <span class="s">"Cavity"</span><span class="p">))</span>
+</code></pre></div></div>
+
+<pre>
+Factor(Cavity) = {
+  Cavity = yes: 0.1
+  Cavity = no: 0.9
+}
+Factor(Weather) = {
+  Weather = cloudy: 0.09999999999999999
+  Weather = rainy: 0.19999999999999998
+  Weather = sunny: 0.7
+}
+1.0
+
+</pre>
+
+<h3 id="conditional-probability">Conditional probability</h3>
+
+<p>Given two random variables $X_1,X_2$, the <em>conditional</em> probability of $X_1$ given $X_2$ is defined as</p>
+
+<script type="math/tex; mode=display">p(X_1 \mid X_2) = \frac{p(X_1,X_2)}{p(X_2)}.</script>
+
+<p>This can also be rearranged to give a definition of the joint distribution in terms of the conditional distribution.</p>
+
+<script type="math/tex; mode=display">p(X_1,X_2) = p(X_1 \mid X_2) p(X_2)</script>
+
+<p>or written in terms of the opposite order</p>
+
+<script type="math/tex; mode=display">p(X_1,X_2) = p(X_2 \mid X_1) p(X_1),</script>
+
+<p>(we will shortly use this equivalence to derive Bayes’ rule).  By applying this property repeatedly, we can also derive a characterization of the joint distribution for any number of random variables $X_1,\ldots,X_n$, referred to as the <em>chain rule</em></p>
+
+<script type="math/tex; mode=display">p(X_1,\ldots,X_n) = \prod_{i=1}^n p(X_i \mid X_1,\ldots,X_{i-1})</script>
+
+<p>This charaterization also gives another way of writing the marginalization formula, which can be useful in some situations</p>
+
+<script type="math/tex; mode=display">p(X_1) = \sum_{x_2} p(X_1 \mid x_2) p(x_2).</script>
+
+<p>Let’s again see how this works with our class.  If we want to use this method to compute the probability of “Dentist” (presumably a random variable indicating whether we go to the dentist), we can use the following formula.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pCavity</span> <span class="o">=</span> <span class="n">marginalize</span><span class="p">(</span><span class="n">pCavityDentist</span><span class="p">,</span> <span class="s">"Dentist"</span><span class="p">)</span>
+<span class="n">pDentistGivenCavity</span> <span class="o">=</span> <span class="n">pCavityDentist</span><span class="o">/</span><span class="n">pCavity</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pDentistGivenCavity</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+Factor(Cavity, Dentist) = {
+  Cavity = yes, Dentist = yes: 0.99
+  Cavity = yes, Dentist = no: 0.01
+  Cavity = no, Dentist = yes: 0.888888888888889
+  Cavity = no, Dentist = no: 0.11111111111111112
+}
+
+</pre>
+
+<p>In other words, the probabilty of going to the dentist given that you have a cavity is 0.9, and the probability of going to the dentist if you don’t have a cavity is 8/9.  It’s important to note here that <code class="highlighter-rouge">pDentistGivenCavity</code> here is represented as as factor, but it is <em>not</em> a joint probability distribution.  To get a distribution, you need to condition on one of the actual settings of the variables we are conditioning on (i.e., in this case, the “Cavity”) variable.  So for example, the following would of course be a distribution.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pDentistGivenCavity</span><span class="p">(</span><span class="n">Cavity</span><span class="o">=</span><span class="s">"yes"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="bayes-rule">Bayes’ rule</h2>
+
+<p>Bayes’ rule has a special place in probability and machine learning, but fundamentally it is just a simple application of the two rules of probability described above  Fundamentally, it provides a way to express the conditional distribution $p(X_1 \mid X_2)$ in terms of the opposite conditional $p(X_2 \mid X_1)$ and the marginal probability (in this context, often called the <em>prior probability</em>) $p(X_1)$.  Specifically, Bayes’ rule is given by</p>
+
+<script type="math/tex; mode=display">p(X_1 \mid X_2) = \frac{p(X_2 \mid X_1)p(X_1)}{\sum_{x_1} p(X_2 \mid x_1)p(x_1)}</script>
+
+<p>which just follows trivially from the above definitions of conditional probability and marginalization</p>
+
+<script type="math/tex; mode=display">p(X_1 \mid X_2) = \frac{p(X_1,X_2)}{p(X_2)} = \frac{p(X_2 \mid X_1)p(X_1)}{\sum_{x_1} p(X_2 \mid x_1)p(x_1)}.</script>
+
+<p>The rule is particularly useful when probability are given in terms of the quantities on the right hand side, but <em>not</em> the left hand side.  A very common example is something like the following:</p>
+
+<blockquote>
+  <p>I want to know if I have come with with a rate strain of flu (occurring in only 1/10,000 people).  There is an “accurate” test for the flu (if I have the flu, it will tell me I have 99% of the time, and if I do not have it, it will tell me I do not have it 99% of the time).  I go to the doctor and test positive.  What is the probability I have the this flu?</p>
+</blockquote>
+
+<p>Most people (and quite unsettlingly, apparently <a href="http://www.bbc.com/news/magazine-28166019">most doctors</a>) tend to see this and guess that the probability of having the flu would be high here, probably approximately the 99% accuracy of the test.  But this is not the case.  To see this, let’s specify the terms here in terms of random variables.  Let $\mathrm{Flu}$ be the random variable associated with whether I have the flu, and let $\mathrm{Test}$ be the random variable associated with whether I test positive (both are binary variables).  What we would like to know is the quantity</p>
+
+<script type="math/tex; mode=display">p(\mathrm{Flu} = 1 \mid \mathrm{Test} = 1).</script>
+
+<p>But we aren’t given this quantity directly.  Reading off the probabilities from the text example, we instead know that</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+p(\mathrm{Flu} = 1) & = 0.0001 \\
+p(\mathrm{Test} = 1 \mid \mathrm{Flu} = 1) & = 0.99 \\
+p(\mathrm{Test} = 0 \mid \mathrm{Flu} = 0) & = 0.99
+\end{split} %]]></script>
+
+<p>and since the probabilities are all binary here, this also implies that</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+p(\mathrm{Flu} = 0) & = 1 - p(\mathrm{Flu} = 1) = 0.9999 \\
+p(\mathrm{Test} = 0 \mid \mathrm{Flu} = 1) & = 1 - p(\mathrm{Test} = 1 \mid \mathrm{Flu} = 1) = 0.01 \\
+p(\mathrm{Test} = 1 \mid \mathrm{Flu} = 0) & = 1 - p(\mathrm{Test} = 0 \mid \mathrm{Flu} = 0) = 0.01.
+\end{split} %]]></script>
+
+<p>Now let’s apply Bayes’ rule to compute the term $p(\mathrm{Flu} = \mathrm{true} \mid \mathrm{Test} = \mathrm{positive})$.  We know that</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+p(\mathrm{Flu} = 1 \mid \mathrm{Test} = 1) & =
+\frac{p(\mathrm{Test} = 1 \mid \mathrm{Flu} = 1) p(\mathrm{Flu} = 1)}
+{p(\mathrm{Test} = 1 \mid \mathrm{Flu} = 1) p(\mathrm{Flu} = 1) + p(\mathrm{Test} = 1 \mid \mathrm{Flu} = 0) p(\mathrm{Flu} = 0)} \\
+& = \frac{0.99 \cdot 0.0001}{0.99 \cdot 0.0001 + 0.01 \cdot 0.9999} \approx 0.0098
+\end{split} %]]></script>
+
+<p>So I actually have less than a 1% chance of having the flu.  What is happening here?  The “intuitive” explanation here is that even though the test is “accurate”, because the prior probability of having the flu is so small, chances are that if I test positive, I’m actually one of the false positives, not an actual case of the flu.  For example, imagine there are 10000 total people (so say that one actually has the flu, and suppose just treat “expectations” loosely, that this person even tests positive).  So one person who tests positive does have the flu.  But of the remaining 9999 people, about 100 of them will <em>also</em> test positive for the flu, because there is a 1% chance of this happening to any given person.  So the chances that you are in this false positive group is much higher than being the one person who actually has the flu.</p>
+
+<p>Incidentally, this is why it’s generally a bad idea to test <em>everyone</em> for extremely rare dieseases (assuming the tests have any false positives, which is usually the case), unless there is good symptomatic evidence to suspect you have have the disease (not that if we only test people who are sympomatic of the flu mentioned above, this would be a much smaller population, so a much higher prior probability of the flu, and the resulting probabilities would look very different).  It’s also worth considering the relative costs of a false positive (probably more detailed test, or unnecessary treatment) balanced with the cost of failing to diagnose the diesease.  These tradeoffs are clearly very important in medicine, which is why it’s always particularly jarring to see articles like the above where doctors make these simple mistakes (though in fairness, I wouldn’t necesarily put <em>too</em> much weight on simple surveys like that mentioned in the above article:  often the real context under which doctors make these decions, for instance running a test only if the person is actually symptomatic, violates the precise phrasing of the question, but may have been what the doctors had in mind).</p>
+
+<p>Let’s finally see how we can write this rule using our Factor class (which incidentally will also give us all the other probabilities associated with our events, such as the probaiblity that you have the flue given that you test negative).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pFlu</span> <span class="o">=</span> <span class="n">Factor</span><span class="p">(</span><span class="s">"Flu"</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mf">0.9999</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mf">0.0001</span><span class="p">})</span>
+<span class="n">pTestGivenFlu</span> <span class="o">=</span> <span class="n">Factor</span><span class="p">(</span><span class="s">"Test"</span><span class="p">,</span> <span class="s">"Flu"</span><span class="p">,</span> <span class="p">{(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span> <span class="mf">0.99</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span><span class="mf">0.01</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span><span class="mf">0.01</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span><span class="mf">0.99</span><span class="p">})</span>
+
+<span class="n">pFluGivenTest</span> <span class="o">=</span> <span class="p">(</span><span class="n">pTestGivenFlu</span> <span class="o">*</span> <span class="n">pFlu</span><span class="p">)</span> <span class="o">/</span> <span class="n">marginalize</span><span class="p">(</span><span class="n">pTestGivenFlu</span> <span class="o">*</span> <span class="n">pFlu</span><span class="p">,</span> <span class="s">"Flu"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pFluGivenTest</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+Factor(Test, Flu) = {
+  Test = 0, Flu = 0: 0.9999989897989902
+  Test = 0, Flu = 1: 1.0102010097969295e-06
+  Test = 1, Flu = 0: 0.9901960784313726
+  Test = 1, Flu = 1: 0.00980392156862745
+}
+
+</pre>
+
+<p>So we see our same conditional probability of less than a 1% chance we have the flu given that we test positive.  But although this is small, it is at least substantially higher than the probability we have the flu given that we test negative.</p>
+
+<h3 id="independence">Independence</h3>
+
+<p>The next topic we’ll discuss here, which will be even more important later in the course when we discuss probabilistic models, is the notion of independence.</p>
+
+<p><strong>Marginal independence</strong> Two variables $X_1$ and $X_2$ are marginally independent (often also just called independent) if their joint distribution is the product of their marginal distributions</p>
+
+<script type="math/tex; mode=display">p(X_1,X_2) = p(X_1)p(X_2)</script>
+
+<p>An equivalent condition, which can easily be derived from the above, is that two variables are independent if</p>
+
+<script type="math/tex; mode=display">p(X_1 \mid X_2) = p(X_1)</script>
+
+<p>To see the equivalence here note that</p>
+
+<script type="math/tex; mode=display">p(X_1 \mid X_2) = \frac{p(X_1,X_2)}{p(X_2)} = \frac{p(X_1)p(X_2)}{p(X_2)} = p(X_1)</script>
+
+<p>where the middle equality holds by our assumption on independence.  Note that this also equivalently implies the opposite direction as well, that</p>
+
+<script type="math/tex; mode=display">p(X_2 \mid X_1) = p(X_2).</script>
+
+<p>This second definition is often the more intuitive way to think about independence.  The basic reasoning to keep in mind is this: if I know the value of $X_2$, does this change my distribution over $X_1$ (i.e., “help me predict $X_1$ better”)?  If so, then the variables are not independent.  If not, then they are.</p>
+
+<p>In code, let’s see if our Weather and Cavity variables above are indpendent.  We can do this “both ways” we described above, first checking if the joint distribution is equal to the product of the marginals.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pWeather</span> <span class="o">=</span> <span class="n">marginalize</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="p">,</span> <span class="s">"Cavity"</span><span class="p">)</span>
+<span class="n">pCavity</span> <span class="o">=</span> <span class="n">marginalize</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="p">,</span> <span class="s">"Weather"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pWeatherCavity</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pWeather</span><span class="o">*</span><span class="n">pCavity</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+Factor(Weather, Cavity) = {
+  Weather = sunny, Cavity = yes: 0.07
+  Weather = sunny, Cavity = no: 0.63
+  Weather = rainy, Cavity = yes: 0.02
+  Weather = rainy, Cavity = no: 0.18
+  Weather = cloudy, Cavity = yes: 0.01
+  Weather = cloudy, Cavity = no: 0.09
+}
+Factor(Weather, Cavity) = {
+  Weather = cloudy, Cavity = yes: 0.01
+  Weather = cloudy, Cavity = no: 0.09
+  Weather = rainy, Cavity = yes: 0.02
+  Weather = rainy, Cavity = no: 0.18
+  Weather = sunny, Cavity = yes: 0.06999999999999999
+  Weather = sunny, Cavity = no: 0.63
+}
+
+</pre>
+
+<p>These are the same distributions (modulo numerical precision), perhaps easiest to see by looking at the factor difference (since the ordering is arbitrary):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">pWeatherCavity</span> <span class="o">-</span> <span class="n">pWeather</span><span class="o">*</span><span class="n">pCavity</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+Factor(Weather, Cavity) = {
+  Weather = cloudy, Cavity = yes: 0.0
+  Weather = cloudy, Cavity = no: 0.0
+  Weather = rainy, Cavity = yes: 0.0
+  Weather = rainy, Cavity = no: 0.0
+  Weather = sunny, Cavity = yes: 1.3877787807814457e-17
+  Weather = sunny, Cavity = no: 0.0
+}
+
+</pre>
+
+<p>Alternatively, we have also computed $p(\mathrm{Weather} \mid \mathrm{Cavity})$, and we can use this to check if the variables are independent.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pWeatherGivenCavity</span> <span class="o">=</span> <span class="n">pWeatherCavity</span> <span class="o">/</span> <span class="n">pCavity</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pWeatherGivenCavity</span><span class="p">(</span><span class="n">Cavity</span><span class="o">=</span><span class="s">"yes"</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pWeatherGivenCavity</span><span class="p">(</span><span class="n">Cavity</span><span class="o">=</span><span class="s">"no"</span><span class="p">))</span>
+</code></pre></div></div>
+
+<pre>
+Factor(Weather) = {
+  Weather = cloudy: 0.09999999999999999
+  Weather = rainy: 0.19999999999999998
+  Weather = sunny: 0.7000000000000001
+}
+Factor(Weather) = {
+  Weather = cloudy: 0.09999999999999999
+  Weather = rainy: 0.19999999999999998
+  Weather = sunny: 0.7
+}
+
+</pre>
+
+<p>These are the same distribution, again, so we can again conclude that Weather and Cavity are indpendent.  On the other and, let’s look at the Cavity and Dentist distribution.  We computed some of these terms already, but let’s look again here.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pCavity</span> <span class="o">=</span> <span class="n">marginalize</span><span class="p">(</span><span class="n">pCavityDentist</span><span class="p">,</span> <span class="s">"Dentist"</span><span class="p">)</span>
+<span class="n">pDentist</span> <span class="o">=</span> <span class="n">marginalize</span><span class="p">(</span><span class="n">pCavityDentist</span><span class="p">,</span> <span class="s">"Cavity"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pCavityDentist</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pCavity</span><span class="o">*</span><span class="n">pDentist</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+Factor(Cavity, Dentist) = {
+  Cavity = yes, Dentist = yes: 0.099
+  Cavity = yes, Dentist = no: 0.001
+  Cavity = no, Dentist = yes: 0.8
+  Cavity = no, Dentist = no: 0.1
+}
+Factor(Cavity, Dentist) = {
+  Cavity = yes, Dentist = yes: 0.08990000000000001
+  Cavity = yes, Dentist = no: 0.010100000000000001
+  Cavity = no, Dentist = yes: 0.8091
+  Cavity = no, Dentist = no: 0.09090000000000001
+}
+
+</pre>
+
+<p>These are not not the same, meaning the variables are not indpendent.</p>
+
+<p><strong>Conditional independence</strong>  Two variables $X_1$, and $X_2$ are <em>conditionally independent</em> given $X_3$ if</p>
+
+<script type="math/tex; mode=display">p(X_1,X_2 \mid X_3) = p(X_1 \mid X_3) p(X_2 \mid X_3)</script>
+
+<p>or equivalently, if</p>
+
+<script type="math/tex; mode=display">p(X_1 \mid X_2,X_3) = \frac{p(X_1,X_2 \mid X_3)}{p(X_2 \mid X_3)} = \frac{p(X_1 \mid X_3) p(X_2 \mid X_3)}{p(X_2 \mid X_3)} = p(X_1 \mid X_3).</script>
+
+<p>Just like with normal independence, the second formulation is often the more intuitive one.  The intuition of this definition is: if I know $X_3$, does also knowing $X_2$ given me any additional information about $X_1$?  If so, $X_1$ and $X_2$ are not conditionally indpendent given $X_3$, and if not, then they are.</p>
+
+<p>Rather than illustrate this again with code (which would look largely like the example above, just with all the factors being conditional distributions on some third variable), we want to instead emphasize this notions of independence on a more intuitive level, and emphasize the most important aspect to keep in mind:</p>
+
+<p><strong>Marginal independence does not imply conditional independence, and conditional independence does not imply marginal independence.</strong></p>
+
+<p>It is <em>very</em> important to keep this fact in mind, as I have seen many people try to manipulate probabilities relying on a (completely false) implication in one direction or the other.</p>
+
+<p>To illustrate this point, I’m going to use a common diagram from courses on probabilistic modeling.  The example itself is a bit contrived, of course, but it does serve to illustrate the difference well.  We <em>aren’t</em> going to explicitly assign probabilities to these terms (we could, but again this would just show the expected fact that they are different, and not the real intuition behind it), but instead just describe the “story” of this setting more informally.  Consider the following diagram</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="alarm.svg" alt="" />
+        
+        
+            <p class="image-caption">Illustration of the 'Alarm' probaiblistic scenario.</p>
+        
+    </div>
+
+<p>This is actually a representation of probabilities tha we will see later in class called a Bayesian network, but we won’t worry about this for now.  What this figure represents is a setting where “Earthquake”, “Burglary”, “Alarm”, “JohnCalls” and “MaryCalls” are all random variables.  The setting it describes is one where both an earthquake or a burglary (both of which are very infrequent) trigger an alarm in your house (the alarm is unlikely to go off in the absence of either event); when this alarm goes off, two of your neighbors can hear the alarm and (independently) decide to call you with some probability (they are unlikely to call if the alarm does not go off).</p>
+
+<p>In there are two interesting sets of independnece relations.  We take it as essentially an assumption that the events of a burglary or earthquake are independent: neither one will have any relation on the other, so that for instance</p>
+
+<script type="math/tex; mode=display">p(\mathrm{Earthquake} \mid \mathrm{Burglary}) = p(\mathrm{Earthquake})</script>
+
+<p>However, are Earthquake and Burglary conditionally independent given “Alarm”?  I.e., does knowing about the buglary help us predict the presence or absence of an earthquake given the alarm?
+A bit of thinking about this scenario, this at an intuitive level, should convince you that we probably <em>don’t</em> believe that these two events are conditionally independent, and instead</p>
+
+<script type="math/tex; mode=display">p(\mathrm{Earthquake} \mid \mathrm{Burglary},\mathrm{Alarm}) \neq p(\mathrm{Earthquake} \mid \mathrm{Alarm})</script>
+
+<p>Specifically, if we hear the alarm, then we expect it to be “caused” by either the burglary or the earthquake; thus, hearing the alarm likely raises the probability of both these two events.  But both of these events are quite unlikely, so if we know that the burglary <em>did</em> occur, this probably will “reset” our estimate of whether the earthquake occurred to much lower level.  Thus, in general, we can intuitive see that observing the Burglary variable <em>does</em> change our condition probability, and thus the two events are likely not conditionally independent.</p>
+
+<p>Conversely, the two events of John calling and Mary calling are <em>not</em> marginally independent, i.e.,</p>
+
+<script type="math/tex; mode=display">p(\mathrm{JohnCalls} \mid \mathrm{MaryCalls}) \neq p(\mathrm{JohnCalls}).</script>
+
+<p>This is because these two events are both highly correlated by the presence of the alarm.  If John calls, then the alarm has probably gone off, so there is a good chance that Mary will call too.  However, it is also the case that John calling and Mary calling are <em>conditionally</em> independent given the alarm,</p>
+
+<script type="math/tex; mode=display">p(\mathrm{JohnCalls} \mid \mathrm{MaryCalls}, \mathrm{Alarm}) = p(\mathrm{JohnCalls} \mid \mathrm{Alarm}).</script>
+
+<p>This is essentially immediate from how the problem was stated, that each neighbors may or may not hear the alarm independently, and thus call.  Thus, as this example hopefully illustrates, it is definitely incorrect to assume that marginal independence implies conditional independence or vice versa.</p>
+
+<h3 id="expectations">Expectations</h3>
+
+<p>The expectation of a random variable is defined as the product between the value the random variable takes on and its probability, summed over all the values that the variable can take on</p>
+
+<script type="math/tex; mode=display">\mathbf{E}[X] = \sum_x x \cdot p(x).</script>
+
+<p>We write this term as a function of the upper case random variable $X$ because it naturally depends on all the values of the random variable, but it is important to emphasize that the expectation is a single number rather than a factor, like $p(X)$.</p>
+
+<p>We also need to emphasize that the expectation is <em>only</em> possible when the random variable takes on numeric values.  There is no notion of sum of “rainy” and “cloudy” for instance, and thus it really only makes sense to consider expectations in the context of real-valued random variables.</p>
+
+<p>We can also generalize the concept of expectation to conditional expectation, i.e.</p>
+
+<script type="math/tex; mode=display">\mathbf{E}[X_1 \mid x_2] = \sum_{x_1} x_1 \cdot p(x_1  \mid x_2).</script>
+
+<p>Note that for this to still be a single number $x_2$ must be a particular assignment, not the random variable in general, i.e., $\mathbf{E}[X_1 \mid X_2]$ would actually be a factor over $X_2$.</p>
+
+<p><strong>Properties of expectations</strong>
+One of the most important properties of expectations is the <em>linearity</em>.  For <em>any</em> two random variables $X_1$, $X_2$ (regardless of whether they are dependent or independent), the expectation of their sums is equal to the sum of their expections: $\mathbf{E}[X_1 + X_2] = \mathbf{E}[X_1] + \mathbf{E}[X_2]$.  We’ll actually show an even more general form here, which include scaling $X_1$ and $X_2$ by some arbitrary constants $\alpha, \beta \in \mathbb{R}$.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+\mathbf{E}[\alpha X_1 + \beta X_2] & = \sum_{x_1,x_2} (\alpha x_1 + \beta x_2) p(x_1, x_2) \\
+& = \sum_{x_1,x_2} \alpha x_1 p(x_1, x_2) + \sum_{x_1,x_2} \beta x_2 p(x_1,x_2) \\
+& = \alpha \sum_{x_1} x_1 \sum_{x_2} p(x_1, x_2) + \beta \sum_{x_2} x_2 \sum_{x_1} p(x_1,x_2) \\
+& = \alpha \sum_{x_1} x_1 p(x_1) + \beta \sum_{x_2} x_2 p(x_2) \\
+& = \alpha \mathbf{E}[X_1] + \beta \mathbf{E}[X_2]
+\end{split} %]]></script>
+
+<p>where we used the definition of marginalization between the third and forth lines, and the rest is just simple algebra and definitions.</p>
+
+<p>Additional, the expectation of a product of random variable is equal to the expectation of the product, $\mathbf{E}[X_1X_2] = \mathbf{E}[X_1]\mathbf{E}[X_2]$, <em>only if the two variables are independent</em>.  To see this, note that</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+\mathbf{E}[X_1 X_2] & = \sum_{x_1,x_2} (x_1x_2) p(x_1, x_2) \\
+ & = \sum_{x_1,x_2} (x_1 x_2) p(x_1) p(x_2) \\
+ & = \sum_{x_1} x_1 p(x_1) \sum_{x_2} x_2 p(x_2) \\
+ & = \mathbf{E}[X_1] \mathbf{E}[X_2]
+ \end{split} %]]></script>
+
+<p>where the second line followed from our assumption of independence.  In general, this property does not hold for dependent random variables, and the difference between these two quantities is actually exactly the covariance between the two variables, as we will define shortly.</p>
+
+<p><strong>Implementation</strong> We can implement the expectation computation for our Factor class in a number of ways.  Because we want to be able to compute the expectation of arbitrary functions, one nice way to handle this is through lambda functions.  The following code lets us take expectations with regard to arbitrary functions of the random variable values.  We use the function by passing a lambda function to the expectation function, which computes the actual value we want to take the expectation of.  Here is an example for a random variable representing a die.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">expectation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+    <span class="n">all_args</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">variables</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">factors</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">)</span><span class="o">*</span><span class="n">v</span> <span class="k">for</span> <span class="n">args</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">all_args</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">factors</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+
+<span class="n">pDie</span> <span class="o">=</span> <span class="n">Factor</span><span class="p">(</span><span class="s">"Die"</span><span class="p">,</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">expectation</span><span class="p">(</span><span class="n">pDie</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"Die"</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<pre>
+3.5
+
+</pre>
+
+<p>We ca also take the expectation of terms squared, etc.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">expectation</span><span class="p">(</span><span class="n">pDie</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"Die"</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div></div>
+
+<pre>
+15.166666666666666
+
+</pre>
+
+<p>We can also verify that for two independent random variables the expectation of the product is the product of expectations.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pDie2</span> <span class="o">=</span> <span class="n">Factor</span><span class="p">(</span><span class="s">"Die2"</span><span class="p">,</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">expectation</span><span class="p">(</span><span class="n">pDie</span><span class="o">*</span><span class="n">pDie2</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"Die"</span><span class="p">]</span><span class="o">*</span><span class="n">v</span><span class="p">[</span><span class="s">"Die2"</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">expectation</span><span class="p">(</span><span class="n">pDie</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"Die"</span><span class="p">])</span> <span class="o">*</span> <span class="n">expectation</span><span class="p">(</span><span class="n">pDie2</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"Die2"</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<pre>
+12.250000000000002
+12.25
+
+</pre>
+
+<p>Finally, let’s consider a case of binary (to keep it simple) random variables that are not independent.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pX1X2</span> <span class="o">=</span> <span class="n">Factor</span><span class="p">(</span><span class="s">"X1"</span><span class="p">,</span> <span class="s">"X2"</span><span class="p">,</span> <span class="p">{(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span><span class="mf">0.1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span><span class="mf">0.2</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span><span class="mf">0.3</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span><span class="mf">0.4</span><span class="p">})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">expectation</span><span class="p">(</span><span class="n">pX1X2</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"X1"</span><span class="p">]</span><span class="o">*</span><span class="n">v</span><span class="p">[</span><span class="s">"X2"</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">expectation</span><span class="p">(</span><span class="n">pX1X2</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"X1"</span><span class="p">])</span> <span class="o">*</span> <span class="n">expectation</span><span class="p">(</span><span class="n">pX1X2</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"X2"</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<pre>
+0.4
+0.42000000000000004
+
+</pre>
+
+<h3 id="variance">Variance</h3>
+<p>The variance of a random variable, denoted $\mathbf{Var}[X]$ is the expectation of the squared difference between $X$ and its expectation.  That is somewhat of a mouthful, so it’s perhaps easy just to write mathematically</p>
+
+<script type="math/tex; mode=display">\mathbf{Var}[X] = \mathbf{E}[(X - \mathbf{E}[X])^2]</script>
+
+<p>This is not always the easiest form to work with, so instead we often work with a simpler form of the variance given by the equivalent formula</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+\mathbf{Var}[X] & = \mathbf{E}[(X - \mathbf{E}[X])^2] \\
+& = \mathbf{E}[X^2 - 2 X \mathbf{E}[X] + \mathbf{E}[X]^2]  \\
+& = \mathbf{E}[X^2] - 2\mathbf{E}[X \mathbf{E}[X]] + \mathbf{E}[\mathbf{E}[X]^2] \\
+& = \mathbf{E}[X^2] - 2\mathbf{E}[X] \mathbf{E}[X] + \mathbf{E}[X]^2 \\
+& = \mathbf{E}[X^2] - \mathbf{E}[X]^2
+\end{split} %]]></script>
+
+<p>where the second line just expanded the square term, the third and fourth lines used the linearity of expectation (and the fact that $\mathbf{E}[X]$ inside an expectation is just a constant that doesn’t depend on $X$, so for instance $\mathbf{E}[\mathbf{E}[X]] = \mathbf{E}[X]$, and the fifth line just canceled one of the terms.</p>
+
+<p>We can also generalize this expression to the <em>covariance</em> between two random variables, defined as</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+\mathbf{Cov}[X_1,X_2] & = \mathbf{E}[(X_1 - \mathbf{E}[X_1])(X_2 - \mathbf{E}[X_2])] \\
+& = \mathbf{E}[X_1 X_2] - \mathbf{E}[\mathbf{E}[X_1]X_2] - \mathbf{E}[X_1 \mathbf{E}[X_2]] + \mathbf{E}[\mathbf{E}[X_1]\mathbf{E}[X_2]] \\
+& = \mathbf{E}[X_1 X_2] - \mathbf{E}[X_1]\mathbf{E}[X_2] - \mathbf{E}[X_1] \mathbf{E}[X_2] - \mathbf{E}[X_1]\mathbf{E}[X_2] \\
+& = \mathbf{E}[X_1 X_2] - \mathbf{E}[X_1]\mathbf{E}[X_2]
+\end{split} %]]></script>
+
+<p>Note as mentioned above that this is just the difference between the product of expectations and the expectation of products, so we have from the derivation above that the correlation between independent random variables is always zero.</p>
+
+<p>We can easily implement the variance by simply using our expectation function.  But we can also see manually the equivalence of the formulas we give above.  For instance, consider the variance term for the Die random variable.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">expectation</span><span class="p">(</span><span class="n">pDie</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="s">"Die"</span><span class="p">]</span> <span class="o">-</span> <span class="n">expectation</span><span class="p">(</span><span class="n">pDie</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"Die"</span><span class="p">]))</span> <span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">expectation</span><span class="p">(</span><span class="n">pDie</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"Die"</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">expectation</span><span class="p">(</span><span class="n">pDie</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"Die"</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+2.9166666666666665
+2.916666666666666
+
+</pre>
+
+<p>So we could define a simple function to compute the variance of a random variable (or really, the variance of any quantity).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">variance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">expectation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="o">**</span><span class="n">v</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">expectation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="o">**</span><span class="n">v</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">variance</span><span class="p">(</span><span class="n">pDie</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"Die"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>And finally, the same technique works for the covariance between two random variables.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">covariance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">expectation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">f1</span><span class="p">(</span><span class="o">**</span><span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="n">f2</span><span class="p">(</span><span class="o">**</span><span class="n">v</span><span class="p">))</span> <span class="o">-</span> 
+            <span class="n">expectation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">f1</span><span class="p">(</span><span class="o">**</span><span class="n">v</span><span class="p">))</span><span class="o">*</span><span class="n">expectation</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span> <span class="p">:</span> <span class="n">f2</span><span class="p">(</span><span class="o">**</span><span class="n">v</span><span class="p">)))</span>
+
+<span class="n">covariance</span><span class="p">(</span><span class="n">pX1X2</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"X1"</span><span class="p">],</span> <span class="k">lambda</span> <span class="o">**</span><span class="n">v</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s">"X2"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h3 id="infinite-and-continuous-random-variables">Infinite and continuous random variables</h3>
+
+<p>Finally, although we have largely discussed discrete random variables so far, we handle also consider random variables with a (countably) infinite number of values can it can take on (for instance, random variables that take on positive integer values), plus random variables that take on continuous values.</p>
+
+<p><strong>Infinite random variables</strong>  In the former case, (countably) infinite random variables, there is no even much additional work that needs to be done from a notation perspective.  We have all the same equations as before for conditional probabilities, marginalization, independence, expectations, etc, with the only difference being that the sum over all possible values is an infinite sum.  Of course, to be a probability distribution, we still require that $\sum_{x} p(x) = 1$, so the probabilities have to somehow be limited in a way that respects this constraint.</p>
+
+<p>As an example, the we could consider a probability distribution over the positive integers $x=1,\ldots,\infty$, specified by the probability</p>
+
+<script type="math/tex; mode=display">p(X=x) = \left(\frac{1}{2}\right )^x.</script>
+
+<p>This is a type of distribution known as a geometric distribution, and it’s easy to check that the sum</p>
+
+<script type="math/tex; mode=display">\sum_{x=1}^\infty \left(\frac{1}{2}\right )^x = 1.</script>
+
+<p><strong>Continuous random variables</strong>  When we consider continuous random variables, the situation is slightly more involved.  The formal definitions here begin to involve concepts from real analysis that go well beyond what we will cover in this course, but the basis point is that when we have a distribution over an uncountably infinite set (such as the real numbers, even in a restricted range), there is <em>zero</em> true probability of the random variable ever taking on <em>exactly</em> a particular value (because there are an infinite number of values it could take on, within any range).  The upshot of this (because you shouldn’t worry about the mathematical details here), is that we need to replace the discrete probability with the notion of a <em>probability density function</em> a mapping $p$ from values that the random variable can take on to positive numbers, such that</p>
+
+<script type="math/tex; mode=display">\int p(x)dx = 1.</script>
+
+<p>Essentially, we need to replace all our summations with integrals, because we are not talking about an uncountably infinite set we need to integrate over.</p>
+
+<p>With these definitions, we can compute the (discrete) probability that $x$ lies within some range $[a,b]$, given by</p>
+
+<script type="math/tex; mode=display">p(a \leq X \leq b) = \int_a^b p(x)dx.</script>
+
+<p>Another common function to consider is the so-called <em>cummulative distribution function</em> (CDF) $F$ of the random variable, which gives the probability that $X$ is less than some number $a$,</p>
+
+<script type="math/tex; mode=display">F(a) = p(X \leq a) = \int_{-\infty}^a p(x)dx.</script>
+
+<p>Although these notions are slightly more difficult to grasp at first, the good news is that when it comes to manipulating the probabilistic expressions, there is no real difficulty here, we just replace the expressions involving probabilities with expressions involving probability densities, and the math works out the same.</p>
+
+<h2 id="some-common-distributions">Some common distributions</h2>
+
+<p>We end by briefly mentioning a few of the “common” distributions you may encounter in data science projects.  This is by no means an exhaustive list, but it does represent several common distributions including some we’ll see later in the course.  We’ll also introduce some of the notation that we’ll use in the next lecture to discuss maximum likelihood estimation of distributions.</p>
+
+<h3 id="bernoulli-distribution">Bernoulli distribution</h3>
+
+<p>We have actually already seen the Bernoulli distribution already: it is a distribution over binary random variables: random variables taking on values in $\{0,1\}$, where there is some fixed probability $\phi \in [0,1]$ that the random variable equals 1 (and of course 0 with probability $1-\phi$).  We write this probability as</p>
+
+<script type="math/tex; mode=display">p(X = 1;\phi) = \phi</script>
+
+<p>where the notation $p(X;\phi)$ denotes the fact that all the terms that follow the semicolon are the <em>parameters</em> of the distribution; the term is read as “the probability of $X$ parameterized by $\phi$”.  We will frequently talk about distributions that are parameterized by some number of parameters in this manner, so this notation will be quite common going forward.</p>
+
+<p>We can of course represent Bernoulli random variables as we have already done, using our <code class="highlighter-rouge">Factor</code> class.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">phi</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">pX</span> <span class="o">=</span> <span class="n">Factor</span><span class="p">(</span><span class="s">"X"</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="n">phi</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pX</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+Factor(X) = {
+  X = 0: 0.2
+  X = 1: 0.8
+}
+
+</pre>
+
+<h3 id="categorical-distribution">Categorical distribution</h3>
+
+<p>A categorical distribution is the multivariate generalization of the Bernoulli, a random variable that takes on one of $k$ different values.  For ease of notation we’ll assume that the variable takes on values in $\{1,2,\ldots,k\}$, and that the probability distribution is given by</p>
+
+<script type="math/tex; mode=display">p(X=i;\phi) = \phi_i</script>
+
+<p>where $\phi \in [0,1]^k$ is a $k$-dimensional vector that specifies the probability of each individual item.  For this to be a valid probability distribution we must of course have $\sum_{i=1}^k \phi_k = 1$.  Note that we don’t actually need all $k$ parameters, since we know that $\phi_k = 1-\sum_{i=1}^{k=1}\phi_i$, but it is typically more convenient to refer to all $k$ probabilities in the same manner, at the cost of the additional constraint that the $\phi_i$ terms sum to one.</p>
+
+<p>Recall from before that it doesn’t make sense to talk about the expectation of a true categorical variable in most cases (unless the values have a clear numeric interpretation).  That is, even if we denote the values $1,2,\ldots,k$, if these represent separate categories like “sunny”, “cloudy” “rainy”, then it doesn’t make sense to average them.  If the values <em>do</em> have a potential numerical interpretation, though (such as the die example we considered earlier), then computing an expectation might make sense.</p>
+
+<p>Below we illustrate a generic categorical variables using our Factor class.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">k</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">phi</span><span class="o">/</span><span class="n">phi</span><span class="o">.</span><span class="nb">sum</span><span class="p">()</span>
+<span class="n">pX</span> <span class="o">=</span> <span class="n">Factor</span><span class="p">(</span><span class="s">"X"</span><span class="p">,</span> <span class="p">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">phi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">)})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pX</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+Factor(X) = {
+  X = 1: 0.025379472523913312
+  X = 2: 0.28719830439875127
+  X = 3: 0.24806560599065108
+  X = 4: 0.2888551059820643
+  X = 5: 0.15050151110462
+}
+
+</pre>
+
+<h3 id="geometric-distribution">Geometric distribution</h3>
+
+<p>The geometric distribution is a distribution over positive integers, $1,2,\ldots,$, and models the number of times you need to sample from a Bernoulli distribution until you get a 1.  The distribution is parameterized by $\phi \in [0,1]$, and the distribution is given by</p>
+
+<script type="math/tex; mode=display">p(X=i;\phi) = (1-\phi)^{i-1}\phi.</script>
+
+<p>It is easy to check that this is a valid distribution since,</p>
+
+<script type="math/tex; mode=display">\sum_{i=1}^\infty p(X=i;\phi) = \phi \sum_{i=1}^\infty (1-\phi)^{i-1} = \phi \frac{1}{1-(1-\phi)} = 1</script>
+
+<p>Although we won’t prove it here, the expectation and variance of the distribution are given by</p>
+
+<script type="math/tex; mode=display">\mathbf{E}[X] = \frac{1}{\phi}, \;\; \mathbf{Var}[X] = \frac{1-\phi}{\phi^2}.</script>
+
+<p>The probability function of the geometric distribution looks like the following, for $\phi=0.2$.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">phi</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">phi</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">phi</span>
+<span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">"$i$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">"$p(X=i)$"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_1.svg" alt="" />
+        
+        
+    </div>
+
+<p>Finally, note that from here on (including for the geometric distribution), we cannot use our Factor class, because it relies on explicitly enumerating all the values that a random variable can take on via the dictionary keys.  For distributions that take on an infinite number of values, we cannot enumerate all these possibilites, and so we will instead just need to functionally describe the probabilities.  Also note that this fact can sometimes make it difficult to exactly compute conditional probabilities or similar terms, as they can involve infinite sums that may not have a simple closed form.</p>
+
+<h3 id="poisson-distribution">Poisson distribution</h3>
+<p>The Poisson distribution is distribution over the non-negative integer $0,1,2,\ldots$, and is commonly used to model, for example, the number of times an event occurs within some window of time (for example, the number of buses that arrive during a particular time frame).  It is parameterized by $\lambda \in \mathbb{R}^+$m, and  it’s probability function is given by</p>
+
+<script type="math/tex; mode=display">p(X=i;\lambda) = \frac{\lambda^k e^-\lambda}{i!}.</script>
+
+<p>The distribution has mean and variance both</p>
+
+<script type="math/tex; mode=display">\mathbf{E}[X] = \lambda, \;\; \mathbf{Var}[X] = \lambda.</script>
+
+<p>The probability looks like the following for $\lambda=3$.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># poisson</span>
+<span class="n">lam</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">lam</span><span class="o">**</span><span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">lam</span><span class="p">)</span><span class="o">/</span><span class="n">misc</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">"$i$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">"$p(X=i)$"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_2.svg" alt="" />
+        
+        
+    </div>
+
+<h3 id="gaussian-distribution">Gaussian distribution</h3>
+
+<p>The Gaussian distribution is a distribution over real-valued numbers, and is probably the most common distribution in data science (not I’m <em>not</em> saying that it is the most common distribution in the <em>data</em> itself, but in data science as a field).  This is due to many nice properties of the distribution it is easy to integrate, and has a natural multivariate analogue, and also due to the fact’s that we’ll talk about in a few lectures, that certain data distributions of sample means tend towards Gaussian distribution (the so-called central limit theorem).  The Gaussian has the “bell-shaped” density function that is probably familiar to many people.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># poisson</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">sig2</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sig2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sig2</span><span class="p">))</span>
+
+<span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.45</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">"$x$"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">"$p(x)$"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_3.svg" alt="" />
+        
+        
+    </div>
+
+<p>The one-dimesional Gaussian distribution is typically parameterized by two parameters $\mu \in \mathbb{R}$ (the mean), and $\sigma^2 \in \mathbb{R}_+$ (the variance).  It’s not important whether we technically parameterize by the variance or in the standard deviation (square root of the variance), so we’ll use the variance as our parameter, since this matches better with the multivariate funciton.  The probability density function of the Gaussian is given by</p>
+
+<script type="math/tex; mode=display">p(x;\mu,\sigma^2) = \frac{1}{\sqrt{2\pi \sigma^2}}\exp\left(-\frac{\|x - \mu\|_2^2}{2\sigma^2} \right)</script>
+
+
+
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

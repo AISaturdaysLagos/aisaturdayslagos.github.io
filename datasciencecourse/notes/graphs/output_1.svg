@@ -1,0 +1,91 @@
+<svg height="148pt" viewBox="0.00 0.00 251.24 148.20" width="251pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<g class="graph" id="graph0" transform="scale(1 1) rotate(0) translate(4 144.201)">
+
+<title>%3</title>
+
+<polygon fill="white" points="-4,4 -4,-144.201 247.241,-144.201 247.241,4 -4,4" stroke="none"/>
+
+<!-- A -->
+
+<g class="node" id="node1"><title>A</title>
+
+<ellipse cx="27" cy="-18" fill="none" rx="27" ry="18" stroke="black"/>
+
+<text font-family="Times,serif" font-size="14.00" text-anchor="middle" x="27" y="-13.8">A</text>
+
+</g>
+
+<!-- B -->
+
+<g class="node" id="node2"><title>B</title>
+
+<ellipse cx="27" cy="-122.201" fill="none" rx="27" ry="18" stroke="black"/>
+
+<text font-family="Times,serif" font-size="14.00" text-anchor="middle" x="27" y="-118.001">B</text>
+
+</g>
+
+<!-- A&#45;&gt;B -->
+
+<g class="edge" id="edge1"><title>A-&gt;B</title>
+
+<path d="M27,-36.1505C27,-52.0406 27,-75.3934 27,-93.7632" fill="none" stroke="black"/>
+
+<polygon fill="black" points="23.4999,-93.9091 27,-103.909 30.4999,-93.909 23.4999,-93.9091" stroke="black"/>
+
+</g>
+
+<!-- C -->
+
+<g class="node" id="node3"><title>C</title>
+
+<ellipse cx="117.241" cy="-70.1006" fill="none" rx="27" ry="18" stroke="black"/>
+
+<text font-family="Times,serif" font-size="14.00" text-anchor="middle" x="117.241" y="-65.9006">C</text>
+
+</g>
+
+<!-- B&#45;&gt;C -->
+
+<g class="edge" id="edge2"><title>B-&gt;C</title>
+
+<path d="M47.477,-110.379C59.3919,-103.5 74.614,-94.7112 87.7971,-87.0999" fill="none" stroke="black"/>
+
+<polygon fill="black" points="89.6222,-90.0877 96.5325,-82.0566 86.1222,-84.0255 89.6222,-90.0877" stroke="black"/>
+
+</g>
+
+<!-- C&#45;&gt;A -->
+
+<g class="edge" id="edge3"><title>C-&gt;A</title>
+
+<path d="M96.7638,-58.2782C84.8489,-51.3991 69.6269,-42.6106 56.4437,-34.9993" fill="none" stroke="black"/>
+
+<polygon fill="black" points="58.1187,-31.9249 47.7084,-29.956 54.6186,-37.9871 58.1187,-31.9249" stroke="black"/>
+
+</g>
+
+<!-- D -->
+
+<g class="node" id="node4"><title>D</title>
+
+<ellipse cx="216.241" cy="-70.1006" fill="none" rx="27" ry="18" stroke="black"/>
+
+<text font-family="Times,serif" font-size="14.00" text-anchor="middle" x="216.241" y="-65.9006">D</text>
+
+</g>
+
+<!-- C&#45;&gt;D -->
+
+<g class="edge" id="edge4"><title>C-&gt;D</title>
+
+<path d="M144.293,-70.1006C154.988,-70.1006 167.457,-70.1006 178.981,-70.1006" fill="none" stroke="black"/>
+
+<polygon fill="black" points="179.221,-73.6007 189.221,-70.1006 179.221,-66.6007 179.221,-73.6007" stroke="black"/>
+
+</g>
+
+</g>
+
+</svg>

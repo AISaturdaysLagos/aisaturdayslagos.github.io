@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Tutorial</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Tutorial" />
+    
+  
+     
+    <meta property="og:description" content="With data science, as with most disciplines, the best way to learn a particular topic is to teach it to others. The tutorial assignment of this course is meant to give you the chance to create a short tutorial on something related to data science. You can describe how to..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/assignments/tutorial/" />
+    <link rel="canonical" href="http://localhost:4000/assignments/tutorial/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Tutorial" />
+    
+  
+    
+    <meta name="twitter:description" content="With data science, as with most disciplines, the best way to learn a particular topic is to teach it to others. The tutorial assignment of this course is meant to give you the chance to create a short tutorial on something related to data science. You can describe how to..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+  <div id="header-big-imgs" data-num-img=1
+    
+	  
+	  
+	    
+		  data-img-src-1="/img/datascience-bg.jpg"
+		
+	  
+    
+  ></div>
+
+
+<header class="header-section has-img">
+
+<div class="big-img intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          <h1>Tutorial</h1>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class='img-desc'></span>
+</div>
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          
+          
+          <h1>Tutorial</h1>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <p>With data science, as with most disciplines, the best way to learn a particular topic is to teach it to others. The tutorial assignment of this course is meant to give you the chance to create a short tutorial on something related to data science. You can describe how to use a particular algorithm, library, methodology, or data set. Your tutorial should provide an introduction to this topic suitable for the level of other students taking this course. Ultimately, you will be graded by the course instructor and other students taking the course.</p>
+
+<h2 id="due-dates">Due Dates</h2>
+
+<p>All submissions are due 11:59pm on the date. No late days can be used for this.</p>
+
+<ul>
+  <li>Sep 27 – One-sentence proposal (submit online <a href="https://forms.gle/1Hdxke7esvCmHVAr6">here</a>)</li>
+  <li>Oct 15 – Tutorial due</li>
+  <li>Oct 29 – Student tutorial evaluation due</li>
+</ul>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>Your tutorial should be in the form of a Jupyter notebook, which mixes together written markdown and code portions. You will walk your readers through the algorithm, library, methodology, or data that you are presenting, explaining high-level concepts with code examples. You want to make the tutorial read like an actual explanation of the process or technique, not just as a listing of code. as a general rule of thumb, you should have a paragraph or two of prose explaining any function or class method you include in the code.</p>
+
+<p>All written prose and code must be your own work. You may (with citation) use small snippets of code or quoted text from existing sources if absolutely necessary, but the vast majority of the code and prose must be original.</p>
+
+<p>Your notebook should contain between 1000-2000 words of prose in markdown sections, and
+between 100-250 lines of code (not counting comments).</p>
+
+<p>As a reference, we have released an example tutorial on geo-spatial analysis, available <a href="/assignments/tutorial/gis_tutorial.ipynb">here</a>. You can view this online using the <a href="https://nbviewer.jupyter.org/url/www.datasciencecourse.org/assignments/tutorial/gis_tutorial.ipynb">online nbviewer app</a>.</p>
+
+<p>Your tutorial must both be able to run and be fully readable as a static web page: you should save the tutorial notebook with any output and figures that are required to understand the content. Your tutorial should be readable to students as soon as they open it, without running any cells. Also, ensure that your code runs correctly, students will be running your submitted code.</p>
+
+<p>Feel free to bundle additional files (such as a <code class="highlighter-rouge">requirements.txt</code> or a dataset) with your tutorial; as long as the total size of your uploaded file is no more than 50MB. If you refer to external datasets, you should provide clear instructions on downloading and installing them. Submit your tutorial as a <code class="highlighter-rouge">.tar</code> or <code class="highlighter-rouge">.zip</code> file to the Code Lab <a href="https://www.diderot.one/course/10/code-homeworks/view-code-homework/?hw_pk=45">tutorial</a> on the course Diderot.</p>
+
+<h3 id="peer-evaluation">Peer evaluation</h3>
+
+<p>In addition to submitting your tutorial, each student will be required to grade two other tutorials. These peer evaluations will factor partly into your final grade for the tutorial. When evaluating other students’ submissions, you will use the rubric described in the next section.</p>
+
+<h2 id="grading">Grading</h2>
+
+<p>Grading will be done on a point scale, (0-100), and will be factor in the different elements as follows:</p>
+
+<ul>
+  <li>5% - tutorial proposal</li>
+  <li>10% - providing feedback on other students tutorials (we are not evaluating the feedback except to verify it meets the criteria of the rubric).</li>
+  <li>25% - student evaluation: peer evaluating of your tutorial, averaged over the two student evaluators of your tutorial.</li>
+  <li>60% - instructor evaluation: evaluation of your tutorial by the instructors according to the rubric.</li>
+</ul>
+
+<p>The instructor and peer evaluators will use the following rubric:</p>
+
+<p>All the following questions are answered on a 1-10 point scale.</p>
+
+<ul>
+  <li><strong>Motivation</strong>: How well does the tutorial motivation the importance of the topic to the data science setting?</li>
+  <li><strong>Understanding</strong>: After reading the topic, how well do you feel you understand the general
+ideas behind the tutorial? If you already knew the subject: how well do you think the tutorial
+was able to describe the basic ideas as you understand them?</li>
+  <li><strong>Prose</strong>: Did the prose in the markdown cells contribution to your understanding of the
+material?</li>
+  <li><strong>Code</strong>: Did the included code provide helpful examples or otherwise solidify your understanding of the topic?</li>
+  <li><strong>Subjective evaluation</strong>: If you were reading this tutorial as a blog post someone sent you, how likely would you be to read the whole thing?</li>
+  <li><strong>Further resources</strong>: Does the tutorial helpfully suggest where to look for additional resources on the problem. Do these resources seem like they would help you further your understanding of the topic or ideas after you have completed the tutorial?</li>
+</ul>
+
+<p>Additionally, with no points assigned, evaluators should:</p>
+
+<ul>
+  <li>Write, in 100-200 words, one thing you particularly liked.</li>
+  <li>Write, in 100-200 words, one thing you think could be improved.</li>
+</ul>
+
+<h2 id="proposal">Proposal</h2>
+
+<p>In addition to the final tutorial, you will need to submit a one-sentence proposal. This is to check that you are working on a reasonable topic. It is a required portion of the assignment.</p>
+
+<p>You should submit a one-sentence proposal to the Google Form linked above; you can change your response until the deadline.</p>
+
+	    
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

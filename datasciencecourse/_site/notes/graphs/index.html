@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Graphs</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Graphs" />
+    
+  
+     
+    <meta property="og:description" content="# Graphs A great deal of data that you will encounter as a data scientist fundamentally involves network data, interrelated objects with relationships between them. To give some very brief examples: social networks deal with people individuals and the friendship relations between them; web data deals with pages and the..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/notes/graphs/" />
+    <link rel="canonical" href="http://localhost:4000/notes/graphs/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Graphs" />
+    
+  
+    
+    <meta name="twitter:description" content="# Graphs A great deal of data that you will encounter as a data scientist fundamentally involves network data, interrelated objects with relationships between them. To give some very brief examples: social networks deal with people individuals and the friendship relations between them; web data deals with pages and the..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <div class="intro-header"></div>
+
+<div role="main" class="container">
+  <style type="text/css">
+.targz-btn {
+    float: right;
+    border: thin solid #999;
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+}
+</style>
+
+
+<a href="graphs.tar.gz" class="targz-btn">&#x2b73; Download Jupyter Notebook</a>
+
+<h1 id="graphs">Graphs</h1>
+
+<p>A great deal of data that you will encounter as a data scientist fundamentally involves network data, interrelated objects with relationships between them.  To give some very brief examples: social networks deal with people individuals and the friendship relations between them; web data deals with pages and the linking information between them; and spatial data (at a certain level of abstraction, we will deal more with spatial data in a few lectures), deals with objects and distances between them.</p>
+
+<p>Before we start, it is worth specifying the difference in our terminology between a “network” and a “graph”, both terms which are used to refer to the types of interelated objects that we will consider.  However, following fairly standard notation, in general “network” refers to the interrelation between actual entities <em>in the real world</em>, where as “graph” refers to the mathematical models for representing vertices and edges (which will often be used to represent networks).  A similar distinction came up previously in relational databases, between the actual entities that the data refered to, and the instantation of those entities in table form.</p>
+
+<p>For the most part, these notes will be about <em>graph</em> algorithms, but of course one of the primary uses of graph algorithms in data science is to reason about networks, which we will also do in this course.</p>
+
+<h2 id="graph-models">Graph models</h2>
+
+<p>Graphs as mathematical objects are <em>collections of vertices (also called nodes) and edges</em>.  We write this mathematically by stating that at graph is the tuple $G =(V,E)$ where $V$ is a set of vertices and $E$ is a set of edges (paris of vertices).  Let’s consider the following graph</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="sample_graph.svg" alt="" />
+        
+        
+            <p class="image-caption">A simple example of a graph object.</p>
+        
+    </div>
+
+<p>In this example, the nodes and edges are given by</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+V &= \{A,B,C,D,E,F\} \\
+E &= \{(A,B), (A,C), (B,C), (C,D), (D,E), (D,F), (E,F)\}
+\end{split} %]]></script>
+
+<p>i.e, there are six nodes, labeled A through F, and with edges corresponding to the lines between these nodes in the figure.  There are many different properties of graphs, but in these notes we’ll focus on a few of the more common distinction between different types of graphs.</p>
+
+<h3 id="directed-vs-undirected-graphs">Directed vs. undirected graphs</h3>
+<p>Graphs can be either <em>directed</em> (the order of the edges matters, and indications some relation <em>from</em> one node <em>to</em> another, or they can be <em>undirected</em>, where the existence of an edge between two nodes implies a bidrectional relationship.  We typically draw directed graphs with arrows between the nodes to indicate direction, and undirected graphs without arrows, like so</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="directed.svg" alt="" />
+        
+        
+            <p class="image-caption">A directed graph.</p>
+        
+    </div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="undirected.svg" alt="" />
+        
+        
+            <p class="image-caption">An undirected graph.</p>
+        
+    </div>
+
+<p>The type of graph that is most appropriate for a given network of course depend on characteristics of that network.  A “web graph”, where nodes represent pages, and edges represent links, would be best described by a directed graph: an edge from page A to page B represents a the fact that page A contains a link to page B.  This is a directed relationship, because such a link does not imply that page B also links to page A.  Note that in directed graphs we can absolutely have edges in both directions (i.e., if page A links to page B and page B links back to page A), but this needs to be sepcified by two separate edges in the graph.</p>
+
+<p>An example of an <em>undirected</em> graph would be a graph over authors and co-author relationships.  For instance, if we consider the authors of scientific papers as nodes in a graph, edges can represent whether the two authors have written a paper together.  This is an inherently non-directed relationship: if authors A wrote a paper with author B, there necessarily it is also the case that author B also write a paper with author A.</p>
+
+<p>Although there will be some difference in algorithms/representations that are needed for directed vs. undirected graphs (the graph library NetworkX, for instance, has two different classes you need to use depending on the type of graph), but most of what we discuss here will apply equally well, potentially with just very minor modifications, to both types of graphs.</p>
+
+<h3 id="weighted-vs-unweigthed-graphs">Weighted vs. unweigthed graphs</h3>
+<p>Graphs can either be <em>weighted</em> (edges between nodes have some real-valued weight associated with them), or <em>unweighted</em> (all edges are equal).  We typically denote weighted graphs be writing the weight along edges.  For instance, a weighted version of the undirected graph above could be illustrated as follows:</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="weighted.svg" alt="" />
+        
+        
+            <p class="image-caption">A weighted (and undirected) graph.</p>
+        
+    </div>
+
+<p>A graph that encoded distance between cities (say for the task of shortest-path planning, a topic that we will discuss shortly), would be best represented as a weighted graph, where the weigtht corresponded to distance between the cities. A simple social network graph, on the other hand, where nodes indicated people and edges indicates friendship, woudl likely be best represented as an unweighted graph, because (at least as far as the social newtork is concerned), friendship is simply a prescence/absence relationship, not a weighted quantity.</p>
+
+<p>Note that there will be cases where the “right” reperesentation of the graph depends on the ultimate use case.  Consider the co-authorship network we described earlier.  This could be “naturally” represented as either an unweighted graph (where the presence of an edge merely signified that two people had a been a co-author on some paper), or a weighted graph (where the weight on an edge corresponds, say to the number of papers two co-authors have written together).  If our goal is to find “shortest paths” in coauthor relationships (for instance, the so-called <a href="https://en.wikipedia.org/wiki/Erd%C5%91s_number">Erdős number</a> lists someone’s distance from Paul Erdős, a famous mathematician known for extensive collaboration, in a co-authorship network), then an undirected graph would be most natural; there would be no real notion of “weight” to the edges in terms of the path.  On the other hand, if the goal was to assess some kind of community structure in the coauthorship graph (also a topic we will deal with shortly), then it makes sense that more papers imply some sort of closer relationship, and thus a weighted version of the graph would be more appropriate.</p>
+
+<p>One point worth making is that real-valued weight on edges is in some sense a “special” feature to edges.  In general, graphs can have multiple properties and data associated with each node and edge; these can be used, for instance, in machine learning algorithms that operate directly on graphs.  However, edge weight is so common, and often can be directly incorporated into graph algorithms such as shortest path algorithms, that it has a special place in distinguishing types of graphs.</p>
+
+<h3 id="some-example-graphs">Some example graphs</h3>
+
+<p>Although we will largely deal with “small” graphs here to emphasize the algorithmic elements (you will apply these to larger “real” graphs in the homework assignments), it’s worth highlighting a few examples of real-world graphs.  The following pictures are taken from the the <a href="https://sparse.tamu.edu/">SuiteSpasre Matrix Collection</a>, and include graphs from the <a href="http://snap.stanford.edu">Stanford Network Analysis Project (SNAP)</a>.  For example, the following image illustrates the graph of road networks in Pennsylvania.</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="roadNet-PA_graph.gif" alt="" />
+        
+        
+            <p class="image-caption">Visualization of road network in Pennsylvania, from https://sparse.tamu.edu/SNAP/roadNet-PA</p>
+        
+    </div>
+
+<p>Edges in this graph corresponds to roads in Pennsylvania, and color corresponds to the length of the road.  I like this graph because it represents well the “bottleneck” structure of the PA road system, where there are many short roads in the the Pittsburgh and Philadelphia regions, while there are fewer but much longer roads that connect the two urban areas of the state.</p>
+
+<p>The above graph is “easy” to visualize because it is actually a representation of a two dimensional structure.  However, for more complex graphs, where there is not necessarily any underlying low-dimensional structure, it can be much harder to obtain any relevant information from the figure.  For example, the following graph from the same collection visualizing the connectivity of the LiveJournal social network.</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="soc-LiveJournal1_graph.gif" alt="" />
+        
+        
+            <p class="image-caption">Visualization of the live journal social network, from https://sparse.tamu.edu/SNAP/soc-LiveJournal1</p>
+        
+    </div>
+
+<p>Despite being a pretty picture of a relatively large graph, and giving some indication that there are small “communities” indicated by the red dots on the outskits (densely connected nodes that are only sparsely connected to the rest of the graph), it is hard to interpret too much from this figure.</p>
+
+<h2 id="graph-representations">Graph representations</h2>
+
+<p>Now that we have defined the very basic properties of graphs from a mathematical standpoint, we’re going to consider how we can represent these graphs from a algorithmic standpoint.  We’re going to use the notation and terms from the Python language here, but it’s important to understand that the concepts here apply broadly (via the conceptual data structures of lists and/or dictionaries / hash maps).  Let’s consider the simple directed graph we showed above, stated again here for simplicity.</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="directed.svg" alt="" />
+        
+        
+            <p class="image-caption">The directed graph we will consider for graph representations.</p>
+        
+    </div>
+
+<p>It would be possible, of course, to just represent the graph like we did mathematically, something like:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nodes</span> <span class="o">=</span> <span class="p">{</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">,</span> <span class="s">"C"</span><span class="p">,</span> <span class="s">"D"</span><span class="p">}</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="p">{(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">),</span> <span class="p">(</span><span class="s">"B"</span><span class="p">,</span><span class="s">"C"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"A"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"D"</span><span class="p">)}</span>
+</code></pre></div></div>
+
+<pre>
+{&#x27;D&#x27;, &#x27;C&#x27;, &#x27;B&#x27;, &#x27;A&#x27;}
+
+</pre>
+
+<p>These are Python <code class="highlighter-rouge">set</code> objects, which are like a dictionary except that they just consist of keys, no values, and we’re only using them here because a graph mathematically was defined precisely as a set of nodes and edges.  This may seem like a natural representation, but it has some major difficulties from a functionality standpoint.  For example, while it’s relatively efficient to check if an edge exists in this representation (checking set membership is a $O(1)$ operation, just like dictionary lookup), it is very difficult, for example, to find all outgoing edges of a node, something we very often want to do when traversing graphs.  For this reason, it is much more common to represent graphs in other formats when we want to use them algorithmically.  We will specifically consider three of these here:</p>
+
+<ol>
+  <li>Adjacency list</li>
+  <li>Adjacency dictionary</li>
+  <li>Adjacency matrix</li>
+</ol>
+
+<h3 id="adjacency-list">Adjacency list</h3>
+
+<p>One of the simplest way to represent directed graphs is as a two-level list, where the elements in the list describe the nodes that each node is connected to.  To do this as a “pure” list, we first need to associate each node in the graph with an index, which we can do with a simple list.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">,</span> <span class="s">"C"</span><span class="p">,</span> <span class="s">"D"</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;, &#x27;D&#x27;]
+
+</pre>
+
+<p>Note that if we want a fast way of looking up nodes, we can create a dictionary of nodes to indices, like so.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nodes_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">"A"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s">"B"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">"C"</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s">"D"</span><span class="p">:</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">nodes_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">)}</span>  <span class="c"># same as the above, done programmatically</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nodes_dict</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+{&#x27;A&#x27;: 0, &#x27;B&#x27;: 1, &#x27;C&#x27;: 2, &#x27;D&#x27;: 3}
+
+</pre>
+
+<p>We could accomplish the same thing just by using dictionaries directly, but since the idea of mapping general node labels like strings to integer indices is a useful conceptual idea (we’ll need to do the same thing when we consider the adjacency matrix for, for instance), we will do that here as well.</p>
+
+<p>More concretely now, the adjacency list format is a list of size $\mid V \mid$ (the number of vertices/nodes in the graph), where element in this list is <em>itself</em> a list of all the nodes that this vertex connects to.  To encode the above graph, this would correspond to the following adjacency list.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">adj_list</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[]]</span>
+</code></pre></div></div>
+
+<p>For example, this representation encodes the following facts:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">adj_list[0] = [1]</code> means that node 0 (“A”) has a link to node 1 (“B”).</li>
+  <li><code class="highlighter-rouge">adj_list[1] = [2]</code> means that node 1 (“B”) has a link to node 2 (“C”).</li>
+  <li><code class="highlighter-rouge">adj_list[2] = [0,3]</code> means that node 2 (“C”) has links to node 0 (“A”) and node 3 (“D”).</li>
+  <li><code class="highlighter-rouge">adj_list[3] = []</code> means that node 3 (“D”) has no outgoing links.</li>
+</ul>
+
+<p>In total, this describes the entire graph.  If we want to represent a weighted graph, we could use a tuple of <code class="highlighter-rouge">(node_index, weight)</code> pairs in the inner lists.</p>
+
+<p>The adjacency list format is nice in that it allows us to quickly determine all (outgoing) neighbors of a node, which is a very useful operation for elements like shortest path algorithms.  On the other hand, unlike even the simple “set of edges” representation above, it is relatively expensive to check if some particular edge exists in the graph.  Because each list of outgoing edges is just represented as a list, if we want to check for the presence of an edge, we need to first find the initial node (a fast lookup), and then search that list to see if the outgoing edge exists (linear in the number of outgoing edges).</p>
+
+<p>Another nice thing about the adjacency list representation, at least as it would be implemented with Python lists, is that adding additional additional nodes/edges to the graph is also constant time: we can just append the lists with the necessary additional edges.  Deleting an edge/node is more costly because of the additional cost associated with deleted elements in Python lists.</p>
+
+<p>An obvious “fix”, then, is to just replace the <em>list</em> of outgoing edges with a <em>set</em> of outgoing edges.  This is exactly what we’ll do next, and in fact we’ll transition everything to dictionaries/sets rather than maintain a separate list of “nodes” and “node indices” (this is mainly just out of convention, since once we move to including dictionary lookups, we may as well do everything with dictionaries).</p>
+
+<h3 id="adjacency-dictionary">Adjacency dictionary</h3>
+
+<p>In order to make have constant time operations for both checking edge presence <em>and</em> finding all the outgoing edges from a node, we can use an adjacency dictionary representation.  Here, the nodes are represented as keys in a dictionary, where the value of each node is another dictionary of outgoing edges (the values in this second dictionary can be empty, i.e., we could use a Python <code class="highlighter-rouge">set</code>, or they could be e.g., the weight on the respective edge).  Let’s see how to represent the above graph, here using weights but explicitly setting them all to one.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">adj_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">"A"</span><span class="p">:</span> <span class="p">{</span><span class="s">"B"</span><span class="p">:</span><span class="mf">1.0</span><span class="p">},</span> <span class="s">"B"</span><span class="p">:{</span><span class="s">"C"</span><span class="p">:</span><span class="mf">1.0</span><span class="p">},</span> <span class="s">"C"</span><span class="p">:{</span><span class="s">"A"</span><span class="p">:</span><span class="mf">1.0</span><span class="p">,</span> <span class="s">"D"</span><span class="p">:</span><span class="mf">1.0</span><span class="p">},</span> <span class="s">"D"</span><span class="p">:{}}</span>
+</code></pre></div></div>
+
+<p>As before, the adjacency dictionary encodes the following facts:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">adj_list["A"] = {"B":1.0}</code> means that node “A” has a link to node “B” (e.g. with weight 1.0)</li>
+  <li><code class="highlighter-rouge">adj_list["B"] = {"C":1.0}</code> means that node “B” has a link to node “C”</li>
+  <li><code class="highlighter-rouge">adj_list["C"] = {"A":1.0, "D":1.0}</code> means that node “C” has links to nodes “A” and “D”</li>
+  <li><code class="highlighter-rouge">adj_list["D"] = {}</code> means that node “D” has no outgoing links</li>
+</ul>
+
+<p>In addition to the aforementioned benefits of having fast (constant time) edge lookup <em>and</em> immediate lookup of all outgoing edges for a given node, the adjacency dictionary representation is very nice for very efficiently constructing and modifying graphs.  We can insert new nodes, insert new edge, delete edges, and delete nodes, all in constant time (this in an effect of all the corresponding operations being constant time for dictionaries).</p>
+
+<p>Due to these benefits, this is in fact the representation that the <a href="https://networkx.github.io/">NetworkX</a> library uses internally, which we’ll discuss more later in these notes.</p>
+
+<h3 id="adjacency-matrix">Adjacency matrix</h3>
+
+<p>The final for of representation we’ll consider is the adjacency matrix.  Because the rows/columns of a matrix are inherently indexed by integers, here we will need to return to the adjacency list concept of having a separate list for mapping from integer indices to node objects themselves.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">,</span> <span class="s">"C"</span><span class="p">,</span> <span class="s">"D"</span><span class="p">]</span>
+<span class="n">nodes_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">)}</span>
+</code></pre></div></div>
+
+<p>The idea of an adjacency matrix is to store all edge information in a matrix $A \in \mathbb{R}^{\mid V \mid \times \mid V \mid}$ (where again $\mid V \mid$ denote the number of nodes) where there is an non-zero entry if the row $i$ and column $j$, $A_{ij}$ if and only if there is a corresponding is an edge from node $j$ to node $i$ (node the convention of ordering regarding rows/columns here, though it could just as easily be reversed).  The actual element in the matrix can be again the weigh of the edge, or just 1.0 if the graph is unweighted.  The matrix below would encode the example graph we have been using:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+A = \left[ \begin{array}{cccc}
+0 & 0 & 1 & 0 \\
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \end{array} \right ] %]]></script>
+
+<p>The advantage of the adjacency matrix representation comes when we want to perform efficient operations with respect to entire matrices.  We will see an example of this in the later section on the PageRank algorithm, but remember from the previous chapter on linear algebra, that matrix operations have been <em>highly</em> optimized by various third-party libraries.  If we can express out matrix algorithms in terms of matrix and vector operations, we can often attain extremely efficient implementations with minimal detail in the implementation ourselves.</p>
+
+<p>There is one more point work making about the adjacency matrix representation.  Since more graphs are sparse (i.e., they have relatively few of all possible edges), it makes sense to store them using a sparse matrix format.  And there is a very close connection between the sparse matrix representations we discussed in the last notes, and the representations we mentioned before.</p>
+
+<p>Specifically, let’s look at the compressed sparse column representation of the $A$ matrix.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">row_indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">col_indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Although it’s a bit hard to see from this example, it shouldn’t be too hard to convince yourself that the <code class="highlighter-rouge">row_indices</code> array is <em>exactly</em> a “flattened” representation of the adjacency list representation we mentioned earlier (that is, instead of a list of lists, we just flatten all the elements sequentially into a 1D array).   It actually additionally requires that the edge list of each node be sorted, but assuming we have this property, the two representations are essentially identical.  And this makes perfect sense, too: the <code class="highlighter-rouge">row_indices</code> will be an ordered list of the non-zero rows for each column sequentially, which is exactly a list of all the outgoing edges for each node, by our definition of the adjacency matrix.  Likewise, the <code class="highlighter-rouge">col_indices</code> are going to just be a list of indices that begin each row, so we can look them up very quickly.  In fact, this is exactly what an efficient implementation of the adjacency list would look like, at least assuming that we aren’t concerned with modifying the graph (remember the CSC format is particularly bad for modifying sparse matrices).  But hopefully this conveys the fact that from a data structure standpoint there actually a great deal of similarity between the matrix and list representations, and the matrix form will inherit most of the benefits of fast linear algebra libraries.</p>
+
+<p>It’s also work noting that the COO format of the adjacency matrix is essentially equivalent to a “list of edges” representation of the graph, must like our original “set of edges” representation we mentioned.</p>
+
+<h2 id="graph-algorithms">Graph algorithms</h2>
+
+<p>A single lecture in a data science course is naturally an inadequate setting to properly discuss graph algorithms, which is essentially an entire subfield of computer science in and of itself.  However, to start giving you just a taste of the types of tasks that people accomplish with graphs, we’ll consider three different algorithms, each asking a slightly different question regarding the underlying network and/or graph.  This is also meant to highlight how we can use different representations of the graph to more “naturally” implement some of the different algorithms.  Specifically, we will cover:</p>
+
+<ol>
+  <li>Dijkstra’s algorithm for computing single-source shortest path</li>
+  <li>The PageRank algorithm for computing node importance</li>
+  <li>The Girvan-Newman algorithm for community detection</li>
+</ol>
+
+<h3 id="dijsktras-algorithm">Dijsktra’s algorithm</h3>
+
+<p>Given two nodes in a graph (directed or undirected, where weights represent “distances” between nodes, or all weights are equal in the case of an unweighted graph), suppose we want to find the shortest path between them.  This has some obvious applications like route planning maps, but also some less-obvious applications like the aforementioned example of computing someone’s Erdős number given a graph of co-authorship relations.  The figure below gives (one) shortest path between the two blue nodes.</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="shortest_path.svg" alt="" />
+        
+        
+            <p class="image-caption">Illustration of (a) shortest path between two nodes, assuming an unweighted graph</p>
+        
+    </div>
+
+<p><a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra’s algorithm</a> is a classic graph algorithm, which actually solves the <em>single-source shortest path</em> problem (that is, it comes the shortest path from a single source node to <em>all</em> other nodes in the graph).  It turns out that in many cases, you can get the all-shortest path solution “for free” if you compute the worst-case single-path between two nodes (that is, two nodes that are the furthest apart in the graph), so it’s common to use these approaches instead of finding paths between just two nodes.</p>
+
+<p>There are several slightly different version of Dijkstra’s algorithm (for instance, there are versions that push neighboring nodes on to a queue only after a node has been visited, which also works in the case of single-path search), but we’ll consider here a fairly standard version for the single-source problem.  The basic idea is to include maintain a <em>priority queue</em>, which we will call $Q$ in the algorithm below, that maintains the shortest distance from the source to each node in the graph.  When we pop a node off the queue (according to the shortest distance), we update the distance of all its neighbors to be the minimum of their current distance or the distance of the popped node plus the distance between the popped node as its neighbor.  Written in pseudocode, this takes the following form (assuming an unweighted graph, so the ‘1’ below corresponds to the weight on edges … this can be replaced with edge weight for a weighted graph).</p>
+
+<hr />
+
+<p><strong>Algorithm</strong>: Dijkstra’s shortest path algorithm</p>
+
+<p><strong>Given:</strong> Graph $G = (V,E)$, source $s$</p>
+
+<p><strong>Initialize:</strong></p>
+
+<ul>
+  <li>$D[s] := 0$</li>
+  <li>$D[i] := \infty$, $\forall i \neq s$</li>
+  <li>$Q := V$</li>
+</ul>
+
+<p><strong>Repeat until $Q$ is empty:</strong></p>
+
+<ul>
+  <li>$i := $ Remove element from $Q$ with smallest $D$</li>
+  <li>
+    <p>For all $j$ such that $(i,j) \in E$:</p>
+
+    <ul>
+      <li>$D[j] = \min (D[j], D[i] + 1)$</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<p>Essentially, what this is doing is that we are expanding out from the source, always expanding the remaining node that is closest to the source, and updating the distance for all the neighbors of this node.</p>
+
+<p>The precise complexity of Dijsktra’s algorithm relies on the complexity of maintaining (and being able to modify) a priority queue of this type, the analysis of which is beyond the scope of this class.  But it should hopefully be apparent that there are about $O(\mid V \mid + \mid E \mid)$ queries that we need to make (since we’re going to iterate over each vertex, and also ultimately iterate over all the edges … the actual complexity with a well-designed priority queue is $O(\mid V \mid \log\mid V \mid + \mid E \mid)$ but we won’t get into why this is the case).</p>
+
+<p>Let’s see how this algorithm looks step by step, looking at the distances and elements in $Q$ at each iteration, for the undirected graph, where “A” is the source node.</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="undirected.svg" alt="" />
+        
+        
+            <p class="image-caption">An undirected graph.</p>
+        
+    </div>
+
+<p>At each step of the algorithm, we have the following elements:</p>
+
+<ul>
+  <li>Initialization: $D=[0,\infty,\infty,\infty], Q=[A,B,C,D]$</li>
+  <li>Step 1: Pop “A”, $D=[0,1,1,\infty], Q=[B,C,D]$</li>
+  <li>Step 2: Pop “B”, $D=[0,1,1,\infty], Q=[C,D]$</li>
+  <li>Step 3: Pop “C”, $D=[0,1,1,2], Q=[D]$</li>
+  <li>Step 4: Pop “D”, $D=[0,1,1,2], Q=[]$</li>
+</ul>
+
+<p>At the end of execution, $D$ contains the length of the shortest path from $s$ to all other nodes.</p>
+
+<p>One final point is that if we want to know not only the length of the shortest path, but also the actual shortest path itself, we need to augment the algorithm to maintain a “pointer” to the actual previous element in the shortest path.  This will be considered in the homework question on Dijkstra’s algorithm, as is also highlighted in the linked Wikipedia page on the algorithm, but it is a very simple modification of the algorithm.</p>
+
+<h3 id="pagerank">PageRank</h3>
+
+<p>PageRank is the algorithm that started Google.  As I’m writing this, Google has a Market Cap of $730 billion USD.  That is not bad for an algorithm that can be explained in a few slides.  [In case you’re wondering, yes, the previous statement is facetious.  Google’s actual initial technological advance was not just this algorithm, but a systems-based approach that could actually compute these results on a graph of the entire Web (albeit the web in 1997, which was significantly smaller, but then ago so were computers at that time).  And even then this was really just one advance of many that actually made Google into Google.  So be careful to ascribe _too_ much value to PageRank, even if it makes for a great story.]</p>
+
+<p>Suppose you have a graph, and you want to somehow determine which nodes are “important”.  For example, in the following graph, which nodes seem like the most important ones?</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="importance.svg" alt="" />
+        
+        
+            <p class="image-caption">A simple graph that illustrates possible considerations of node 'importance'</p>
+        
+    </div>
+
+<p>You would probably say that the more “central” nodes are the more important ones here.  But how do we generalize this to bigger graphs?  To directed graphs? Is a node that just points to every other node an important one?  Or do we want to favor incoming edges over outgoing edges?  These questions are all impossible to answer “factually” in some sense, because they are ultimately subjective.  But the PageRank algorithm is one answer to these questions.  The historical context for the algorithm is that, traditionally, web search worked by trying to match a user’s search string with the terms on a page; this works well in many cases, but it also tends to ignore whether or not “important” pages are being returned.  Especially for common search terms, a _lot_ of pages will match the terms, and how do we rank between these?  Google’s answer was to compute the PageRank-based importance of each page, and sort between matching sites based upon this.</p>
+
+<p>The central idea of PageRank is to consider what is called a _random walk_ over the graph.  You can think of this as browsing the web by randomly clicking on links, then seeing where you end up.  More formally, the process is as follows:</p>
+
+<p>* Start at some random node in the graph
+* Repeatedly jump to a random neighboring node
+* If a node has no neighbors, jump
+* (Optional) with probability $d$, jump to a random node</p>
+
+<p>The node importance of PageRank is the probability that we wind up on page at any given time point, given that we have followed the procedure above for a long time.  Algorithmically, the method is as follows:</p>
+
+<hr />
+
+<p><strong>Algorithm</strong>: Page Rank</p>
+
+<p><strong>Given:</strong> Graph $G = (V,E)$, probability $d$, count $T$</p>
+
+<p><strong>Initialize:</strong></p>
+
+<ul>
+  <li>$A := $ adjacency matrix of $G$</li>
+  <li>$P := $ replace all-zero columns of $A$ with all-ones, and normalize columns</li>
+  <li>$\hat{P} :=  (1-d)P + \frac{d}{\mid V \mid}(11^T)$</li>
+  <li>$x := \frac{1}{\mid V \mid} 1$</li>
+</ul>
+
+<p><strong>Repeat $T$ times:</strong></p>
+
+<ul>
+  <li>$x := \hat{P}x $</li>
+</ul>
+
+<hr />
+
+<p>Let’s see how this works for the directed graph we have considered above:</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="directed.svg" alt="" />
+        
+        
+            <p class="image-caption">Our directed graph, again.</p>
+        
+    </div>
+
+<p>As discuss above, the adjacency matrix of this graph is given by:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+A = \left[ \begin{array}{cccc}
+0 & 0 & 1 & 0 \\
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \end{array} \right ] %]]></script>
+
+<p>To get the $P$ matrix, we first fill in the all-zeros column with ones, and then normalize the column (divide them by their sum):</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+P = \left[ \begin{array}{cccc}
+0 & 0 & 0.5 & 0.25 \\
+1 & 0 & 0 & 0.25 \\
+0 & 1 & 0 & 0.25 \\
+0 & 0 & 0.5 & 0.25 \end{array} \right ] %]]></script>
+
+<p>Finally, we add $(1-d)P$ to $d$ times the “all-1/4” matrix (the all ones matrix normalized by column), with gives (supposing we shoose $d=0.1$)</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+\hat{P} & = (1-d) \left[ \begin{array}{cccc}
+0 & 0 & 0.5 & 0.25 \\
+1 & 0 & 0 & 0.25 \\
+0 & 1 & 0 & 0.25 \\
+0 & 0 & 0.5 & 0.25 \end{array} \right ] +
+d \left[ \begin{array}{cccc}
+0.25 & 0.25 & 0.25 & 0.25 \\
+0.25 & 0.25 & 0.25 & 0.25 \\
+0.25 & 0.25 & 0.25 & 0.25 \\
+0.25 & 0.25 & 0.25 & 0.25 \end{array} \right ] \\
+&=
+\left[ \begin{array}{cccc}
+0.025 & 0.025 & 0.475 & 0.25 \\
+0.925 & 0.025 & 0.025 & 0.25 \\
+0.025 & 0.925 & 0.025 & 0.25 \\
+0.025 & 0.925 & 0.475 & 0.25 \end{array} \right ]
+\end{split} %]]></script>
+
+<p>Let’s see how we can do this is code.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="n">P</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">P</span><span class="p">[:,</span> <span class="n">P</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">P</span> <span class="o">/</span> <span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mf">1e-10</span><span class="p">)</span>
+<span class="n">Phat</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="n">P</span> <span class="o">+</span> <span class="n">d</span><span class="o">/</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">Phat</span> <span class="err">@</span> <span class="n">x</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">/</span><span class="n">x</span><span class="o">.</span><span class="nb">sum</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[ 0.21260745  0.26418338  0.31060172  0.21260745]
+
+</pre>
+
+<p>You can play around with this implementation to see what happens for different values of $d$.</p>
+
+<p><strong>Note:</strong> (this is very important, especially for your homework), that this is definitely <em>not</em> an efficient implementation of PageRank, because it uses dense matrix representations, which won’t fit in memory for any reasonably-sized graph.  To make PageRank actually feasible for large graphs, you need to use sparse matrix reprsentations.  But also note that adding all-ones rows and (especially) the all-ones matrix, if we did it naively, would of course eliminate any sparsity in the matrix.  So you need to handle these terms separately, which you can do using the fact the distributive property of matrix addition and multiplication, and by performing multiplications in the correct order.  You’ll need to work these details out more in the homework.</p>
+
+<h3 id="girvan-newman">Girvan-Newman</h3>
+
+<p>The last algorithm we will consider here focuses on another problem in graphs, which has generated increasing interest in recent years, the problem of detecting “communities” in graphs.  Let’s consider the following (undirected) graph.</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="communities.svg" alt="" />
+        
+        
+            <p class="image-caption">Example graph with clear instances of 'communities'</p>
+        
+    </div>
+
+<p>Clearly, there are three subgraphs here that seem to form “communities”, tighly knit subgrounds where most nodes are interconnected (they don’t need to be fully connected, a type of subgraph formally called a “clique”, but they are clique-like in that they are “almost” fully connected, by some definition), and which are only connected to other parts of the graph relatively sparsely.  Such communities play a large role in the analysis of social networks (the setting where the name is most appropriate, since these often correspond to actual communities of people), where it is common for small groups to all be friends with each other, and have relatively fewer connections outside the group.  But the use of community detection is also valuable in other types of graphs, for instance finding scientific subfields by looking at communities in paper citation graphs, or even finding biologically related functions by looking at protein interaction networks.</p>
+
+<p>There are several different algorithms for finding communities, but one well-known approach is the Girvan-Newman algorithm, which was proposed in 2003.  To be more precise, the algorithm does not immediately produce a breakdown in the graph into communities, but instead a <em>dendrogram</em>, a hiearchical decomposition of the graph into related nodes, from which communities can be extracted.</p>
+
+<p>The basic approach of the Girvan-Newman algorithm is to <em>remove</em> edges from the graph one at a time, in the order of a property called <em>edge betweenness</em> (more on this in a second).  If the graph is broken into two separate connected components, this becomes a hierarchical decomposition of the original graph.  This process in then repeated on both subgraphs recursively.  We aren’t going to describe the algorithm in as much detail as Dijsktra’s or the PageRank algorithm, mainly because the approach to actually computing the edge betweenness is somewhat involved, so we instead rely on a higher-level description of the algorithm in conceptual terms, with just hints at its implementation.</p>
+
+<p>The edge betweenness property, which orders how we remove edges, is defined as <em>the number of shortest paths that pass through an edge, considering all pairs of shortest paths from and to each node in the network</em> (in the case that there is more than one shortest path between two nodes, we divide the sum evenly over all the paths).   To illustrate this property, let’s consider the following graph.</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="gn.svg" alt="" />
+        
+        
+            <p class="image-caption">Graph for illustrating edge betweenness.</p>
+        
+    </div>
+
+<p>Since there are a lot of symmetries in the graph, we can specify all the edge betweenness factors by the following labels (all other betweenness factors are the same for the corresponding symmetric edges).</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="gn_betweenness.svg" alt="" />
+        
+        
+            <p class="image-caption">Edge betweeness numbers.</p>
+        
+    </div>
+
+<p>Let’s consider some examples.  The edge between nodes 1 and 2 has a betweenness of 1, because there is only one shortest path that spans this edge, the path between these two nodes; every other shortest path in the graph, from 1 to any other node, will instead go through node 3.  And similarly the 1–3 edge has a betweenness of 12, because there are 12 other nodes in the network (including node 3) where the shortest path must pass through this edge.  Now consider the 3–7 edge.  This case looks harder, until you realize that this edge is the only one that connects the two subgraphs with nodes (1,2,3) and (4,5,6,7,8,9,10,11,12,13,14); there are 3 nodes in one of these subgraphs and 11 in the other, so there must be 11 times 3 = 33 total shortest paths that path through this edge.  The same goes for the 7–8 edge: this divides two subgraphs of 7 nodes each, so the edge betweenness is 49.</p>
+
+<p>These cases might give the impression that edge betweenness is fairly easy (because for a tree-structured graph, it is just a matter of counting the number of nodes on each side of the edge), but in general graphs it can be a bit more complex; computing it requires computing all pairs of shortest paths in the graph (for example using Dijkstra’s algorithm above), and then accumulating the count of each time an edge is passed through.  For this reason, we won’t dive into the algorithmic detail, but just show how the overall Girvan-Newman algorithm proceeds on the graph above.</p>
+
+<p>To begin running Girvan-Newman on the above graph, we would remove the 7–8 edge, as it has the highest betweenness, dividing the graph as follows:</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="gn_1.svg" alt="" />
+        
+        
+            <p class="image-caption">First iteration of Girvan-Newman</p>
+        
+    </div>
+
+<p>After this, we need to <em>recompute</em> the edge betweeness in each of the subgraphs.  This is an important consideration: in general there is no easy way to “modify” betweenness of the modified graph after an edge is removed (unless of course the remove occurs on an entirely separate component), so we need to recompute the betweenness again from scratch.  In our example, at this point the 3–7, 6–7, 8–9, and 8–12 edges will all have the (same) highest betweenness, so we remove them all (it would be fine to only remove one and then proceed sequentially, but we can just as easily remove them all), resulting in the following graph.</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="gn_2.svg" alt="" />
+        
+        
+            <p class="image-caption">Second iteration of Girvan-Newman</p>
+        
+    </div>
+
+<p>Running an additional iteration would remove all the remaining edges.  The process by which we removed edges implies the following dendrogram.</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="dendrogram.svg" alt="" />
+        
+        
+            <p class="image-caption">Dendrogram formed by Girvan-Newman</p>
+        
+    </div>
+
+<p>This shows the hierarchical breakdown of the graph at all the different levels of the edge removals.  This in fact is the result of the Girvan-Newman algorithm; if we want to actual commit to some returned set of communities, we could cut this dendrogram at a specified level in the hierarchy, or perhaps decent the graphs until we find clusters of some prescribed size.  Regardless, the process itself has managed to break the graph down hierarchically into region that appear more and more “community-like” until we eventually just reach the nodes themselves.</p>
+
+<p>As a final note, due to the need to compute all pairs of shortest paths (at each iteration of the algorithm), Girvan-Newman is not particularly computationally efficient.  More efficient community detection algorithms, such as those based upon Louvain clustering, are currently a bit more common in the literature, but the Girvan-Newman algorithm is still conceptually a very useful approach.</p>
+
+<h2 id="the-networkx-graph-library">The NetworkX graph library</h2>
+
+<p>As a final point in these notes, we want to briefly highlight the <a href="http://networkx.github.io">NetworkX</a> graph library.  NetworkX is one of the most commonly-used graph libraries for Python, mainly because it has a huge collection of built-in algorithms (including, for instance, all the algorithms we considered in these notes, but of course also many many more.  It contains a simple interface for constructing both directed and undirected graphs, and performing a wide range of analyses.  It should be noted, however, that NetworkX is <em>not</em> suitable for truly large-scale graphs: the graph structures and underlying algorithms are all implemented in native Python, meaning that very large-scale operations will be significantly slower than highly optimized compiled code.</p>
+
+<h3 id="creating-graphs">Creating graphs</h3>
+
+<p>Let’s start by importing the library and creating a graph.  Since the many more complex algorithms differ for directed and undirected graphs, NetworkX has separate classes for the two categories of graphs: <code class="highlighter-rouge">Graph</code> and <code class="highlighter-rouge">DiGraph</code> objects.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="n">nx</span>
+<span class="n">G_undirected</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="n">G_directed</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Nodes in a NetworkX can be any hashable type (i.e., any type that can be used as a key in a dictionary, and in fact as we will see shortly, Network uses the adjacency dictionary representation of the graph internally).  We can add nodes using the <code class="highlighter-rouge">.add_node()</code> and <code class="highlighter-rouge">.add_nodes_from()</code> calls.  Similarly, we can remove nodes using the <code class="highlighter-rouge">.remove_node()</code> or <code class="highlighter-rouge">.remove_nodes_from()</code> calls.  Finally, a list of nodes can be given by the <code class="highlighter-rouge">.nodes()</code> call.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s">"A"</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">([</span><span class="s">"B"</span><span class="p">,</span><span class="s">"C"</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
+</code></pre></div></div>
+
+<pre>
+[&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;]
+
+</pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span><span class="o">.</span><span class="n">remove_nodes_from</span><span class="p">([</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"C"</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">([</span><span class="s">"A"</span><span class="p">,</span> <span class="s">"C"</span><span class="p">])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="s">"B"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
+</code></pre></div></div>
+
+<pre>
+[&#x27;B&#x27;]
+[&#x27;A&#x27;, &#x27;C&#x27;]
+
+</pre>
+
+<p>Edges can be added and removed from the graph using using the <code class="highlighter-rouge">.add_edge()</code> (add a single edge), <code class="highlighter-rouge">.add_edges_from()</code> (add a sequence of edges from a list), <code class="highlighter-rouge">.remove_edge()</code> and <code class="highlighter-rouge">remove_edges_from()</code> (similar to before).  Note that we can add edges between nodes that do not exist, and the relevant nodes are automatically added to the graph (for this reason, it is more common to simply add edges, rather than add nodes and edges separately, when constructing a graph).  Like the <code class="highlighter-rouge">.nodes()</code> call the <code class="highlighter-rouge">.edges()</code> call returns a list of edges in the graph, represented as tuples</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">),</span> <span class="p">(</span><span class="s">"B"</span><span class="p">,</span><span class="s">"C"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"A"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"D"</span><span class="p">)])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">())</span>
+</code></pre></div></div>
+
+<pre>
+[&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;, &#x27;D&#x27;]
+[(&#x27;A&#x27;, &#x27;B&#x27;), (&#x27;B&#x27;, &#x27;C&#x27;), (&#x27;C&#x27;, &#x27;A&#x27;), (&#x27;C&#x27;, &#x27;D&#x27;)]
+
+</pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span><span class="o">.</span><span class="n">remove_edge</span><span class="p">(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">())</span>
+</code></pre></div></div>
+
+<pre>
+[(&#x27;B&#x27;, &#x27;C&#x27;), (&#x27;C&#x27;, &#x27;A&#x27;), (&#x27;C&#x27;, &#x27;D&#x27;)]
+
+</pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span><span class="o">.</span><span class="n">remove_edges_from</span><span class="p">([(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">),</span> <span class="p">(</span><span class="s">"B"</span><span class="p">,</span><span class="s">"C"</span><span class="p">)])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(),</span> <span class="n">weight</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[(&#x27;C&#x27;, &#x27;A&#x27;), (&#x27;C&#x27;, &#x27;D&#x27;)]
+
+</pre>
+
+<p>Removing a node will remove all the edges connected to that node.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">),</span> <span class="p">(</span><span class="s">"B"</span><span class="p">,</span><span class="s">"C"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"A"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"D"</span><span class="p">)])</span>
+<span class="n">G</span><span class="o">.</span><span class="n">remove_node</span><span class="p">(</span><span class="s">"A"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">())</span>
+</code></pre></div></div>
+
+<pre>
+[(&#x27;B&#x27;, &#x27;C&#x27;), (&#x27;C&#x27;, &#x27;D&#x27;)]
+
+</pre>
+
+<p>We can also add weights to edges via the <code class="highlighter-rouge">weight</code> attribute, though as we see, this is just a special case of more general edge attributes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">),</span> <span class="p">(</span><span class="s">"B"</span><span class="p">,</span><span class="s">"C"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"A"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"D"</span><span class="p">)],</span> <span class="n">weight</span><span class="o">=</span><span class="s">"4.0"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="internal-representations-and-nodeedge-data">Internal representations and node/edge data</h3>
+
+<p>Internally, NetworkX uses the adjacency dictionary representation to represent the graph.  We can access these elements by just indexing into the graph object itself.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">),</span> <span class="p">(</span><span class="s">"B"</span><span class="p">,</span><span class="s">"C"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"A"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"D"</span><span class="p">)])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="p">[</span><span class="s">"C"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<pre>
+{&#x27;A&#x27;: {}, &#x27;D&#x27;: {}}
+
+</pre>
+
+<p>Remember that in an adjacency dictionary representation, the value for key “C” would be a dictionary, with keys corresponding to the nodes that “C” is connected to, just as we see above.  Note that by default, the value in this inner dictionary is itself an (empty) dictionary.  This dictionary is precisely where we store any relevant attributes for this edge.  For example, to add a “color” attribute to an edge, we just add the key/value pair to the edge.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span><span class="p">[</span><span class="s">"A"</span><span class="p">][</span><span class="s">"B"</span><span class="p">][</span><span class="s">"color"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"red"</span>
+</code></pre></div></div>
+
+<p>The weight of an edge is just another attribute of this type, but NetworkX will know to treat the “weight” parameter properly for several of the underlying graph algorithms.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span><span class="p">[</span><span class="s">"A"</span><span class="p">][</span><span class="s">"B"</span><span class="p">][</span><span class="s">"weight"</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="p">[</span><span class="s">"A"</span><span class="p">][</span><span class="s">"B"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<pre>
+{&#x27;weight&#x27;: 1.0, &#x27;color&#x27;: &#x27;red&#x27;}
+
+</pre>
+
+<p>Obviously, node attributes cannot be added in quite the same way: the <code class="highlighter-rouge">G["A"]</code> dictionary couldn’t be a method for adding node properties, as this is already how we represent the edges of node “A”.  Instead, if we want to add node properties we use the <code class="highlighter-rouge">.node</code> property.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="s">"A"</span><span class="p">][</span><span class="s">"color"</span><span class="p">]</span> <span class="o">=</span> <span class="s">"blue"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">node</span><span class="p">[</span><span class="s">"A"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<pre>
+{&#x27;color&#x27;: &#x27;blue&#x27;}
+
+</pre>
+
+<p>Finally, the <code class="highlighter-rouge">.nodes()</code> and <code class="highlighter-rouge">.edges()</code> lists by default will not return any of the attributes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">())</span>
+</code></pre></div></div>
+
+<pre>
+[&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;, &#x27;D&#x27;]
+[(&#x27;A&#x27;, &#x27;B&#x27;), (&#x27;B&#x27;, &#x27;C&#x27;), (&#x27;C&#x27;, &#x27;A&#x27;), (&#x27;C&#x27;, &#x27;D&#x27;)]
+
+</pre>
+
+<p>If we want to data returned too, we need to pass the <code class="highlighter-rouge">data=True</code> argument.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span>
+</code></pre></div></div>
+
+<pre>
+[(&#x27;A&#x27;, {&#x27;color&#x27;: &#x27;blue&#x27;}), (&#x27;B&#x27;, {}), (&#x27;C&#x27;, {}), (&#x27;D&#x27;, {})]
+[(&#x27;A&#x27;, &#x27;B&#x27;, {&#x27;weight&#x27;: 1.0, &#x27;color&#x27;: &#x27;red&#x27;}), (&#x27;B&#x27;, &#x27;C&#x27;, {}), (&#x27;C&#x27;, &#x27;A&#x27;, {}), (&#x27;C&#x27;, &#x27;D&#x27;, {})]
+
+</pre>
+
+<h3 id="drawing-graphs">Drawing graphs</h3>
+
+<p>NetworkX has some built in routines for drawing graphs, though generally speaking they do not produce the most visually compelling output.  Here is a simple illustration of the graph we have been working with.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">),</span> <span class="p">(</span><span class="s">"B"</span><span class="p">,</span><span class="s">"C"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"A"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"D"</span><span class="p">)])</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_0.svg" alt="" />
+        
+        
+    </div>
+
+<p>Direction are indicated by thick black lines, and positions are determined by randomly spacing out nodes.  It is somewhat functional for simple data exploration, but if you want to actually create nice drawings, you are better off using a graph visualization tool like <a href="https://www.graphviz.org/">Graphviz</a>, for which NetworkX has built-in support.  Here’s an example of using Graphviz to visualize a graph.  Note that to do this, you’ll need to install the <a href="https://pygraphviz.github.io/">pygraphviz</a> package with the <code class="highlighter-rouge">conda install pygraphviz</code> (this will also install Graphviz).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">SVG</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">nx_agraph</span><span class="o">.</span><span class="n">to_agraph</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="n">A</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="s">"out.svg"</span><span class="p">,</span> <span class="n">prog</span><span class="o">=</span><span class="s">"circo"</span><span class="p">)</span>
+<span class="n">SVG</span><span class="p">(</span><span class="s">"out.svg"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="output_1.svg" alt="" />
+        
+        
+    </div>
+
+<p>Much nicer.  There are a few different <code class="highlighter-rouge">prog</code> arguments you can try out, which create different positional locations.  The most common, in addition to the <code class="highlighter-rouge">circo</code> we used here, are <code class="highlighter-rouge">dot</code>, and <code class="highlighter-rouge">neato</code>.</p>
+
+<h3 id="graph-algorithms-1">Graph algorithms</h3>
+
+<p>Finally, NetworkX has a large number of graph algorithms built in.  A full list is here: <a href="https://networkx.github.io/documentation/stable/reference/algorithms/index.html">NetworkX algorithms</a>.  Let’s look at just the algorithms we have described so far in these notes.  First let’s consider the shortest path algorithm (generating either the path length or the path itself).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">),</span> <span class="p">(</span><span class="s">"B"</span><span class="p">,</span><span class="s">"C"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"A"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"D"</span><span class="p">)])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">shortest_path_length</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">"A"</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">shortest_path</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">"A"</span><span class="p">))</span>
+</code></pre></div></div>
+
+<pre>
+{&#x27;A&#x27;: 0, &#x27;B&#x27;: 1, &#x27;C&#x27;: 1, &#x27;D&#x27;: 2}
+{&#x27;A&#x27;: [&#x27;A&#x27;], &#x27;B&#x27;: [&#x27;A&#x27;, &#x27;B&#x27;], &#x27;C&#x27;: [&#x27;A&#x27;, &#x27;C&#x27;], &#x27;D&#x27;: [&#x27;A&#x27;, &#x27;C&#x27;, &#x27;D&#x27;]}
+
+</pre>
+
+<p>The PageRank implementation takes an <code class="highlighter-rouge">alpha</code> parameters which is $1-d$ is our notation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="s">"A"</span><span class="p">,</span><span class="s">"B"</span><span class="p">),</span> <span class="p">(</span><span class="s">"B"</span><span class="p">,</span><span class="s">"C"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"A"</span><span class="p">),</span> <span class="p">(</span><span class="s">"C"</span><span class="p">,</span><span class="s">"D"</span><span class="p">)])</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">pagerank</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Finally, Girvan-Newman is a bit more involved, as it return the dendrogram as a sequence of successive breakdowns of the nodes.  Note that this sequence removes one edge at a time, so it only matches our figure at a few different points in the network, but it is hopefully apparent that this is doing the same thing as in our previous algorithmic description.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> 
+                  <span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">),</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">),</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">),</span> <span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">),</span>
+                  <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">)])</span>
+<span class="n">communities</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">community</span><span class="o">.</span><span class="n">girvan_newman</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">communities</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijskstra’s algorithm</a></li>
+  <li><a href="http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf">Page et al., “The PageRank Citation Ranking: Bringing Order to the Web.”</a> (the PageRank paper)</li>
+  <li><a href="http://www.pnas.org/content/99/12/7821">Girvan and Newman, “Community structure in social and biological networks”</a> (original source for Girvan-Newman algorithm)</li>
+  <li><a href="http://networkx.github.io">NetworkX library</a></li>
+</ul>
+
+
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

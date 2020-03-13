@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Lectures</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Lectures" />
+    
+  
+     
+    <meta property="og:description" content="This page lists the class lectures and recitations, plus additional material (slides, notes, video) associated with each lecture. The lecture videos linked on this page require an Andrew ID to view: watch lectures using these links so we can track attendance. If you do not have an Andrew account, use..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/lectures/" />
+    <link rel="canonical" href="http://localhost:4000/lectures/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Lectures" />
+    
+  
+    
+    <meta name="twitter:description" content="This page lists the class lectures and recitations, plus additional material (slides, notes, video) associated with each lecture. The lecture videos linked on this page require an Andrew ID to view: watch lectures using these links so we can track attendance. If you do not have an Andrew account, use..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+  <div id="header-big-imgs" data-num-img=1
+    
+	  
+	  
+	    
+		  data-img-src-1="/img/datascience-bg.jpg"
+		
+	  
+    
+  ></div>
+
+
+<header class="header-section has-img">
+
+<div class="big-img intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          <h1>Lectures</h1>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class='img-desc'></span>
+</div>
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          
+          
+          <h1>Lectures</h1>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <p>This page lists the class lectures and recitations, plus additional material (slides, notes, video) associated with each lecture.</p>
+
+<p>The lecture videos linked on this page require an Andrew ID to view: watch lectures using these links so we can track attendance. If you do not have an Andrew account, use <a href="https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22618ea253-ca45-4b14-9f1d-aab501543bd2%22">this link</a> to view the lectures instead.</p>
+
+<p>If you want to watch the lecture but we have yet to update this page, the attendance-tracked videos can be found in <a href="https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%228a57a699-0986-428d-ac5f-aab500d49214%22">this Panopto folder</a>.</p>
+
+<h2 id="lectures">Lectures</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td><strong>Data collection and management</strong></td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>01</td>
+      <td>Aug 26</td>
+      <td>Introduction</td>
+      <td><a href="/slides/intro.pdf">slides</a></td>
+      <td><a href="/notes/intro/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3fb481a5-c076-46fc-b83a-aab501383990"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>02</td>
+      <td>Aug 28</td>
+      <td>Data collection and scraping</td>
+      <td><a href="/slides/data_collection.pdf">slides</a></td>
+      <td><a href="/notes/data_collection/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=6c60db58-ec48-45d6-8ac9-aab70137d9e2"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>Sep 02</td>
+      <td><em>Labor Day</em></td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>03</td>
+      <td>Sep 04</td>
+      <td>Jupyter Notebook lab</td>
+      <td><a href="/slides/jupyter.pdf">slides</a></td>
+      <td><a href="/notes/jupyter/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=bcc123be-0e29-4b33-8052-aabe0138a0b1"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>04</td>
+      <td>Sep 09</td>
+      <td>Relational data</td>
+      <td><a href="/slides/relational_data.pdf">slides</a></td>
+      <td><a href="/notes/relational_data/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=bfb0d92c-5d1b-4947-9ced-aac3013927dc"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>05</td>
+      <td>Sep 11</td>
+      <td>Visualization and data exploration</td>
+      <td><a href="/slides/visualization.pdf">slides</a></td>
+      <td><a href="/notes/visualization/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=9fedeb5f-6c1c-4ba2-9511-aac50138ad7f"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>06</td>
+      <td>Sep 16</td>
+      <td>Vectors, matrices, and linear algebra</td>
+      <td><a href="/slides/matrices.pdf">slides</a></td>
+      <td><a href="/notes/matrices/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=5a40b062-8e21-4e52-bd39-aaca01388aa8"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>07</td>
+      <td>Sep 18</td>
+      <td>Graph and network processing</td>
+      <td><a href="/slides/graphs.pdf">slides</a></td>
+      <td><a href="/notes/graphs/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=264a1577-20e6-407e-a0b3-aacc0138f1c0"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>08</td>
+      <td>Sep 23</td>
+      <td>Free text and natural language processing</td>
+      <td><a href="/slides/free_text.pdf">slides</a></td>
+      <td><a href="/notes/free_text/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f16751dd-fc9d-4075-9891-aad101387701"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>09</td>
+      <td>Sep 25</td>
+      <td>(continued)</td>
+      <td><a href="/slides/free_text.pdf">slides</a></td>
+      <td><a href="/notes/free_text/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b44645f6-a437-4ff1-ad61-aad30138d957"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td><strong>Statistical modeling and machine learning</strong></td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>Sep 30</td>
+      <td>Introduction to machine learning</td>
+      <td><a href="/slides/ml_intro.pdf">slides</a></td>
+      <td><a href="/notes/ml_intro/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=7939e1a9-d8fe-493d-90f4-aad500e6e8f0"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>Oct 02</td>
+      <td>(continued)</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=1d6666d8-7e0c-4a1d-a2fe-aada013848b6"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Oct 07</td>
+      <td>Linear classification</td>
+      <td><a href="/slides/linear_classification.pdf">slides</a></td>
+      <td><a href="/notes/linear_classification/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=d4eaccaf-d5e0-426f-9afa-aadf013aeb6b"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>Oct 09</td>
+      <td>Nonlinear modeling, cross-validation</td>
+      <td><a href="/slides/nonlinear_modeling.pdf">slides</a></td>
+      <td><a href="/notes/nonlinear_modeling/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2fc314de-ca84-4709-88cb-aae10138ac7c"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Oct 14</td>
+      <td>(continued)</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f9e82096-89f1-4e81-a16f-aae601396af2"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>Oct 16</td>
+      <td>Basics of probability</td>
+      <td><a href="/slides/probability.pdf">slides</a></td>
+      <td><a href="/notes/probability/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=abfd73df-20bb-4a25-b2d5-aae8013ac74d"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>Oct 21</td>
+      <td>(continued)</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=619200d6-045d-48b2-b091-aaed01396ffa"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>Oct 23</td>
+      <td><em>Class Cancelled</em></td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>Oct 28</td>
+      <td>Maximum likelihood estimation, naive Bayes</td>
+      <td><a href="/slides/mle.pdf">slides</a></td>
+      <td><a href="/notes/mle/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=4c947b20-4e29-4067-be63-aaf401398111"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Oct 30</td>
+      <td>Hypothesis testing and experimental design</td>
+      <td><a href="/slides/hypothesis_testing.pdf">slides</a></td>
+      <td><a href="/notes/hypothesis_testing/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=921caf93-4b20-426b-b3e9-aaf601381edb"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td><strong>Advanced modeling techniques</strong></td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td><em>Nov 01</em></td>
+      <td>Unsupervised learning</td>
+      <td><a href="/slides/unsupervised.pdf">slides</a></td>
+      <td><a href="/notes/unsupervised/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=29980978-06c5-4261-b22b-aaf800dcd929"><i class="fa fa-video-camera"></i></a></td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>Nov 04</td>
+      <td>Recommender systems</td>
+      <td><a href="/slides/recommender.pdf">slides</a></td>
+      <td><a href="/notes/recommender/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%228a57a699-0986-428d-ac5f-aab500d49214%22"><i class="fa fa-list-alt"></i></a></td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>Nov 06</td>
+      <td>Anomaly detection</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%228a57a699-0986-428d-ac5f-aab500d49214%22"><i class="fa fa-list-alt"></i></a></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td><strong>Additional topics</strong></td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>Nov 11</td>
+      <td>Big data and MapReduce methods</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%228a57a699-0986-428d-ac5f-aab500d49214%22"><i class="fa fa-list-alt"></i></a></td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>Nov 13</td>
+      <td>Deep learning</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%228a57a699-0986-428d-ac5f-aab500d49214%22"><i class="fa fa-list-alt"></i></a></td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>Nov 18</td>
+      <td>Decision trees, interpretable models</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%228a57a699-0986-428d-ac5f-aab500d49214%22"><i class="fa fa-list-alt"></i></a></td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>Nov 20</td>
+      <td><em>Class Cancelled</em></td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>Nov 25</td>
+      <td>Debugging data science</td>
+      <td> </td>
+      <td><a href="/notes/debugging/">notes</a></td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%228a57a699-0986-428d-ac5f-aab500d49214%22"><i class="fa fa-list-alt"></i></a></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>Nov 27</td>
+      <td><em>Thanksgiving</em></td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>Dec 02</td>
+      <td>A data science walkthrough</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%228a57a699-0986-428d-ac5f-aab500d49214%22"><i class="fa fa-list-alt"></i></a></td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>Dec 04</td>
+      <td>The future of data science and Q&amp;A</td>
+      <td> </td>
+      <td> </td>
+      <td><a href="https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%228a57a699-0986-428d-ac5f-aab500d49214%22"><i class="fa fa-list-alt"></i></a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><em>Italics</em> denote an online class.</p>
+
+<h2 id="recitations-and-office-hours">Recitations and Office Hours</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>HW 1</td>
+      <td>Sep 05, 6:00pm</td>
+      <td>DH 2210</td>
+      <td><a href="/notes/recitation_1/">notes</a></td>
+    </tr>
+    <tr>
+      <td>HW 2</td>
+      <td>Sep 17, 6:00pm</td>
+      <td>HH B103</td>
+      <td><a href="/notes/recitation_2/">notes</a></td>
+    </tr>
+    <tr>
+      <td>HW 3</td>
+      <td>Oct 10, 6:00pm</td>
+      <td>DH 2210</td>
+      <td><a href="/notes/recitation_3/">notes</a></td>
+    </tr>
+    <tr>
+      <td>HW 4</td>
+      <td>Nov 04, 6:00pm</td>
+      <td>GHC 4102</td>
+      <td><a href="/notes/recitation_4/">notes</a></td>
+    </tr>
+    <tr>
+      <td>HW 5</td>
+      <td>TBC</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+	    
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

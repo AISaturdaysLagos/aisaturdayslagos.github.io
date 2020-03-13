@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Recitation 2</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Recitation 2" />
+    
+  
+     
+    <meta property="og:description" content="# Recitation 2 ### Homework Tips * 20 minutes reading documentation will save you 8 hours of writing code * Be familiar with the [What Can I Ask On Diderot?](www.diderot.one/course/10/dosts/?is_inbox=yes&amp;dost=4658) policy * Talk to other students taking the course -- they can help you and you can help them. *..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/notes/recitation_2/" />
+    <link rel="canonical" href="http://localhost:4000/notes/recitation_2/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Recitation 2" />
+    
+  
+    
+    <meta name="twitter:description" content="# Recitation 2 ### Homework Tips * 20 minutes reading documentation will save you 8 hours of writing code * Be familiar with the [What Can I Ask On Diderot?](www.diderot.one/course/10/dosts/?is_inbox=yes&amp;dost=4658) policy * Talk to other students taking the course -- they can help you and you can help them. *..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <div class="intro-header"></div>
+
+<div role="main" class="container">
+  <style type="text/css">
+.targz-btn {
+    float: right;
+    border: thin solid #999;
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+}
+</style>
+
+
+<a href="recitation_2.tar.gz" class="targz-btn">&#x2b73; Download Jupyter Notebook</a>
+
+<h1 id="recitation-2">Recitation 2</h1>
+
+<h3 id="homework-tips">Homework Tips</h3>
+
+<ul>
+  <li>20 minutes reading documentation will save you 8 hours of writing code</li>
+  <li>Be familiar with the <a href="www.diderot.one/course/10/dosts/?is_inbox=yes&amp;dost=4658">What Can I Ask On Diderot?</a> policy</li>
+  <li>Talk to other students taking the course – they can help you and you can help them.</li>
+  <li>Look for the “Common Problems in Homework x” post on Diderot before asking questions online.</li>
+</ul>
+
+<h3 id="ta-hours">TA Hours</h3>
+
+<ul>
+  <li>Come this week! Don’t wait until the last week.</li>
+  <li>We will only help you with your code if you construct a <em>minimal counter-example</em> : a simplest test case that fails.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="n">sp</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">shuffle</span>
+</code></pre></div></div>
+
+<h2 id="views-and-data">Views and Data</h2>
+
+<p>Pandas loads data and presents you with a <em>view</em> of it. Most read-only operations on the <code class="highlighter-rouge">DataFrame</code> change the view but leave the underlying data intact; this allows you to work quickly (because copying is expensive) with very large datasets (big enough that you can only keep one copy in memory).</p>
+
+<p>Here’s an example using a modified version of the <a href="https://www.kaggle.com/AnalyzeBoston/crimes-in-boston">Crimes in Boston</a> dataset (CC0):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"crime_min.csv.gz"</span><span class="p">,</span> <span class="s">"rt"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">crime_file</span><span class="p">:</span>
+    <span class="n">crime</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">crime_file</span><span class="p">)</span>
+    <span class="n">crime</span><span class="p">[</span><span class="s">"date"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">crime</span><span class="p">[</span><span class="s">'date'</span><span class="p">],</span> <span class="n">infer_datetime_format</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"offense_codes.csv.gz"</span><span class="p">,</span> <span class="s">"rt"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">offense_file</span><span class="p">:</span>
+    <span class="n">offense</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">offense_file</span><span class="p">)</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s">"code"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">crime</span>
+</code></pre></div></div>
+
+<div><small><div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>incident_num</th>
+      <th>offense_code</th>
+      <th>district</th>
+      <th>date</th>
+      <th>lat</th>
+      <th>lon</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>I182070945</td>
+      <td>619</td>
+      <td>D14</td>
+      <td>2018-09-02 13:00:00</td>
+      <td>42.357791</td>
+      <td>-71.139371</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>I182070943</td>
+      <td>1402</td>
+      <td>C11</td>
+      <td>2018-08-21 00:00:00</td>
+      <td>42.306821</td>
+      <td>-71.060300</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>I182070941</td>
+      <td>3410</td>
+      <td>D4</td>
+      <td>2018-09-03 19:27:00</td>
+      <td>42.346589</td>
+      <td>-71.072429</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>I182070940</td>
+      <td>3114</td>
+      <td>D4</td>
+      <td>2018-09-03 21:16:00</td>
+      <td>42.334182</td>
+      <td>-71.078664</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>I182070938</td>
+      <td>3114</td>
+      <td>B3</td>
+      <td>2018-09-03 21:05:00</td>
+      <td>42.275365</td>
+      <td>-71.090361</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>319068</td>
+      <td>I050310906-00</td>
+      <td>3125</td>
+      <td>D4</td>
+      <td>2016-06-05 17:25:00</td>
+      <td>42.336951</td>
+      <td>-71.085748</td>
+    </tr>
+    <tr>
+      <td>319069</td>
+      <td>I030217815-08</td>
+      <td>111</td>
+      <td>E18</td>
+      <td>2015-07-09 13:38:00</td>
+      <td>42.255926</td>
+      <td>-71.123172</td>
+    </tr>
+    <tr>
+      <td>319070</td>
+      <td>I030217815-08</td>
+      <td>3125</td>
+      <td>E18</td>
+      <td>2015-07-09 13:38:00</td>
+      <td>42.255926</td>
+      <td>-71.123172</td>
+    </tr>
+    <tr>
+      <td>319071</td>
+      <td>I010370257-00</td>
+      <td>3125</td>
+      <td>E13</td>
+      <td>2016-05-31 19:35:00</td>
+      <td>42.302333</td>
+      <td>-71.111565</td>
+    </tr>
+    <tr>
+      <td>319072</td>
+      <td>142052550</td>
+      <td>3125</td>
+      <td>D4</td>
+      <td>2015-06-22 00:12:00</td>
+      <td>42.333839</td>
+      <td>-71.080290</td>
+    </tr>
+  </tbody>
+</table>
+<p>319073 rows × 6 columns</p>
+</div></small></div>
+
+<p>It uses a decent amount of memory:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">crime</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">str</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">crime</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span> <span class="o">//</span> <span class="mi">1024</span> <span class="o">//</span> <span class="mi">1024</span><span class="p">)</span> <span class="o">+</span> <span class="s">" MB"</span>
+</code></pre></div></div>
+
+<p>This doesn’t seem like much, but datasets get very large very quickly. Let’s select all reports of “GATHERING CAUSING ANNOYANCE”:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gca</span> <span class="o">=</span> <span class="n">crime</span><span class="p">[</span><span class="n">crime</span><span class="o">.</span><span class="n">offense_code</span> <span class="o">==</span> <span class="mi">3302</span><span class="p">]</span>
+<span class="n">gca</span>
+</code></pre></div></div>
+
+<div><small><div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>incident_num</th>
+      <th>offense_code</th>
+      <th>district</th>
+      <th>date</th>
+      <th>lat</th>
+      <th>lon</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>24331</td>
+      <td>I182044697</td>
+      <td>3302</td>
+      <td>D4</td>
+      <td>2018-06-09 14:36:00</td>
+      <td>42.351251</td>
+      <td>-71.073052</td>
+    </tr>
+    <tr>
+      <td>37259</td>
+      <td>I182030938</td>
+      <td>3302</td>
+      <td>D4</td>
+      <td>2018-04-25 12:54:00</td>
+      <td>42.341318</td>
+      <td>-71.078784</td>
+    </tr>
+    <tr>
+      <td>56534</td>
+      <td>I182010380</td>
+      <td>3302</td>
+      <td>A1</td>
+      <td>2018-02-08 17:20:00</td>
+      <td>42.355407</td>
+      <td>-71.063124</td>
+    </tr>
+    <tr>
+      <td>62970</td>
+      <td>I182003526</td>
+      <td>3302</td>
+      <td>E5</td>
+      <td>2018-01-13 23:31:00</td>
+      <td>42.286228</td>
+      <td>-71.124498</td>
+    </tr>
+    <tr>
+      <td>63220</td>
+      <td>I182003288</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2018-01-12 23:55:00</td>
+      <td>42.333220</td>
+      <td>-71.109439</td>
+    </tr>
+    <tr>
+      <td>150827</td>
+      <td>I172017387</td>
+      <td>3302</td>
+      <td>A1</td>
+      <td>2017-03-04 11:13:00</td>
+      <td>42.353110</td>
+      <td>-71.064323</td>
+    </tr>
+    <tr>
+      <td>160521</td>
+      <td>I172007037</td>
+      <td>3302</td>
+      <td>A1</td>
+      <td>2017-01-26 14:59:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>165072</td>
+      <td>I172002246</td>
+      <td>3302</td>
+      <td>A1</td>
+      <td>2017-01-09 12:04:00</td>
+      <td>42.356502</td>
+      <td>-71.062000</td>
+    </tr>
+    <tr>
+      <td>177200</td>
+      <td>I162095504</td>
+      <td>3302</td>
+      <td>C11</td>
+      <td>2016-11-22 05:20:00</td>
+      <td>42.304815</td>
+      <td>-71.072183</td>
+    </tr>
+    <tr>
+      <td>186443</td>
+      <td>I162085653</td>
+      <td>3302</td>
+      <td>A1</td>
+      <td>2016-10-19 12:18:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>222475</td>
+      <td>I162046897</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2016-06-13 23:56:00</td>
+      <td>42.327541</td>
+      <td>-71.099500</td>
+    </tr>
+    <tr>
+      <td>227620</td>
+      <td>I162041405</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2016-05-27 02:37:00</td>
+      <td>42.332590</td>
+      <td>-71.100314</td>
+    </tr>
+    <tr>
+      <td>247973</td>
+      <td>I162019520</td>
+      <td>3302</td>
+      <td>C11</td>
+      <td>2016-03-13 00:20:00</td>
+      <td>42.295072</td>
+      <td>-71.047497</td>
+    </tr>
+    <tr>
+      <td>251477</td>
+      <td>I162015700</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2016-02-27 23:12:00</td>
+      <td>42.329751</td>
+      <td>-71.098977</td>
+    </tr>
+    <tr>
+      <td>270919</td>
+      <td>I152102472</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2015-12-12 00:33:00</td>
+      <td>42.330570</td>
+      <td>-71.099591</td>
+    </tr>
+    <tr>
+      <td>271448</td>
+      <td>I152101891</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2015-12-09 23:38:00</td>
+      <td>42.331286</td>
+      <td>-71.102540</td>
+    </tr>
+    <tr>
+      <td>282045</td>
+      <td>I152090122</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2015-10-30 22:01:00</td>
+      <td>42.334278</td>
+      <td>-71.102952</td>
+    </tr>
+    <tr>
+      <td>285434</td>
+      <td>I152086419</td>
+      <td>3302</td>
+      <td>C11</td>
+      <td>2015-10-17 16:14:00</td>
+      <td>42.303565</td>
+      <td>-71.078681</td>
+    </tr>
+    <tr>
+      <td>285585</td>
+      <td>I152086244</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2015-10-17 01:10:00</td>
+      <td>42.329645</td>
+      <td>-71.097472</td>
+    </tr>
+    <tr>
+      <td>287262</td>
+      <td>I152084444</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2015-10-11 00:33:00</td>
+      <td>42.337683</td>
+      <td>-71.096668</td>
+    </tr>
+    <tr>
+      <td>291103</td>
+      <td>I152080302</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2015-09-26 17:45:00</td>
+      <td>42.327016</td>
+      <td>-71.105551</td>
+    </tr>
+    <tr>
+      <td>291260</td>
+      <td>I152080126</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2015-09-26 02:05:00</td>
+      <td>42.331513</td>
+      <td>-71.104949</td>
+    </tr>
+    <tr>
+      <td>291262</td>
+      <td>I152080124</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2015-09-26 02:59:00</td>
+      <td>42.334097</td>
+      <td>-71.102264</td>
+    </tr>
+    <tr>
+      <td>293338</td>
+      <td>I152077876</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2015-09-19 00:25:00</td>
+      <td>42.331348</td>
+      <td>-71.103225</td>
+    </tr>
+    <tr>
+      <td>293411</td>
+      <td>I152077794</td>
+      <td>3302</td>
+      <td>E5</td>
+      <td>2015-09-18 18:01:00</td>
+      <td>42.285370</td>
+      <td>-71.172440</td>
+    </tr>
+    <tr>
+      <td>295087</td>
+      <td>I152075994</td>
+      <td>3302</td>
+      <td>B2</td>
+      <td>2015-09-13 00:19:00</td>
+      <td>42.331836</td>
+      <td>-71.104329</td>
+    </tr>
+    <tr>
+      <td>310780</td>
+      <td>I152058711</td>
+      <td>3302</td>
+      <td>C6</td>
+      <td>2015-07-16 06:52:00</td>
+      <td>42.353208</td>
+      <td>-71.046471</td>
+    </tr>
+  </tbody>
+</table>
+</div></small></div>
+
+<p>We see that the created frame is a copy. It has a <em>weak reference</em> to the original DataFrame:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gca</span><span class="o">.</span><span class="n">_is_copy</span>
+</code></pre></div></div>
+
+<p>We print out the index and see that it refers to the selected rows in the original DataFrame by row id:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gca</span><span class="o">.</span><span class="n">index</span>
+</code></pre></div></div>
+
+<p>Making a copy creates a new backing array, independent of the original data:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gca_copy</span> <span class="o">=</span> <span class="n">gca</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">gca_copy</span><span class="o">.</span><span class="n">_is_copy</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+None
+
+</pre>
+
+<h2 id="databases-and-indices">Databases and Indices</h2>
+
+<p><code class="highlighter-rouge">pandas</code> and RDBMS software work off of indices. These exist to speed up queries.</p>
+
+<p>The reason indexes are so important is because of <a href="https://en.wikipedia.org/wiki/Database_normalization">data normalization</a>. By allowing us to efficiently connect information dispersed over several tables, we can store data in a way that minimizes redundancy and maximizes throughput. Here’s a <a href="https://support.microsoft.com/en-us/help/283878/description-of-the-database-normalization-basics">basic introduction</a> to the concept.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">speed_crime</span> <span class="o">=</span> <span class="n">crime</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">speed_crime</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">speed_crime</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+<span class="nb">str</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">speed_crime</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span> <span class="o">//</span> <span class="mi">1024</span> <span class="o">//</span> <span class="mi">1024</span><span class="p">)</span> <span class="o">+</span> <span class="s">" MB"</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">timeit</span>
+<span class="n">entries</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">fr</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s">"2016-11-01"</span><span class="p">),</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="s">"2016-12-01"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">speed_crime</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&gt;</span> <span class="n">fr</span><span class="p">)</span>  <span class="ow">and</span> <span class="p">(</span><span class="n">idx</span> <span class="o">&lt;</span> <span class="n">to</span><span class="p">):</span>
+        <span class="n">entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">timeit</span>
+<span class="n">speed_crime</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">"2016-11-01"</span><span class="p">:</span><span class="s">"2016-12-01"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<pre>
+2.52 ms ± 32.4 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+
+</pre>
+
+<p>It’s a little quicker! This is why you’re expected to complete <code class="highlighter-rouge">hw2_time_series</code> without looping over the data.</p>
+
+<p>The chief gains in this are from <em>vectorization</em> (which is running as much of the code sequentially as low-level as possible), and then from <em>indexing</em> (which is preparing a lookup data structure to find parts of the data more efficiently).</p>
+
+<h3 id="join-operation">Join operation</h3>
+
+<p>The use of an index allows us to <strong>join</strong> two tables together using common column values. Lets take a look at the <code class="highlighter-rouge">offense</code> table:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">offense</span><span class="p">[</span><span class="n">offense</span><span class="o">.</span><span class="n">code</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="mi">3302</span><span class="p">,</span> <span class="mi">3116</span><span class="p">,</span> <span class="mi">1103</span><span class="p">,</span> <span class="mi">3122</span><span class="p">,</span> <span class="mi">2401</span><span class="p">])]</span>
+</code></pre></div></div>
+
+<div><small><div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>code</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>6</td>
+      <td>1103</td>
+      <td>CONFIDENCE GAMES</td>
+    </tr>
+    <tr>
+      <td>135</td>
+      <td>2401</td>
+      <td>AFFRAY</td>
+    </tr>
+    <tr>
+      <td>261</td>
+      <td>3116</td>
+      <td>HARBOR INCIDENT / VIOLATION</td>
+    </tr>
+    <tr>
+      <td>266</td>
+      <td>3122</td>
+      <td>AIRCRAFT INCIDENTS</td>
+    </tr>
+    <tr>
+      <td>299</td>
+      <td>3302</td>
+      <td>GATHERING CAUSING ANNOYANCE</td>
+    </tr>
+  </tbody>
+</table>
+</div></small></div>
+
+<p>We’ve previously set the <code class="highlighter-rouge">code</code> as the index:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">offense_indexed</span> <span class="o">=</span> <span class="n">offense</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">"code"</span><span class="p">)</span>
+<span class="n">offense_indexed</span>
+</code></pre></div></div>
+
+<div><small><div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+    </tr>
+    <tr>
+      <th>code</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1001</td>
+      <td>COUNTERFEITING</td>
+    </tr>
+    <tr>
+      <td>1002</td>
+      <td>FORGERY OR UTTERING</td>
+    </tr>
+    <tr>
+      <td>1101</td>
+      <td>PASSING WORTHLESS CHECK</td>
+    </tr>
+    <tr>
+      <td>1102</td>
+      <td>FRAUD - FALSE PRETENSE</td>
+    </tr>
+    <tr>
+      <td>1103</td>
+      <td>CONFIDENCE GAMES</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>905</td>
+      <td>ARSON - OTHER COMMERCIAL</td>
+    </tr>
+    <tr>
+      <td>906</td>
+      <td>ARSON - COMMUNITY/PUB.STRUC.</td>
+    </tr>
+    <tr>
+      <td>907</td>
+      <td>ARSON - ALL OTHER STRUCTURES</td>
+    </tr>
+    <tr>
+      <td>920</td>
+      <td>ARSON - MOTOR VEHICLES</td>
+    </tr>
+    <tr>
+      <td>930</td>
+      <td>ARSON - OTHER</td>
+    </tr>
+  </tbody>
+</table>
+<p>425 rows × 1 columns</p>
+</div></small></div>
+
+<p>Now we can <code class="highlighter-rouge">join</code> the two tables, selecting the <code class="highlighter-rouge">offense.name</code> where <code class="highlighter-rouge">crime.offense_code == offense.code</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">crime</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">offense_indexed</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">"offense_code"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">"left"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div><small><div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>incident_num</th>
+      <th>offense_code</th>
+      <th>district</th>
+      <th>date</th>
+      <th>lat</th>
+      <th>lon</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>I182070945</td>
+      <td>619</td>
+      <td>D14</td>
+      <td>2018-09-02 13:00:00</td>
+      <td>42.357791</td>
+      <td>-71.139371</td>
+      <td>LARCENY ALL OTHERS</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>I182070943</td>
+      <td>1402</td>
+      <td>C11</td>
+      <td>2018-08-21 00:00:00</td>
+      <td>42.306821</td>
+      <td>-71.060300</td>
+      <td>VANDALISM</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>I182070941</td>
+      <td>3410</td>
+      <td>D4</td>
+      <td>2018-09-03 19:27:00</td>
+      <td>42.346589</td>
+      <td>-71.072429</td>
+      <td>TOWED MOTOR VEHICLE</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>I182070940</td>
+      <td>3114</td>
+      <td>D4</td>
+      <td>2018-09-03 21:16:00</td>
+      <td>42.334182</td>
+      <td>-71.078664</td>
+      <td>INVESTIGATE PROPERTY</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>I182070938</td>
+      <td>3114</td>
+      <td>B3</td>
+      <td>2018-09-03 21:05:00</td>
+      <td>42.275365</td>
+      <td>-71.090361</td>
+      <td>INVESTIGATE PROPERTY</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>319068</td>
+      <td>I050310906-00</td>
+      <td>3125</td>
+      <td>D4</td>
+      <td>2016-06-05 17:25:00</td>
+      <td>42.336951</td>
+      <td>-71.085748</td>
+      <td>WARRANT ARREST</td>
+    </tr>
+    <tr>
+      <td>319069</td>
+      <td>I030217815-08</td>
+      <td>111</td>
+      <td>E18</td>
+      <td>2015-07-09 13:38:00</td>
+      <td>42.255926</td>
+      <td>-71.123172</td>
+      <td>MURDER, NON-NEGLIGIENT MANSLAUGHTER</td>
+    </tr>
+    <tr>
+      <td>319070</td>
+      <td>I030217815-08</td>
+      <td>3125</td>
+      <td>E18</td>
+      <td>2015-07-09 13:38:00</td>
+      <td>42.255926</td>
+      <td>-71.123172</td>
+      <td>WARRANT ARREST</td>
+    </tr>
+    <tr>
+      <td>319071</td>
+      <td>I010370257-00</td>
+      <td>3125</td>
+      <td>E13</td>
+      <td>2016-05-31 19:35:00</td>
+      <td>42.302333</td>
+      <td>-71.111565</td>
+      <td>WARRANT ARREST</td>
+    </tr>
+    <tr>
+      <td>319072</td>
+      <td>142052550</td>
+      <td>3125</td>
+      <td>D4</td>
+      <td>2015-06-22 00:12:00</td>
+      <td>42.333839</td>
+      <td>-71.080290</td>
+      <td>WARRANT ARREST</td>
+    </tr>
+  </tbody>
+</table>
+<p>319073 rows × 7 columns</p>
+</div></small></div>
+
+<h2 id="once-more-with-sqlite">Once More With SQLite</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">':memory:'</span><span class="p">)</span>
+<span class="n">crime</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s">"crime"</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s">"replace"</span><span class="p">)</span>
+<span class="n">offense</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s">"offense"</span><span class="p">,</span> <span class="n">conn</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s">"replace"</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"PRAGMA automatic_index = false;"</span><span class="p">)</span> <span class="c"># Disable automatic indexing for this demo</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SELECT * FROM `crime`;"</span><span class="p">)</span><span class="o">.</span><span class="n">fetchmany</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SELECT * FROM `offense`;"</span><span class="p">)</span><span class="o">.</span><span class="n">fetchmany</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="sqlite-indexes-and-join">SQLite Indexes and Join</h3>
+
+<p>We can set SQLite indexes up pretty easily. Lets try the join query from earlier without one first:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">join_query</span> <span class="o">=</span> <span class="s">"SELECT * FROM `crime` LEFT JOIN `offense` ON crime.`offense_code` = offense.`code`;"</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">join_query</span><span class="p">)</span><span class="o">.</span><span class="n">fetchmany</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>It works, but how does it happen? We can use the <code class="highlighter-rouge">EXPLAIN QUERY PLAN</code> instruction to get SQLite to tell us its strategy.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">f</span><span class="s">"EXPLAIN QUERY PLAN {join_query}"</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">SCAN TABLE</code> means it searches the table by looping over it, the slowest way of doing this. What this means is that SQLite has to loop over the <code class="highlighter-rouge">offense</code> table once for each entry in <code class="highlighter-rouge">crime</code>.</p>
+
+<p>Now lets create an index and do this again:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">f</span><span class="s">"CREATE INDEX code_index ON offense(`code`)"</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">f</span><span class="s">"EXPLAIN QUERY PLAN {join_query}"</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">SEARCH TABLE</code> means that the index <code class="highlighter-rouge">code_index</code> is used to efficiently locate entries inside <code class="highlighter-rouge">offense</code>. This means that SQLite has to efficiently find entries from <code class="highlighter-rouge">offense</code> for each entry in <code class="highlighter-rouge">crime</code>.</p>
+
+<h2 id="matrices-and-sparse-representation">Matrices and Sparse Representation</h2>
+
+<p>There’s a basic problem with matrices. An $n \times m$ matrix of type <code class="highlighter-rouge">float64</code> takes $n\times m\times 8$ bytes of memory. That adds up to a lot of space.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{pmatrix}
+1 & 2 &  0 &  0 &  0 &  0 \\
+ 0 & 3 &  0 & 4 &  0 &  0 \\
+ 0 &  0 & 5 & 6 & 7 &  0 \\
+ 0 &  0 &  0 &  0 &  0 & 8 \\
+\end{pmatrix} %]]></script>
+
+<p>That’s why we need <em>sparse representations</em>.</p>
+
+<h3 id="different-representations">Different Representations</h3>
+
+<p>There are two different sparse representations we’re going to use.</p>
+
+<p>The first is the <strong>Coordinate</strong> or <code class="highlighter-rouge">i, j, v</code> format. It’s called that because we store the matrix as pairs of <code class="highlighter-rouge">i, j</code> coordinates and <code class="highlighter-rouge">v</code> values.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">j</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Lets convert the matrix to the dense form to see it:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">todense</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"0"</span><span class="p">,</span> <span class="s">" "</span><span class="p">))</span>
+</code></pre></div></div>
+
+<pre>
+[[            1]
+ [  2          ]
+ [        3    ]
+ [      4      ]
+ [    5        ]
+ [6            ]
+ [          7  ]]
+
+</pre>
+
+<p>We can create matrices that are very large. A $10,000\times 10,000$ matrix of <code class="highlighter-rouge">float64</code> will take 1.6 GB of memory to create.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">size</span><span class="o">=</span><span class="mi">20000</span>
+<span class="n">i</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">))</span> <span class="o">*</span> <span class="mi">200</span>
+<span class="n">j</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">))</span> <span class="o">*</span> <span class="mi">200</span>
+<span class="n">v</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="mi">200</span>
+<span class="n">shuffle</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">coo_matrix</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+<span class="n">m</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">str</span><span class="p">((</span><span class="n">m</span><span class="o">.</span><span class="n">col</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">row</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">nbytes</span><span class="p">)</span> <span class="o">//</span> <span class="mi">1024</span> <span class="o">//</span> <span class="mi">1024</span><span class="p">)</span> <span class="o">+</span> <span class="s">" MB"</span>
+</code></pre></div></div>
+
+<p>The most important operation with matrices is matrix multiplication. If we try to use this format to perform matrix multiplication, we’ll have to repeatedly search over the entire list. We need a more efficient way to store the sparse values.</p>
+
+<p>That’s where the <strong>Compressed Sparse Row</strong> representation comes in:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">md</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">tocsr</span><span class="p">()</span>
+<span class="n">md</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">str</span><span class="p">((</span><span class="n">md</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">+</span> <span class="n">md</span><span class="o">.</span><span class="n">indptr</span><span class="o">.</span><span class="n">nbytes</span> <span class="o">+</span> <span class="n">md</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">nbytes</span><span class="p">)</span> <span class="o">//</span> <span class="mi">1024</span> <span class="o">//</span> <span class="mi">1024</span><span class="p">)</span> <span class="o">+</span> <span class="s">" MB"</span>
+</code></pre></div></div>
+
+<p>The Compressed Sparse Row representation stores each row as a (sometimes sorted) list of <code class="highlighter-rouge">(index, values)</code> pairs. This allows for much quicker math when the size and density of the matrix is sufficiently large. Here we try it on a matrix of about 1% density:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">timeit</span>
+<span class="n">m</span> <span class="o">*</span> <span class="n">m</span>
+</code></pre></div></div>
+
+<pre>
+8.97 s ± 25.8 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
+</pre>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%%</span><span class="n">timeit</span>
+<span class="n">md</span> <span class="o">*</span> <span class="n">md</span>
+</code></pre></div></div>
+
+<pre>
+2.76 s ± 6.74 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
+</pre>
+
+
+
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

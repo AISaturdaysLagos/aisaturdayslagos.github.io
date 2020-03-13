@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Project</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Project" />
+    
+  
+     
+    <meta property="og:description" content="A major component of 15-388/688 is a final group project in which you investigate some applied data science problem and gain experience with the full data science pipeline. This is an open-ended project, where you find some data and select a method of analysis, apply it, and draw conclusions about..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/assignments/project/" />
+    <link rel="canonical" href="http://localhost:4000/assignments/project/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Project" />
+    
+  
+    
+    <meta name="twitter:description" content="A major component of 15-388/688 is a final group project in which you investigate some applied data science problem and gain experience with the full data science pipeline. This is an open-ended project, where you find some data and select a method of analysis, apply it, and draw conclusions about..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+  <div id="header-big-imgs" data-num-img=1
+    
+	  
+	  
+	    
+		  data-img-src-1="/img/datascience-bg.jpg"
+		
+	  
+    
+  ></div>
+
+
+<header class="header-section has-img">
+
+<div class="big-img intro-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          <h1>Project</h1>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class='img-desc'></span>
+</div>
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          
+          
+          <h1>Project</h1>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <p>A major component of 15-388/688 is a final group project in which you investigate some applied data science problem and gain experience with the full data science pipeline. This is an open-ended project, where you find some data and select a method of analysis, apply it, and draw conclusions about the data.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Release date</th>
+      <th>Due date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Proposal</td>
+      <td>Oct 17</td>
+      <td>Nov 1</td>
+    </tr>
+    <tr>
+      <td>Video</td>
+      <td> </td>
+      <td>Dec 5</td>
+    </tr>
+    <tr>
+      <td>Video Screening</td>
+      <td> </td>
+      <td>Dec 6</td>
+    </tr>
+    <tr>
+      <td>Video Feedback</td>
+      <td>Dec 6</td>
+      <td>Dec 8</td>
+    </tr>
+    <tr>
+      <td>Report</td>
+      <td> </td>
+      <td>Dec 11</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>There will be a mandatory video screening section for all students in the Pittsburgh campus, on Dec 6 from 4:30 PM to 7:30PM in Rashid Auditorium (GHC 4401). Food will be provided, with vegetarian options.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>If you have any questions about the requirements, please talk to the course staff.</p>
+
+<h3 id="topic--data">Topic &amp; Data</h3>
+
+<ol>
+  <li>The focus of the project should be on analyzing a data set to ask some underlying question about the data or the process generating the data.</li>
+  <li>While you can use advanced algorithms to help you answer this question, the focus on the final project should not be solely on the algorithms themselves, but should be in some practical question you want to understand from the data itself.</li>
+  <li>The project must analyze a real data set, not a synthetic data set. You may collect your data from a computational process.</li>
+  <li>You cannot use a pre-curated data set, such as data sets from Kaggle or something similar (unless you substantially build on the data).</li>
+  <li>You can pick topics that overlap with your existing areas of research.</li>
+</ol>
+
+<h3 id="groups">Groups</h3>
+
+<ol>
+  <li>The final project should be done in groups of 2-3 students.</li>
+  <li>One student in each group will submit the project proposal and the Andrew IDs of other students in the group.</li>
+</ol>
+
+<p>We will not approve any groups of four or more students. In very rare cases, we may approve students who want to work on a project alone, but there must be a well-founded reason for this beyond not being able to find a group to work on a particular topic of interest: for example, one student was approved to work alone on data covered by federal privacy regulations.</p>
+
+<p>Students taking the course as 15-388 and 15-688 can be in the same group.</p>
+
+<p>Students auditing the course (who are <strong>not required</strong> to do this project) may not be in the same group as students not auditing the course.</p>
+
+<h2 id="proposal">Proposal</h2>
+
+<p>You should submit your proposal and your group <a href="https://forms.gle/d9YXYeeAZE6kH4jx7">here</a> by midnight, Nov 1. Only one student in each group needs to submit the form.</p>
+
+<p>The proposal should be no more than 1200 characters. In it, you should briefly cover:</p>
+
+<ol>
+  <li>what underlying question you are trying to answer,</li>
+  <li>how your data will be collected, and–</li>
+  <li>what analysis you will be performing</li>
+</ol>
+
+<h2 id="products">Products</h2>
+
+<p>To complete this project you must communicate your findings through a video and a report.</p>
+
+<h3 id="video-presentations">Video presentations</h3>
+
+<p>You must submit a 90 second video explaining your work. This can be:</p>
+
+<ul>
+  <li>a recording of a slideshow with voiceover,</li>
+  <li>a screen-capture of the system you’ve built,</li>
+  <li>an animation explaining your project, or</li>
+  <li>anything as long as it is a video file and it lasts no more than 90 seconds.</li>
+</ul>
+
+<p>You must submit a link to this video hosted on YouTube for screening during class.</p>
+
+<p>You are required to provide simple feedback to 5 other student presentations. We will randomly assign other groups for you to provide feedback for. The provided feedback will not affect your grade, but will be anonymously provided to the group.</p>
+
+<h3 id="final-report">Final Report</h3>
+
+<p>The final report must be submitted as an <a href="https://nbviewer.jupyter.org/">nbviewer</a> link to a Jupyter notebook. We recommend you work in a public GitHub (or similar) repository and simply link to the final report, but you can also upload your final draft to a server.</p>
+
+<p>The instructors will be grading your notebook using a static rendering of the notebook. The notebook should still be written as a traditional report, just one that makes reproducing your report much easier for anyone who is interested in diving more deeply into your work. It should be readable as a narrative explaining your project without requiring the reader to run any code. We (or your peer reviewers) may request your report, data, additional code, and requirements file.</p>
+
+<p>The final report has a constraint of 2000 words of prose, and no limit on the amount of code. However, if you develop very large code blocks as part of the project, you should include them in a separate Python file. Your notebook should be executable in cell order.</p>
+
+<h2 id="grading">Grading</h2>
+
+<p>We will grade your report and video based on this rubric:</p>
+
+<ul>
+  <li>Does the project clearly identify the problem?</li>
+  <li>Does the project clearly describe the relevant data and its collection?</li>
+  <li>Does the project clearly explain how the data can be used to draw conclusions about the underlying system?</li>
+  <li>Does the report clearly explain the work that was done?</li>
+  <li>Is the project innovative or novel?</li>
+  <li>Does the project use techniques presented in the course (or clearly related to topics covered in the course) to understand and analyze the data for this problem?</li>
+  <li>Does the report explain how this work fits around related work in this subject area?</li>
+  <li>Does the report provide directions for further investigation?</li>
+</ul>
+
+<h3 id="plagiarism">Plagiarism</h3>
+
+<p>Plagiarism, the unattributed copying of ideas, prose, pictures, program code, or any product of human effort, is forbidden. If you use anything that you did not produce yourself, you are expected to cite it. This includes (but is not limited to) stock images, graphics, functions, data cleaning/preprocessing steps, and animations.</p>
+
+<p>For your report, you must cite everything (1) where it is used and (2) in a section at the bottom. In your video, you should include an attribution when the external product is visible or audible, and additionally in your video description.</p>
+
+<p>Students who are caught plagiarizing will receive a zero for the assignment and will be referred to the Office of the Vice President for Student Affairs for <a href="https://www.cmu.edu/student-affairs/theword/academic-discipline/index.html">Academic Disciplinary Actions</a>.</p>
+
+<h3 id="breakdown">Breakdown</h3>
+
+<p>The score breakdown is:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th style="text-align: right">Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Proposal</td>
+      <td style="text-align: right">5%</td>
+    </tr>
+    <tr>
+      <td>Video</td>
+      <td style="text-align: right">20%</td>
+    </tr>
+    <tr>
+      <td>Video feedback given</td>
+      <td style="text-align: right">5%</td>
+    </tr>
+    <tr>
+      <td>Report (Instructor Feedback)</td>
+      <td style="text-align: right">70%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Note that the video feedback score is based on the feedback you <em>give</em> other groups, not the feedback you receive from them.</p>
+
+<h2 id="past-projects">Past Projects</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Title</td>
+      <td>Students</td>
+      <td>Link</td>
+    </tr>
+    <tr>
+      <td>MineB4USign</td>
+      <td><code class="highlighter-rouge">saavasar</code>, <code class="highlighter-rouge">gshivana</code>, <code class="highlighter-rouge">sumitb</code></td>
+      <td><a href="https://nbviewer.jupyter.org/github/bhramoss/MineB4USign/blob/master/Project.ipynb">link</a></td>
+    </tr>
+    <tr>
+      <td>Exploring Fake News</td>
+      <td><code class="highlighter-rouge">ngekakis</code>, <code class="highlighter-rouge">sayalave</code>, <code class="highlighter-rouge">yashk</code></td>
+      <td><a href="https://nbviewer.jupyter.org/github/ngekakis/PDS_FakeNews/blob/master/Final%20Project%20-%20PDS%20v3.ipynb">link</a></td>
+    </tr>
+    <tr>
+      <td>Academic Performance of Universities Based on Alumni Data</td>
+      <td><code class="highlighter-rouge">hanqingc</code>, <code class="highlighter-rouge">yizhouw1</code>, <code class="highlighter-rouge">hwu4</code></td>
+      <td><a href="https://nbviewer.jupyter.org/github/hanqingc/15688_project/blob/master/Alumni.ipynb">link</a></td>
+    </tr>
+    <tr>
+      <td>Predicting Patient Outcomes of Artificial Heart Implant</td>
+      <td><code class="highlighter-rouge">qyang1</code></td>
+      <td><a href="http://nbviewer.jupyter.org/github/yang-qian/15-688-Final/blob/master/15-688Report.ipynb">link</a></td>
+    </tr>
+    <tr>
+      <td>Building Reputation on StackOverflow</td>
+      <td><code class="highlighter-rouge">shubhamt</code>, <code class="highlighter-rouge">vikasha</code>, <code class="highlighter-rouge">yashovac</code></td>
+      <td><a href="https://nbviewer.jupyter.org/github/stripathi08/CMU_15688/blob/master/Building%20Reputation%20on%20StackOverflow.ipynb">link</a></td>
+    </tr>
+  </tbody>
+</table>
+
+	    
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

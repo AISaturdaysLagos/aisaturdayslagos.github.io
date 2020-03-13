@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Free Text</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Free Text" />
+    
+  
+     
+    <meta property="og:description" content="# Free Text This set of notes focuses on processing free text data. In addition to the more structured relational data and graphs we have discussed previously, free text makes up one of the most common types of &quot;widely available&quot; data: web pages, unstructured &quot;comment&quot; fields in many relational databases,..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/notes/free_text/" />
+    <link rel="canonical" href="http://localhost:4000/notes/free_text/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Free Text" />
+    
+  
+    
+    <meta name="twitter:description" content="# Free Text This set of notes focuses on processing free text data. In addition to the more structured relational data and graphs we have discussed previously, free text makes up one of the most common types of &quot;widely available&quot; data: web pages, unstructured &quot;comment&quot; fields in many relational databases,..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <div class="intro-header"></div>
+
+<div role="main" class="container">
+  <style type="text/css">
+.targz-btn {
+    float: right;
+    border: thin solid #999;
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+}
+</style>
+
+
+<a href="free_text.tar.gz" class="targz-btn">&#x2b73; Download Jupyter Notebook</a>
+
+<h1 id="free-text">Free Text</h1>
+
+<p>This set of notes focuses on processing free text data.  In addition to the more structured relational data and graphs we have discussed previously, free text makes up one of the most common types of “widely available” data: web pages, unstructured “comment” fields in many relational databases, and many other easily-obtained large sources of data naturally come in free text form.  The notable difference, of course ,is that unlike the data types we have discussed before, free text lacks the “easily extractable” structure inherent in the previous types of data we have considered.</p>
+
+<p>This is not to say, of course, that free text data lacks structure.  Just the opposite: by its very definition free text usually needs to have meaning to the people who are reading that data.  But the task of actually understanding this structure is a problem that is still beyond the scope of “generic” data science tools, because it often involves human-level intelligence (or at least bringing to bear an enormous amount of external context) to understand the meaning behind the text.</p>
+
+<p>This is also naturally a debatable point, and this particular perspective on free text data is one that may need to be reconsidered based upon advances in the upcoming years.  For instance, we will later in the course deal with algorithms for processing image data for data science tasks, but only after we have (briefly, at a very high level) covered some methods for deep learning; indeed, handling images will be one of the primary use cases for deep learning in data science.  And there are already some instances of these techniques that appear in this lecture too: the word2vec model (which is an addition to the lecture this year), <em>is</em> in fact a neural network model that we will use to understand text data.</p>
+
+<p>But the primary difference is that, in my opinion, it is still the case that <em>most</em> tasks involving free text analysis in data science can be carried out using relatively simple methods that we can easily understand without any reference to complex machine learning: methods like bag-of-word models, TFIDF vectors, and (simple n-gram) language models.  It may be that some day soon “off-the-shelf” deep learning methods will be so superior to these approaches that there is no need to bother with anything else, but in my experience we are not quite there yet, so this lecture still focuses substantially on the simple approaches, even if it also mentions (without a full derivation) models like word2vec.</p>
+
+<h2 id="free-text-in-data-science">Free text in data science</h2>
+
+<p>As mentioned above, the goal that we will consider here of using free text in data science is to extract some meaningful information from the text, <em>without</em> any deep understanding of its meaning.  The reason for this is simple: extracting deep understanding from text is hard.</p>
+
+<h3 id="natural-language-processingunderstanding">Natural language processing/understanding</h3>
+<p>The general field of Natural Language Processing (some might differentiate between NLP and “natural language understanding”, but for our purposes here you can think of these synonymously) looks to truly understand the structure behind free text, e.g. perform tasks like parse the sentences grammatically, describe the general entities and properties that the text is referring to, etc.  But it is easy to come up with examples of why this can be hard.  For example, consider he following example, known as a Winograd schema:</p>
+
+<blockquote>
+  <p>The city councilmen refused the demonstrators a permit because they [feared/advocated] violence.</p>
+</blockquote>
+
+<p>If you read the sentence:</p>
+
+<blockquote>
+  <p>The city councilmen refused the demonstrators a permit because they feared violence.</p>
+</blockquote>
+
+<p>then it is fairly obviously that the “they” here refers to the city councilmen; fearing violence would not be a reason for denying someone a permit, so clearly it is the councilmen that fear violence.  On the other hand, in the sentence</p>
+
+<blockquote>
+  <p>The city councilmen refused the demonstrators a permit because they advocated violence.</p>
+</blockquote>
+
+<p>the “they” term clearly applies to the demonstrators (the city councilmen presumably would not advocate for violence, let along deny someone a permit because they, the councilmen, were advocating violence).  The point of all this (and this was the original point of these examples, which were originally proposed by Terry Winograd in 1972) is that when we do something “simple”, like parse a sentence, we bring to bear an enormous amount of outside knowledge and context to this action.  Unlike say, XML documents, there is no internally-specified format that makes language unambiguous; it could be unambiguous only because of external context and knowledge, or it could even be completely ambiguous.  Or in a different vein, there can be grammatically-incorrect sentences that still have clear syntactic meaning, and there can be grammatically-correct sentences that are meaningful.</p>
+
+<h3 id="free-text-in-data-science-1">Free text in data science</h3>
+
+<p>Fortunately, for many data science tasks, we can still extract considerable information from text <em>while only understanding it at an extremely rudimentary level</em>.  Consider the following two reviews for the same movie:</p>
+
+<blockquote>
+  <p>… truly, a stunning exercise in large-scale filmmaking; a beautifully-assembled picture in which Abrams combines a magnificent cast with a marvelous flair for big-screen, sci-fi storytelling.</p>
+</blockquote>
+
+<p>and</p>
+
+<blockquote>
+  <p>It’s loud and full of vim – but a little hollow and heartless.</p>
+</blockquote>
+
+<p>Understanding that the first review is positive, while the second review is negative, doesn’t take any deep understand of the language itself, it can be done by simple keyword lookup: “stunning” and “marvelous” are associated with a positive review, while “hollow” and “heartless” are associated with negative reviews.  Now, of course it’s possible to use more complex language to signify a positive review while using some “negative” words, with statements like, “not at all boring”.  But people don’t usually write exclusively in this manner (doing so would be “not at all clear”), so that the general sentiment of text can still come through very easily even with a few instances where the words themselves can throw you off.</p>
+
+<p>With this as context, these notes cover three different examples of methods for extracting some information from free text, without truly understanding much of the language itself.  These methods are becoming standard tools in data science, and have the advantage of being relatively easy to set up and begin processing with.  These methods are:</p>
+
+<ol>
+  <li>Bag of words models and TDIDF vectors</li>
+  <li>Word embeddings and word2vec</li>
+  <li>N-gram language models</li>
+</ol>
+
+<p><strong>Terminology:</strong> Before we begin, a quick note on terminology.  In these notes “document” will mean an individual group of free text data (this could be an actual document or a text field in a database).  “Words” or “terms” refer to individual tokens separated by whitespace, and additionally also refers to puncutation (so we will often separate punctuation explicitly from the surounding words.  “Corpus” refers to a collection of documents, and we will sometimes refer to the set of all <em>unique</em> words/tokens in the corpus as the “vocabulary”.</p>
+
+<h2 id="bag-of-words-models-and-tfidf">Bag of words models and TFIDF</h2>
+
+<p>The bag of words model is by far the most common means of representing documents in data science.  Under this model, a document is described soley by the set of words (and possibly their counts) that make up the document.  All information about the actual ordering of the words is ignored.  It is essentially the so-called “word cloud” view of a document.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">wordcloud</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"http://www.datasciencecourse.org"</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s">"lxml"</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
+<span class="n">wc</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r"\s+"</span><span class="p">,</span><span class="s">" "</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+<span class="n">wc</span><span class="o">.</span><span class="n">to_image</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/notes/free_text/output_0.png" alt="" /></p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="wordcloud.png" alt="" />
+        
+        
+            <p class="image-caption">Word cloud of text from the Practical Data Science home page.</p>
+        
+    </div>
+
+<p>Despite the obvious information we are throwing away with this representation, it send to work surpringingly well in practice, for the precise reason we mentioned above, that the general “gist” of many documents can be obtained with only looking at the presence/absence of words in the text.</p>
+
+<p>In these notes, we’ll cover a simple example of creating so-called TFIDF vectors, which represent the documents via a (weighted) bag of words model. We will then then using these to compute the similarity between documents.  This technique is a common approach for applications like document retrieval and or search, though in the homework you will also experiment using TFIDF vectors as input to a machine learning algorithm.</p>
+
+<h3 id="term-frequency">Term frequency</h3>
+
+<p>In our example, let’s begin with our corpus that contains the following three documents:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">documents</span> <span class="o">=</span> <span class="p">[</span><span class="s">"the goal of this lecture is to explain the basics of free text processing"</span><span class="p">,</span>
+             <span class="s">"the bag of words model is one such approach"</span><span class="p">,</span>
+             <span class="s">"text processing via bag of words"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>In this setting, we can represent the documents using a <em>term frequency</em> matrix, and $m \times n$ matrix where $m$ denotes the number of documents, and $n$ denotes the vocabulary size (i.e., the number of unique words across all documents).  To see (the naive way of) how to construct this list, let’s first consider a simple way to get a list of all unique words across all documents.  In general there is no need to actually sort the list of words, but we will do so for simplicity here.  It’s a good idea to also generate a dictionary that maps words to their index in this list, as we’ll frequently want to look up the index corresponding to a word.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">document_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">documents</span><span class="p">]</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">document_words</span><span class="p">,</span> <span class="p">[])))</span>
+<span class="n">vocab_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vocab</span><span class="p">)}</span>
+<span class="k">print</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">vocab_dict</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[&#x27;approach&#x27;, &#x27;bag&#x27;, &#x27;basics&#x27;, &#x27;explain&#x27;, &#x27;free&#x27;, &#x27;goal&#x27;, &#x27;is&#x27;, &#x27;lecture&#x27;, &#x27;model&#x27;, &#x27;of&#x27;, &#x27;one&#x27;, &#x27;processing&#x27;, &#x27;such&#x27;, &#x27;text&#x27;, &#x27;the&#x27;, &#x27;this&#x27;, &#x27;to&#x27;, &#x27;via&#x27;, &#x27;words&#x27;] 
+
+{&#x27;approach&#x27;: 0, &#x27;bag&#x27;: 1, &#x27;basics&#x27;: 2, &#x27;explain&#x27;: 3, &#x27;free&#x27;: 4, &#x27;goal&#x27;: 5, &#x27;is&#x27;: 6, &#x27;lecture&#x27;: 7, &#x27;model&#x27;: 8, &#x27;of&#x27;: 9, &#x27;one&#x27;: 10, &#x27;processing&#x27;: 11, &#x27;such&#x27;: 12, &#x27;text&#x27;: 13, &#x27;the&#x27;: 14, &#x27;this&#x27;: 15, &#x27;to&#x27;: 16, &#x27;via&#x27;: 17, &#x27;words&#x27;: 18} 
+
+
+</pre>
+
+<p>Now let’s construct a matrix that contains word counts (term frequencies) for all the documents.  We’ll also refer to the term frequency of the $j$th word in the $i$th library as $\mathrm{tf}_{i,j}$.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">X_tf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">doc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">document_words</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+        <span class="n">X_tf</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">vocab_dict</span><span class="p">[</span><span class="n">word</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X_tf</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[[0 0 1 1 1 1 1 1 0 2 0 1 0 1 2 1 1 0 0]
+ [1 1 0 0 0 0 1 0 1 1 1 0 1 0 1 0 0 0 1]
+ [0 1 0 0 0 0 0 0 0 1 0 1 0 1 0 0 0 1 1]]
+
+</pre>
+
+<p>As mentioned above, each of the <em>rows</em> in this matrix correponds to one of the three documents above, and each column correponds to one of the 19 words.  Importantly, note that in practice (for instance on the homework), you will want to create term frequency matrices directly in sparse format, because the term frequency matrix is itself typically sparse (when there are a large number of documents, many words will only be contained in a small number of the document).</p>
+
+<p>In this case, we had the entry in our term frequency matrix just correspond to the number of occurences of that term.  But there are other possibilities as well:</p>
+
+<ul>
+  <li>The entry can be binary: 1 if the term occurs (any number of times), and 0 otherwise.  This somewhat mitigates the significance of common words that may occur very frequently.</li>
+  <li>A nonlinear scaling, e.g. $\log (1+\mathrm{tf}_{i,j})$, which lies somewhere between the binary case and the raw counts.</li>
+  <li>A scaled version of term frequencies, e.g., scaling by the maximum term frequency in the document, $\mathrm{tf}_{i,j} / \max_k \mathrm{tf}_{i,k}$.  (Note that this won’t affect the actual similarity scores we’ll discuss next, because we will ultimately scale each document but it affects the term frequency matrix itself, of course).</li>
+</ul>
+
+<h3 id="inverse-document-frequency">Inverse document frequency</h3>
+
+<p>An obvious issue with using normal term frequency counts to represent a document is that the document’s vector (and the resulting similarities we will consider) will often be “dominated” by very common words, for example: “of”, “the”, “is”, in the preceeding example documents.  This issue can be mitigated to some extent by excluding so-called “stop words” (common English words like “the”, “a”, “of” that aren’t considered relevant to the particular documents) from the term frequency matrix.  But this still ignores the case where a word that may not be a generic stop word still happens to occur in a very large number of documents.  Intuitively, we expect that the most “important” words in a document are precisely those that only occur in some relatively small number of documents, so that we want to discount the weight of very frequently-occurring terms.</p>
+
+<p>This can be accomplished via the inverse document frequency weight for words.  Just as with term frequencies, there are some different weightings of this term, but the most common formulation is</p>
+
+<script type="math/tex; mode=display">\mathrm{idf}_j = \log\left(\frac{\mbox{# documents}}{\mbox{# documents with word $j$}}\right).</script>
+
+<p>As an example, if the word is contained in every document, then the inverse document frequency weight will be zero (log of one).  In contrast, if a word occurs in only one document, its inverse document frequency will be $\log (\mbox{# documents})$.</p>
+
+<p>Note that inverse document frequency is a <em>per word</em> term, as opposed to term frequency, which is <em>per word and document</em>.  We can compute inverse document frequency for our data set as follows, which mainly just requires counting how many documents contain each word.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">idf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">X_tf</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">X_tf</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">idf</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[ 1.09861229  0.40546511  1.09861229  1.09861229  1.09861229  1.09861229
+  0.40546511  1.09861229  1.09861229  0.          1.09861229  0.40546511
+  1.09861229  0.40546511  0.40546511  1.09861229  1.09861229  1.09861229
+  0.40546511]
+
+</pre>
+
+<h3 id="tfidf">TFIDF</h3>
+
+<p>The term frequency inverse document frequency (TFIDF) combination simply scales the columns of the term frequency matrix by their inverse document frequency.  In doing so, we still have an effective bag of words representation of each document, but we do so with the weighting implied by the inverse document frequency: discouting words that occur very frequently, and increasing the weight of less frequent terms.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_tfidf</span> <span class="o">=</span> <span class="n">X_tf</span> <span class="o">*</span> <span class="n">idf</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X_tfidf</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[[ 0.          0.          1.09861229  1.09861229  1.09861229  1.09861229
+   0.40546511  1.09861229  0.          0.          0.          0.40546511
+   0.          0.40546511  0.81093022  1.09861229  1.09861229  0.          0.        ]
+ [ 1.09861229  0.40546511  0.          0.          0.          0.
+   0.40546511  0.          1.09861229  0.          1.09861229  0.
+   1.09861229  0.          0.40546511  0.          0.          0.
+   0.40546511]
+ [ 0.          0.40546511  0.          0.          0.          0.          0.
+   0.          0.          0.          0.          0.40546511  0.
+   0.40546511  0.          0.          0.          1.09861229  0.40546511]]
+
+</pre>
+
+<h3 id="cosine-similarity">Cosine similarity</h3>
+
+<p>Given a TFIDF (or just term frequency) matrix, one of the more common questions to address is to compute similarity between multiple documents in the corpus.  The common metric for doing so is to compute the cosine similarity between two different documents.  This is simply a normalize inner product between the vectors describing each documents.  Specifically,</p>
+
+<script type="math/tex; mode=display">\mbox{CosineSimilarity}(x,y) = \frac{x^T y}{\|x\|_2 \cdot \|y\|_2}.</script>
+
+<p>The cosine similarity is a number between zero (meaning the two documents share no terms in common) and one (meaning the two documents have the exact same term frequency or TFIDF representation).  In fact, the cosine similarity is exactly the converse of the squared Eucliean distance between the normalized document vectors; formally, for $\tilde{x} = x / \|x\|_2$ and $\tilde{y} = y / \|y\|_2$,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{split}
+\frac{1}{2}\|\tilde{x} - \tilde{y}\|_2^2 & = \frac{1}{2}(\tilde{x} - \tilde{y})^T (\tilde{x} - \tilde{y}) \\
+& = \frac{1}{2} (\tilde{x}^T \tilde{x} - 2 \tilde{x}^T \tilde{y} + \tilde{y}^T \tilde{y}) \\
+& = \frac{1}{2} (1 - 2 \tilde{x}^T \tilde{y} + 1) \\
+& = 1 - \mbox{CosineSimilarity}(x,y).
+\end{split} %]]></script>
+
+<p>We can compute cosine similarity between the TFIDF vectors in our corpus as follows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_tfidf_norm</span> <span class="o">=</span> <span class="n">X_tfidf</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X_tfidf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span><span class="bp">None</span><span class="p">]</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">X_tfidf_norm</span> <span class="err">@</span> <span class="n">X_tfidf_norm</span><span class="o">.</span><span class="n">T</span>
+<span class="k">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[[ 1.          0.06796739  0.07771876]
+ [ 0.06796739  1.          0.10281225]
+ [ 0.07771876  0.10281225  1.        ]]
+
+</pre>
+
+<p>We could also look at the cosine similarity with the ordinary term frequency matrix.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_tf_norm</span> <span class="o">=</span> <span class="n">X_tf</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X_tf</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span><span class="bp">None</span><span class="p">]</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">X_tf_norm</span> <span class="err">@</span> <span class="n">X_tf_norm</span><span class="o">.</span><span class="n">T</span>
+<span class="k">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[[ 1.          0.3928371   0.38490018]
+ [ 0.3928371   1.          0.40824829]
+ [ 0.38490018  0.40824829  1.        ]]
+
+</pre>
+
+<p>As expected, using the term frequency matrix results in substantially higher scores: the inclusion of words that occur across many of the documents add positive terms to the inner product between the document vectors, resulting in higher similarity scores.  Note, however, that the distances are typically <em>all</em> scaled up, meaning that the relative distances are not necssarily any more informative than the TFIDF similarities (indeed, it is typically less informative, since the scores are inflated by the “random” occurance of multiple high-frequency words).</p>
+
+<h2 id="word-embeddings-and-word2vec">Word embeddings and word2vec</h2>
+
+<p>One of the downsides to term frequency models (even as far as bag-of-words representations are concerned), is there is no notion of similarity between words.  But in reality, we do associate some notion of similarity between different words.  For example, consider the following corpus.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">documents</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">"pittsburgh has some excellent new restaurants"</span><span class="p">,</span>
+    <span class="s">"boston is a city with great cuisine"</span><span class="p">,</span>
+    <span class="s">"postgresql is a relational database management system"</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p>In a term frequency model (one that doesn’t throw out stop words, but it is naturally possibly to construct similar examples even with less common words), the second the third documents have the highest similarity (due to them both having the words “is” and “a”).  Conversely, there is no exactly work overlap between the first sentence and either other sentence, so the similarity will be zero.  Yet this doesn’t quite seems satisfactory, because there is an obvious sense in which the first two sentences are more similar than the third in the above example: they are both about food in cities, whereas the third sentence seems entirely unrelated.</p>
+
+<p>To get started with word embeddings, we’ll note that words in the term frequency model can also be considered as being represented by vectors; in particular, any word is represented by a “one-hot” vector that has a zero in all the coordinates except a one in the coordinate specified by the word.  For example, let’s form the vocabulary for the corpus above.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">document_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">doc</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">documents</span><span class="p">]</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">document_words</span><span class="p">,</span> <span class="p">[])))</span>
+<span class="n">vocab_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vocab</span><span class="p">)}</span>
+<span class="k">print</span><span class="p">(</span><span class="n">vocab_dict</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+{&#x27;a&#x27;: 0, &#x27;boston&#x27;: 1, &#x27;city&#x27;: 2, &#x27;cuisine&#x27;: 3, &#x27;database&#x27;: 4, &#x27;excellent&#x27;: 5, &#x27;great&#x27;: 6, &#x27;has&#x27;: 7, &#x27;is&#x27;: 8, &#x27;management&#x27;: 9, &#x27;new&#x27;: 10, &#x27;pittsburgh&#x27;: 11, &#x27;postgresql&#x27;: 12, &#x27;relational&#x27;: 13, &#x27;restaurants&#x27;: 14, &#x27;some&#x27;: 15, &#x27;system&#x27;: 16, &#x27;with&#x27;: 17} 
+
+
+</pre>
+
+<p>In this case the vector for “pittsburgh” would just be an all-zeros vector but with a one in the 11th position.  We’ll denote this vector as $e_{\mathrm{pittsburgh}}$, as the “$e$” notation often stands for the unit basis in linear algebra (exactly this same idea of a vector that is all zeros with a single one in a particular entry).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">e_pittsburgh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">))</span>
+<span class="n">e_pittsburgh</span><span class="p">[</span><span class="n">vocab_dict</span><span class="p">[</span><span class="s">"pittsburgh"</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="k">print</span><span class="p">(</span><span class="n">e_pittsburgh</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  1.  0.  0.  0.  0.  0.  0.]
+
+</pre>
+
+<p>Obviously we can recover our document term frequency vector by just adding together the vectors for each word in the document</p>
+
+<script type="math/tex; mode=display">x{_\mathrm{doc}} = \sum_{\mathrm{word} \in \mathrm{doc}} e_{\mathrm{word}}.</script>
+
+<p>The issue here, now stated more formally, is that there is no notion of distance within this space.  The (squared) distance between two words is either two (if the words are different) or zero (if the words are the same).  That is</p>
+
+<script type="math/tex; mode=display">\|e_{\mathrm{pittsburgh}} - e_{\mathrm{boston}}\|_2^2 =
+\|e_{\mathrm{pittsburgh}} - e_{\mathrm{database}}\|_2^2 = 2.</script>
+
+<p>Despite the fact that we think of “pittsburgh” and “boston” as being “closer” to each other than to “database”, our term frequency model doesn’t capture this at all.</p>
+
+<h3 id="word-embeddings">Word embeddings</h3>
+
+<p>This discussion brings us to the topic of “word embeddings”.  Like the one-hot encoding of words, a word embedding is a vector representation of words, in some space $\mathbb{R}^k$.  That it, for every word in the encoder, the word embedding represents this word with a $k$-dimensional vector.  There are a few important differences, though:</p>
+
+<ol>
+  <li>Euclidean distances in the word embedding (attempt to) correspond to some notion of similarity between the words.</li>
+  <li>The dimensionality of the vector, $k$, does not need to be the same as the vocabulary size (typically it is a much smaller fixed dimension, like $k = 300$.</li>
+</ol>
+
+<p>Conceptually, you can think of the embeddings as something like the following figure:</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="embedding.svg" alt="" />
+        
+        
+            <p class="image-caption">Conceptual illustration of word embeddings</p>
+        
+    </div>
+
+<p>As seen in the figure, “similar” words are mapped to points close together (by Euclidean distance), whereas dissimilar words will be further away.</p>
+
+<h3 id="word2vec">Word2vec</h3>
+
+<p>How do we actually go about creating a word embedding that has these properties, though?  We don’t yet have enough background to define the algorithms for doing this in detail, but a common approach that has ignited a lot of recent interest in word embeddings is the <a href="https://code.google.com/archive/p/word2vec/">word2vec</a> algorithm, see <a href="https://arxiv.org/abs/1301.3781">Mikolov et al., “Efficient Estimation of Word Representations in Vector Space”, Arxiv 2013</a>  and several variants that arose subsequently.  We haven’t yet covered the necessary material from machine learning to properly cover this algorithm (indeed, some authors subsequently argued that several aspects are not fully described even in the paper, see <a href="https://arxiv.org/abs/1402.3722">Goldberg and Levy, “word2vec Explained: deriving Mikolov et al.’s negative-sampling word-embedding method”, Arxiv 2014</a>).</p>
+
+<p>For our purposes, though, the basic idea of word2vec is that, given a large body of text, we want to train an algorithm that can “predict” the context around a word.  For example, suppose we have the following sentence somewhere in our corpus that we are building the word2vec model on:</p>
+
+<blockquote>
+  <p>… eastern US city of Pittsburgh is building new technology centers …</p>
+</blockquote>
+
+<p>and</p>
+
+<blockquote>
+  <p>.. the eastern city of Boston has well-established technology and biotech sectors but …</p>
+</blockquote>
+
+<p>From the word “pittsburgh”, we would try to predict some of the surrounding words (possibly ignoring stop words), using a “projection” of pittsburgh into a lower dimensional space.  The illustration of the learning task looks like something like the following:</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="word2vec.svg" alt="" />
+        
+        
+            <p class="image-caption">Illustration of word2vec algorithm</p>
+        
+    </div>
+
+<p>This may seem a bit odd, because there isn’t really any way to “predict”, with any kind of real accuracy, all the context that will appear around a word just from the word itself.  But the idea here is that we try to slightly bump up the probability of the surround words, and lower the probability of other words.</p>
+
+<p>The “reason” why this works is illustrated in the two quotes above.  For two words that are very common, there is likely to be substantial overlap in their surrounding context (i.e., the context surrounding the two words is often vyer similar, whether or not the two actual words occur together).  Thus, the two words should make “similar” predictions, which can be achieved by simply making the two word embeddings very similar.</p>
+
+<p>However, in truth there is still a lot of uncertainty about just why the embeddings that these methods generate are so good: although the above logic implies why two word vectors for words with similar context <em>could</em> be very close, it doesn’t imply that they <em>will</em> necessarily be close (and indeed, we could could up with alternative embeddings were both “pittsburgh” and “boston” predicted identical context well, yet had different embeddings.  There has been a great deal of follow-on work that has considered the algorithm and variants in much more detail from both an algorithmic and theoretical side, but we won’t consider this here.</p>
+
+<h3 id="pretrained-models">Pretrained models</h3>
+
+<p>While it is absolutely possible to train word2vec models yourself using freely available tools, it is somewhat time consuming, and requires a <em>very large</em> corpus to train upon.  This is an important point: <em>building</em> the word2vec model requires a rich enough data set such that we see similar words in similar contexts.  In the example above, you need to see “pittsburgh” and “boston” enough times with enough overlapping context words before the model will start to learn that these two words are similar.</p>
+
+<p>Thus, it is rather unusual to actually build new word2vec models in data science tasks; this would only happen if you have a rich enough data set (and one that deviates enough from the “standard” language that most existing models are trained upon), to build meaningful representations.  Trying to build a word2vec model solely on our three-document example above, for instance, would be completely meaningless.</p>
+
+<p>What <em>is</em> common, however, is to use existing, pre-trained word2vec models that have already been build based upon large and “standard” corpora.  Several people have released such models available for free.  For instance, the original word2vec authors released a model trained on over 300 billion words from Google News, and containing 3 million unique words, with embeddings of size $k=300$, available at the <a href="https://code.google.com/archive/p/word2vec/">word2vec project page</a>.  One problem with this model is that it is relatively large: about 4GB uncompressed in memory, so in practice unless you have more than 16GB of of memory on your system, similarity queries and similar functions will time out.  A collections of smaller models is available at the <a href="http://vsmlib.readthedocs.io/en/latest/tutorial/getting_vectors.html">vsmlib library page</a>.  And for this particular set of notes I use a version trained on English Wikipedia, originally available <a href="http://u.cs.biu.ac.il/~yogo/data/syntemb/deps.words.bz2">here</a>, but which I’ve compressed a bit and modified to work directly with the gensim library that we use in these notes; the model is avialable <a href="https://drive.google.com/file/d/1zkckPYnB9VZcmPkT1PUi0wOb0l6qHkia/view?usp=sharing">here</a>.</p>
+
+<h3 id="properties-of-word-vectors">Properties of word vectors</h3>
+
+<p>Let’s look at a few properties of the resulting word vectors.  To do so, we’re going to use the <a href="https://radimrehurek.com/gensim/">gensim</a> library.  Gensim was built as a generic topic modeling library (a subject we’ll look at a bit more later in the course), but for one purposes now, one of it’s nice features is that it has an interface to pre-trained word embedding models.  It also has an optimized implementation of the actual word2vec training algorithm, so in the even that you do have a large enough corpus that has some deviations from standard English (a common example in data science would be free-text comments in some specialized topic area, like notes that a technician may write in some very particular application domain), you can also use the library to train your own model.</p>
+
+<p>Loading the pre-trained models, though, is quite straightforward.  We can load the model I linked above using the following code.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">gensim</span> <span class="k">as</span> <span class="n">gs</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">KeyedVectors</span><span class="o">.</span><span class="n">load_word2vec_format</span><span class="p">(</span><span class="s">'deps.words.bin'</span><span class="p">,</span> <span class="n">binary</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We can now get the actual word vectors of many relevant words in the English language (the data set has 174,015 words, so substantially less than the 3 million Google dataset, but still enough to cover a lot of common words you would use in English).  We can get the vector of a word using the <code class="highlighter-rouge">.wv</code> object.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s">"pittsburgh"</span><span class="p">][:</span><span class="mi">10</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>It’s important to understand that the values in the word vector itself don’t have any absolute meaning, they are only relevant in relation to other word vectors.  For instance, we can get the word vectors closest to “pittsburgh” using the <code class="highlighter-rouge">.similar_by_word()</code> function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="o">.</span><span class="n">similar_by_word</span><span class="p">(</span><span class="s">"pittsburgh"</span><span class="p">,</span> <span class="n">topn</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This function is actually just a quick wrapper over the more general <code class="highlighter-rouge">.similar_by_vector()</code> function, but leaves out the input word itself (which naturally always has full similarity to itself).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="o">.</span><span class="n">similar_by_vector</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s">"pittsburgh"</span><span class="p">],</span> <span class="n">topn</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>These results look very reasonable: the most similar words to Pittsburgh are also all cities in the middle and eastern US.  You can experiment with other word, and often they seems surprisingly good, especially given the simple process that is used to actually train the model.</p>
+
+<h3 id="reasoning-by-analogy">Reasoning by analogy</h3>
+
+<p>One of the most compelling (and frankly, surprising) properties of word vectors is their ability to perform basic analogical reasoning through arithmetic in the vector space.  For example, in the above similarities, “boston” was only the third-most similar word to “pittsburgh”.  However, what if we consider an analogy like the following:</p>
+
+<blockquote>
+  <p>Pennsylvania : Pittsburgh -&gt; Massachusetts : ?</p>
+</blockquote>
+
+<p>(read as “Pennsylvania is to Pittsburgh as Massachusetts is to [blank]”).  In turns out that in word2vec models, the vectors <em>between</em> different vector relationships capture some rudimentary form of this kind of word relationship.  Graphically, this looks like the following:</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="analogy.svg" alt="" />
+        
+        
+            <p class="image-caption">Conceptual illustration of analogy relationships in word embedding models</p>
+        
+    </div>
+
+<p>We expect the vector from “massachusetts” to “boston” to be similar to the vector of “pennsylvania” to “pittsburgh” (capturing something like, “big cities in the state”, or maybe even something more specific like “tech-heavy cities in the state”).  To perform this analogical reasoning in vector space, we can get the vector from pennsylvania to pittsburgh ($w_{\mathrm{pittsburgh}} - w_{\mathrm{pennsylvania}}$) and add it to $w_{\mathrm{massachusetts}}$</p>
+
+<script type="math/tex; mode=display">w = w_{\mathrm{pittsburgh}} - w_{\mathrm{pennsylvania}} + w_{\mathrm{massachusetts}}</script>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="o">.</span><span class="n">similar_by_vector</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s">"pittsburgh"</span><span class="p">]</span> <span class="o">-</span> <span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s">"pennsylvania"</span><span class="p">]</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="s">"massachusetts"</span><span class="p">],</span> <span class="n">topn</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The most similar word to this vector is just the vector $w_{\mathrm{pittsburgh}}$ (just like the vector for “pittsburgh” was naturally closest to itself, in practice the analogy relationships above are not perfect in the vector space, and since “massachusetts and “pennsylvania” are themselves relatively close, “pittsburgh” still the closest to this modified vector).  But after that, “boston” comes in second, relatively more similar to “pittsburgh” than it was before, given the additional information about the states that the two cities are in.</p>
+
+<p>These kind of properties of the word embedding models, are, quite frankly, completely surprising.  There is nothing in the training process of word2vec models that optimizes for this property of the resulting vectors.  They simply emerge from trying to capture the nearby context of words, given a large enough dataset for training.</p>
+
+<h3 id="bag-of-word-vectors">Bag of word vectors</h3>
+
+<p>Now that we have defined a “nicer” representation of words in a vector space, let’s see one simple way of using these to compute document similarity that captures the underlying words.  Returning to our previouse example of the three documents (two about food in cities, one about PostgreSQL), we can do the something similar as to did to create the term frequency document vectors (i.e., add up all the word vectors in the document), but this time using the word2vec embeddings instead of the term frequency one-hot vectors:</p>
+
+<script type="math/tex; mode=display">x{_\mathrm{doc}} = \sum_{\mathrm{word} \in \mathrm{doc}} w_{\mathrm{word}}.</script>
+
+<p>where following the notation above, $w_{\mathrm{word}}$ denotes the word2vec embedding of the word rather than the one-hot encoding.</p>
+
+<p>We can build these document vectors for our simple corpus with the following code.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_w2v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">sum</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">wv</span><span class="p">[</span><span class="n">w</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">document_words</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>Now let’s compute the normalized cosine similarty scores between all the documents.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_w2v</span> <span class="o">=</span> <span class="n">X_w2v</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X_w2v</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span><span class="bp">None</span><span class="p">]</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">X_w2v</span> <span class="err">@</span> <span class="n">X_w2v</span><span class="o">.</span><span class="n">T</span>
+<span class="k">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[[ 1.          0.78749132  0.6995337 ]
+ [ 0.78749132  1.00000012  0.76503289]
+ [ 0.6995337   0.76503289  1.        ]]
+
+</pre>
+
+<p>Now our first and second documents (both about food in cities) are the two most similar documents, while each both are less similar to the third, <em>despite</em> the fact that the first and second documents have no words in common.  Note that in general the similarities here are higher than similarities you get with a TFIDF model, so what is important are the relative similarities, not the absolute similarities.  This is because “random” words in a word embedding model still often have some degree of similarity, for example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="s">"pittsburgh"</span><span class="p">,</span> <span class="s">"postgresql"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This is certainly low compared to the similarity between “pittsburgh” and “boston”, but it’s not zero either, and so these terms (and especially the similarity between all the more common words) add up to cause the “absolute” similarities to be relatively high.  But again, what is important here is the relative scores, which correctly show that the first two documents are more similar, as we would expect from their content.  You can, of ourse, also combine word2vec embeddings with inverse document frequency weights and similar things, to try to get better representations of the relevant features of documents.</p>
+
+<h3 id="aside-tfidf-in-gensim">Aside: TFIDF in gensim</h3>
+
+<p>As a brief note, we can also compute traditional TFIDF scores using gensim (both similarities and the term-frequency matrix in sparse form).  We didn’t mention this above simply because we hadn’t introduced gensim yet, and the TFIDF scores are quite easy to create manually, but this can be handy if you don’t want to explicitly create the sparse matrices (though you’ll need to create them yourself for the homework).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dictionary</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">corpora</span><span class="o">.</span><span class="n">Dictionary</span><span class="p">(</span><span class="n">document_words</span><span class="p">)</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">document_words</span><span class="p">]</span>
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">TfidfModel</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">X_tfidf</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">matutils</span><span class="o">.</span><span class="n">corpus2csc</span><span class="p">(</span><span class="n">tfidf</span><span class="p">[</span><span class="n">corpus</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">X_tfidf</span><span class="o">.</span><span class="n">todense</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</code></pre></div></div>
+
+<pre>
+[[ 0.40824829  0.40824829  0.40824829  0.40824829  0.40824829  0.40824829
+   0.          0.          0.          0.          0.          0.          0.
+   0.          0.          0.          0.          0.        ]
+ [ 0.          0.          0.          0.          0.          0.
+   0.43550663  0.16073254  0.16073254  0.43550663  0.43550663  0.43550663
+   0.43550663  0.          0.          0.          0.          0.        ]
+ [ 0.          0.          0.          0.          0.          0.          0.
+   0.16073254  0.16073254  0.          0.          0.          0.
+   0.43550663  0.43550663  0.43550663  0.43550663  0.43550663]]
+
+</pre>
+
+<p>Note that the term frequency matrix is actually the transpose of what we defined, but it is of course equivalent.  You can also get the cosine similarity matrix as well.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">M</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">similarities</span><span class="o">.</span><span class="n">MatrixSimilarity</span><span class="p">(</span><span class="n">tfidf</span><span class="p">[</span><span class="n">corpus</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">M</span><span class="o">.</span><span class="n">get_similarities</span><span class="p">(</span><span class="n">tfidf</span><span class="p">[</span><span class="n">corpus</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<pre>
+[[ 1.          0.          0.        ]
+ [ 0.          0.99999988  0.0516699 ]
+ [ 0.          0.0516699   0.99999988]]
+
+</pre>
+
+<h2 id="language-models-and-n-grams">Language models and n-grams</h2>
+
+<p>Finally, as a last topic in these notes, we provide a very brief introduction to language models, in particular simple n-gram based language models.</p>
+
+<p>Although the bag of words representation does work remarkably well in many cases, it of course is still an incredibly simple representation of documents that will miss basic properties.  For example the documents</p>
+
+<blockquote>
+  <p>great moving and not boring</p>
+</blockquote>
+
+<p>has the exact same bag of words representation (for both term frequency and word2vec models) as the document</p>
+
+<blockquote>
+  <p>boring movie and not great</p>
+</blockquote>
+
+<p>because they contain the exact same words.  As despite the fact, mentioned above, that we don’t often talk like this, we would like to consider a better way to represent more complex structure in language.</p>
+
+<h3 id="probabilistic-language-models">Probabilistic language models</h3>
+
+<p>A probabilistic language model attempts to to predict the probablity of each word in the document, given all the words that proceeded it</p>
+
+<script type="math/tex; mode=display">P(\mathrm{word}_i | \mathrm{word}_1, \ldots, \mathrm{word}_{i-1})</script>
+
+<p>(we are going to cover probability more later in this course, but the notions of probability here are very simple, just counting, and so with some apologies for the forward reference, we’re going to dive into the subject now as it fits best the free text section).  This is natural representation for language, because we do intutively feel like the proceeding words in a sentence give some distribution about what the subsequent words could be.  For example, consider the partial sentence</p>
+
+<blockquote>
+  <p>Data science is the study and practice of how we can extract insight and knowledge from large amounts of</p>
+</blockquote>
+
+<p>While we may not be able to prescribe precise numerical probabilities to the next word (humans are quite bad as prescribing probabilities anyway), there is an obvious sense in which the probability</p>
+
+<script type="math/tex; mode=display">P(\mathrm{word}_i = \mbox{"data"} | \mathrm{word}_1, \ldots, \mathrm{word}_{i-1})</script>
+
+<p>is greater than the probability</p>
+
+<script type="math/tex; mode=display">P(\mathrm{word}_i = \mbox{"hotdogs"} | \mathrm{word}_1, \ldots, \mathrm{word}_{i-1}).</script>
+
+<p>Of course, note that this also requires some information about language (which we maybe could extract from a word2vec model, though we won’t get even that complex here), to understand that “data” makes more sense given that the sentence is talking about data science.</p>
+
+<h3 id="n-gram-models">N-gram models</h3>
+
+<p>Building a language model that uses the entirely of preceeding text in a generic manner, capturing long term dependencies and bringing in “common sense” knowledge, is a very much still a long-term goal of natural language processing, and we won’t be considering what is the current state of the art for such approaches.  Instead, our goal is to build a rudimentary language model that captures some basic context of the preceeding words in predicting the next one.</p>
+
+<p>The technique we will use to do this, which is still an absolute standard baseline for many NLP tasks (if you can’t beat it with a fancy model, then it is a strong sign that you model may not be so useful after all), is the <em>n-gram model</em>.  The idea here is to put a <em>cap</em> on the size of the context we use to predict the next word, so that under an n-gram model we have that</p>
+
+<script type="math/tex; mode=display">P(\mathrm{word}_i | \mathrm{word}_1, \ldots, \mathrm{word}_{i-1}) = P(\mathrm{word}_i | \mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i-1})</script>
+
+<p>i.e., we only use the $n-1$ previous terms to predict the next term.  So in a 4-gram model, we would predict the probabilities</p>
+
+<script type="math/tex; mode=display">P(\mathrm{word}_i = \mbox{"data"} | \mathrm{word}_1, \ldots, \mathrm{word}_{i-1}), \;\; \mbox{and} \;\;
+P(\mathrm{word}_i = \mbox{"hotdogs"} | \mathrm{word}_1, \ldots, \mathrm{word}_{i-1})</script>
+
+<p>using just just the three previous words, “large ammounts of [blank]”.  Obviously, a lot of context in being thrown away here, and you would imagine that the probability of “hotdogs” is going to be much higher in this context than the probability of “hotdogs” being the next word in the original sentence (even if it still likely has lower probability than “data”, simply because people talk about data more than they text to talk about hotdogs).</p>
+
+<p>N-gram models are typically <em>built</em> based upon some fixed corpus, and when we refer to probabilities in an n-gram model, we are just refering to counts in this corpus.  That is given some corpus,</p>
+
+<script type="math/tex; mode=display">P(\mathrm{word}_i | \mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i-1}) = \frac{\#(\mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i})}{\#(\mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i-1})}</script>
+
+<p>i.e., we just count the number of times we have seen the entire sequence of words $\mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i}$ divided by the number of times we have seen just the preceeding words $\mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i-1}$.  For example,</p>
+
+<script type="math/tex; mode=display">P(\mbox{"data"} | \mbox{"large amounts of"})  = \frac{\#(\mbox{"large amounts of data"})}{\#(\mbox{"large amounts of"})}</script>
+
+<p>is just the number of times we see the entire phrase “large amounts of data” divided by the times we see the phrase “large amounts of”, in our training corpus.  This is as complex as the probabilities are going to get in our setting.</p>
+
+<p><strong>Laplace smoothing</strong>  One potential issue with this basic n-gram model is that it will frequently predict that the probabilty of some phrase is zero, if that phrase has never been seen before in the corpus we used to build the model.  This can be problematic, especially if we want to evaluate the probability of text outside the corpus we used to build the model (in which case, there are alsmost definitely going to be phrases in the new text that we hadn’t seen before).  One simple strategy that alleviates this problem somewhat (though it does so in a very naive way), is to add what is called <em>Laplace smoothing</em>, which just adds a small probability to every possible next word</p>
+
+<script type="math/tex; mode=display">P(\mathrm{word}_i | \mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i-1}) = \frac{\#(\mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i}) + \alpha}{\#(\mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i-1}) + \alpha D}</script>
+
+<p>where $D$ is the number of total unique words in the vocabulary and $\alpha$ is some small number.  A (slightly) more sophisticated approach might back off to lower $n$ in the n-gram model when it encounters a phrase it has not seen before; or a (much more complex) model might actually estimate these probabilities to some extent using similarities between words such as those based upon word embeddings.</p>
+
+<p><strong>Choosing n</strong>  How do we choose the best value for $n$?  If we shoose $n$ to be larger, we have more context in modeling our probabilities, but we also need more data until we are able to get a good estimate of the relevant probabilities.  On the other hand, smaller $n$ will use less context, but also require less data to model the probabilities.</p>
+
+<p>While the correct answer about choosing the right $n$ is to use some evaluation metric on a held out data set (we’ll discuss this kind of methodology a lot more when we discuss machine learning in general), in practice it’s common to simply choose $n=2$ when we have a “small” training corpus, up to hundreds of thousands of words (i.e., predict based upon just the previous word), and $n=3$ when we have a larger training corpus, more than a million words (predict based upon two previous words).  These are, of course, just very rough rules of thumb, and you’ll look into this a bit more in your homework.</p>
+
+<h3 id="using-language-models-in-data-science">Using language models in data science</h3>
+
+<p>How might these models be used in a data science context?  You’ll explore this more in your homework, but one nice application of language models is in author identification or de-anonymization.  If we have two large corpora of work $C_1$ and $C_2$ from two different authors, then we can build an n-gram language model based upon the first corpora, and another based upon the second corpora.  Then, if we have a new document that we believe to be written by one of the two authors, but we do not know which one, we can then use these two different models to compute the probability of the new document under each of these two models.  We can then guess that the true author of the document is the person whose language model gives higher probability (evaluated e.g., via perplexity, which we will discuss shortly) to the unknown document.  As mentioned, you’ll use this technique in the 688 problems in the next homework.</p>
+
+<h3 id="sampling-from-the-models">Sampling from the models</h3>
+
+<p>A perhaps less-practical (but amusing) application of language models is to generate synthetic text that is “similar” in some way to the text used to build the model.  Naturally, a simple n-gram model will not be able to generate text with any real semantic content (it is arguable whether any model that we currently have is capable of this), but the generated text is often amusingly similar to the source material.</p>
+
+<p>We built n-gram models, with varying $n$, on the complete works of Shakespeare, available in a single file <a href="http://www.gutenberg.org/files/100/100-0.txt">here</a>.  We don’t include the full source here, as you will need to implement this model in your homework, but the basic model is quite simple, just dictionaries/counters of all $n-1$ and $n$ word combinations present in the text, used to compute the probabilities as above (some care needs to be taken in creating an efficient structure to look up all occurring next-words given the $n-1$ previous words).</p>
+
+<p>Then, we <em>randomly sample</em> from this model.  That is, given the previous $n-1$ words, we compute the probability of each next word from the entire vocabulary, and we randomly sample from this distribution (when we have seen no words so far, we first sample from the 1-gram distribution, then 2-gram, etc, up to n-gram).  We repeat this process some fixed number of times to generate the synthetic text.</p>
+
+<p>Here is some generated by the $n=1$ model (in our model, punctuation was considered to be its own word):</p>
+
+<blockquote>
+  <p>in as , stands gods revenge ! france pitch good in fair hoist an what fair shallow-rooted , . that with wherefore it what a as your . , powers course which thee dalliance all</p>
+</blockquote>
+
+<p>This looks like some words that Shakespeare might use, but in an $n=1$ model, remember that we are using <em>no</em> previous context to predict the next word.  That is, we are simply randomly sampling single words one after another from the set and frequency of all words used by Shakespeare; so it is not too surprising that the text doesn’t look like anything meaningful.  Now let’s consider the $n=2$ model.</p>
+
+<blockquote>
+  <p>look you may i have given them to the dank here to the jaws of tune of great difference of ladies . o that did contemn what of ear is shorter time ; yet seems to</p>
+</blockquote>
+
+<p>This seems a bit better. There is no repeated punctuation, and two-word pairs here all seem reasonable, but it still doesn’t look much like real written text, at all.  Finally, $n=3$:</p>
+
+<blockquote>
+  <p>believe , they all confess that you withhold his levied host , having brought the fatal bowels of the pope ! ‘ and that this distemper’d messenger of heaven , since thou deniest the gentle desdemona</p>
+</blockquote>
+
+<p>This is now becoming fairly realistic.  There is, of course, no real content to the sentences, but they are a good source of material that looks superficially like the original source (several people have, for example, build n-gram language models for various public figures with distinctive writing styles).</p>
+
+<p>Let’s go a bit further and consider text from an $n=7$ model:</p>
+
+<blockquote>
+  <p>so express’d : but what of that ? ‘twere good you do so much for charity . i cannot find it ; ‘tis not in the bond . you , merchant , have you any thing to say ? but little</p>
+</blockquote>
+
+<p>This is starting to look a lot like Shakespeare, because it <em>is</em> Shakespeare.  Specifically, it is a passage from Act IV, Scene I of The Merchant of Venice.  What happens in this case is that because our context is so long, looking at the past 6 words, once we have generated some text there is only <em>one</em> instance in all of Shakespeare of these particular set of six words occurring; thus, we will, with probability 1.0, just “sample” the word that occurs immediately after, and repeat the process.  Note that this only occurs when we do not use Laplace smoothing, but in the case that we do use Laplace smoothing, something just as bad happens: we typically get “off” from any text that ever has occurred in Shakespeare, so both the numerator and denominator counts are zero, and we just randomly sample words.</p>
+
+<h3 id="evaluating-language-models">Evaluating language models</h3>
+
+<p>Other than simply generating some random text and seeing what “looks right” (and as we saw, this can be deceiving if we start to generate a lot of text that is identical to the source), how might we evaluate how well a given model is really fitting to data.  The most common metric used in NLP to see how well a language model captures some text is the <em>perlexity</em> metric.</p>
+
+<p>Perplexity is defined as a (scaled) version of the inverse probability of the data, specifically, given a document with $N$ words</p>
+
+<script type="math/tex; mode=display">\mbox{Perplexity} = \left(\frac{1}{P(\mathrm{word}_1, \ldots, \mathrm{word}_N)} \right )^{\frac{1}{N}} = \exp \left (\frac{-\log P(\mathrm{word}_1, \ldots, \mathrm{word}_N)}{N} \right )</script>
+
+<p>Note that we can compute the probability $P(\mathrm{word}_1, \ldots, \mathrm{word}_N)$ in n n-gram model by</p>
+
+<script type="math/tex; mode=display">P(\mathrm{word}_1, \ldots, \mathrm{word}_N) = \prod_{i=n}^N P(\mathrm{word}_i | \mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i-1})</script>
+
+<p>where for simplicity we just ignore the first $n-1$ words so we don’t need to worry about modeling probabilities with a smaller context (if the document is large enough, this will have very small effect).</p>
+
+<p>One thing to note here is that this formula involves multiplying together very small probabilities.  In general, you don’t want to do this, but instead you want to compute the <em>log</em> of this quantity, given by</p>
+
+<script type="math/tex; mode=display">\log P(\mathrm{word}_1, \ldots, \mathrm{word}_N) = \sum_{i=n}^N \log P(\mathrm{word}_i | \mathrm{word}_{i-n+1}, \ldots, \mathrm{word}_{i-1})</script>
+
+<p>and then use this quantity directly in the second equivalent version of perplexity above.  Note, however, that if the probability of any observed sequence of $n$ terms is <em>exactly</em> zero, then the entire probability of the document will also be zero.  Thus, when evaluating n-gram language models on anything other than the training sequence, you will typically always want to employ Laplace smoothing.</p>
+
+<h3 id="training-and-validation-sets">Training and validation sets</h3>
+
+<p>As a final note, and as a prelude to what we will consider much more in the lectures on machine learning, notice that the perplexity of the language model evaluated on the training set (the corpus used to build the model), will always decrease with greater $n$; as seen in the example above, larger $n$ just gives higher probability to the exact sequences we saw in the training corpus.  The following is a plot of the perplexity of our Shakespeare model evaluated on the data it was built on (note that we use Laplace smoothing here, so that the perplexity does not decrease to 1, as it would if we didn’t use smoothing).</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="perplexity_training.svg" alt="" />
+        
+        
+            <p class="image-caption">Perplexity versus the size of the n-gram model, for text used to build the n-gram model.</p>
+        
+    </div>
+
+<p>On the other hand, if we evaluate the model on text <em>other</em> than what we used to build it (in this case, we build the model only on the first 70% of the Shakespeare works, and use this model to compute probabilities on the remaining 30%, a set called <em>hold-out validation set</em>), the situations looks very different.  Our perplexity decreases initially, but quickly increases to very large amounts, simply because none of the past phrases are even seen in the text, and so we rely solely on Laplace smoothing to assign any probability to the words at all.</p>
+
+<!-- _includes/image.html -->
+<div class="image-wrapper">
+        
+            <img src="perplexity_testing.svg" alt="" />
+        
+        
+            <p class="image-caption">Perplexity versus the size of the n-gram model, for a new document that the model was not trained on.</p>
+        
+    </div>
+
+<p>From a perplexity standpoint, it actually seems like $n=2$ is the best setting for Shakespeare, as even the $n=3$ model fits to strongly to what was seen in the training corpus.</p>
+
+
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>

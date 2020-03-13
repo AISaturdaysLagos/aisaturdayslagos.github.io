@@ -1,0 +1,5 @@
+
+<div class="staff" onclick="window.location.href='{{ include.href }}'">
+    <img src="/staff/{{ include.img }}">
+    <span>{{ include.name }}</span>
+</div>

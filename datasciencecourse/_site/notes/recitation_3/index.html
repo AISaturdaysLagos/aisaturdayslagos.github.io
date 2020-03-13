@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="theme-color" content="#157878" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <title>Recitation 3</title>
+
+    <meta name="author" content="Practical Data Science" />
+    
+
+    <link rel="alternate" type="application/rss+xml" title="Practical Data Science - CMU 15-388/688 Spring 2019" href="/feed.xml" />
+  
+    
+      
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+      
+        <link rel="stylesheet" href="/css/bootstrap-social.css" />
+      
+        <link rel="stylesheet" href="/css/main.css" />
+      
+    
+  
+    
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway::400,700,300" />
+      
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+      
+    
+  
+    
+  
+    
+  
+    
+  
+      <!-- Facebook OpenGraph tags -->
+    
+  
+    
+    <meta property="og:title" content="Recitation 3" />
+    
+  
+     
+    <meta property="og:description" content="# Recitation 3 ### Homework Tips * Be familiar with the [What Can I Ask On Diderot?](www.diderot.one/course/10/dosts/?is_inbox=yes&amp;dost=4658) policy * Talk to other students taking the course -- they can help you and you can help them. * Feel free to meet other students during the Collaboration Space -- every Tuesday..." />
+    
+
+    <meta property="og:type" content="website" />
+
+    
+    <meta property="og:url" content="http://localhost:4000/notes/recitation_3/" />
+    <link rel="canonical" href="http://localhost:4000/notes/recitation_3/" />
+    
+
+    
+    
+  
+    <!-- Twitter summary cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@" />
+    <meta name="twitter:creator" content="@" />
+  
+    
+    <meta name="twitter:title" content="Recitation 3" />
+    
+  
+    
+    <meta name="twitter:description" content="# Recitation 3 ### Homework Tips * Be familiar with the [What Can I Ask On Diderot?](www.diderot.one/course/10/dosts/?is_inbox=yes&amp;dost=4658) policy * Talk to other students taking the course -- they can help you and you can help them. * Feel free to meet other students during the Collaboration Space -- every Tuesday..." />
+    
+
+    
+  
+  <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$', '$'], ["$$", "$$"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        "HTML-CSS": {
+          linebreaks: {
+            automatic: true
+          },
+          scale: 90,
+          fonts: ["TeX"],
+          mtextFontInherit: false,
+          matchFontHeight: true
+        },
+        "TeX": {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js"],
+        }
+        //,
+        //displayAlign: "left",
+        //displayIndent: "2em"
+      });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default" type="text/javascript"></script>
+</head>
+
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        
+            <a class="navbar-brand" href="http://localhost:4000">Practical Data Science</a>
+        
+        </div>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+        <ul class="nav navbar-nav navbar-right">
+        
+            <li><a href="/information" class="btn">Information</a></li>
+        
+            <li><a href="/lectures" class="btn">Lectures</a></li>
+        
+            <li><a href="/assignments" class="btn">Assignments</a></li>
+        
+            <li><a href="/calendar" class="btn">Calendar</a></li>
+        
+            <li><a href="/staff" class="btn">Staff</a></li>
+        
+            <li><a href="/policies" class="btn">Policies</a></li>
+        
+            <li><a href="/faq" class="btn">FAQ</a></li>
+        
+        </ul>
+        </div>
+
+        
+    </div>
+</nav>
+
+
+    <div class="intro-header"></div>
+
+<div role="main" class="container">
+  <style type="text/css">
+.targz-btn {
+    float: right;
+    border: thin solid #999;
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+}
+</style>
+
+
+<a href="recitation_3.tar.gz" class="targz-btn">&#x2b73; Download Jupyter Notebook</a>
+
+<h1 id="recitation-3">Recitation 3</h1>
+
+<h3 id="homework-tips">Homework Tips</h3>
+
+<ul>
+  <li>Be familiar with the <a href="www.diderot.one/course/10/dosts/?is_inbox=yes&amp;dost=4658">What Can I Ask On Diderot?</a> policy</li>
+  <li>Talk to other students taking the course – they can help you and you can help them.</li>
+  <li>Feel free to meet other students during the Collaboration Space – every Tuesday in GHC 4303.</li>
+  <li>Look for the “Common Problems in Homework x” post on Diderot before asking questions online.</li>
+</ul>
+
+<h3 id="ta-hours">TA Hours</h3>
+
+<ul>
+  <li>Come this week! Don’t wait until the last week.</li>
+  <li>Construct a <em>minimal counter-example</em> : a simplest test case that fails.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+</code></pre></div></div>
+
+<h2 id="linear-classification">Linear Classification</h2>
+
+<p>Usually we talk about linear regression: inferring a continuous value as a linear function of input variables. In this homework, we’re using linear regression to predict a category variable. Let’s see what this looks like on a simple test dataset:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n</span><span class="o">=</span><span class="mi">50</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="mf">2.5</span><span class="p">))</span>
+<span class="n">cls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">n</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">cls</span><span class="o">==-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">cls</span><span class="o">==-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">cls</span><span class="o">==</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">cls</span><span class="o">==</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="/notes/recitation_3/output_0.png" alt="" /></p>
+
+<p>We fit a simple linear regression model to this data and examine the output. Notice that the output is continuous, not discrete.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">pred</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>Let’s draw the scatter data and highlight misclassified points:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">pred</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">pred</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">pred</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">pred</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c"># Plot misclassified points:</span>
+<span class="n">errs</span> <span class="o">=</span> <span class="p">((</span><span class="n">cls</span><span class="o">==-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pred</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">))</span> <span class="o">|</span> <span class="p">((</span><span class="n">cls</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pred</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">))</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">errs</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">errs</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="/notes/recitation_3/output_1.png" alt="" /></p>
+
+<p>Lets visualize the classifier using regularly-spaced points:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">101</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">101</span><span class="p">))</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">ccls</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">ccls</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="n">ccls</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">ccls</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="n">ccls</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c"># Post the original data division as well:</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">cls</span><span class="o">==-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">cls</span><span class="o">==-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">cls</span><span class="o">==</span> <span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">cls</span><span class="o">==</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="/notes/recitation_3/output_2.png" alt="" /></p>
+
+<p>Notice that the class boundary is a line; this is characteristic of a linear classifier. We cannot separate classes like these using a linear classifier:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="/notes/recitation_3/output_3.png" alt="" /></p>
+
+<h2 id="f1-vs-accuracy">F1 vs Accuracy</h2>
+
+<p>In <code class="highlighter-rouge">hw3_text</code>, we introduce the $F_1$-score to measure the performance of a binary classifier. We define this in terms of the number of true and false positives and negatives in our classifier.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Predicted</th>
+      <th>Actual</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>true positive</td>
+      <td>T</td>
+      <td>T</td>
+    </tr>
+    <tr>
+      <td>false positive</td>
+      <td>T</td>
+      <td>F</td>
+    </tr>
+    <tr>
+      <td>false negative</td>
+      <td>F</td>
+      <td>T</td>
+    </tr>
+    <tr>
+      <td>true negative</td>
+      <td>F</td>
+      <td>F</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To calculate the $F_1$ score, we can calculate:
+<script type="math/tex">% <![CDATA[
+\begin{align*}
+\text{precision} & \gets \frac{\text{true positive}}{\text{true positive} + \text{true negative}}
+\\ \text{recall} & \gets \frac{\text{true positive}}{\text{true positive} + \text{false positive}}
+\\ F_1\text{ score} & \gets 2 \cdot \frac{\text{precision} \cdot \text{recall}}{\text{precision} + \text{recall}}
+\end{align*} %]]></script></p>
+
+<h3 id="why">Why?</h3>
+
+<p>We care about this because it works when you want to measure classifier performance on rare events.</p>
+
+<p>For example, lets look at a pair of ficticious medical test in a population where 1% of people have some disorder.</p>
+
+<p>When <em>Zico’s Magic Classifier</em> (ZMC) and the much simpler <em>Always False Classifier</em> (AFC) are run on 1000 people, they both obtain 99% accuracy. Here are the confusion matrices for both:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Always False Classifier</th>
+      <th>Actual True</th>
+      <th>Actual False</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Predicted True</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Predicted False</td>
+      <td>10</td>
+      <td>990</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Zico’s Magic Classifier</th>
+      <th>Actual True</th>
+      <th>Actual False</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Predicted True</td>
+      <td>10</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>Predicted False</td>
+      <td>0</td>
+      <td>980</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The accuracy for both classifiers is 99%, despite AFC not depending on the data (and consequently being useless). In this example, accuracy does not tell us which classifier is better.</p>
+
+<p>Let’s calculate the $F_1$ score for both classifiers:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>$F_1$ score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ATC</td>
+      <td>$\frac{0}{0}$</td>
+      <td>$\frac{0}{10}$</td>
+      <td>$0$ or <code class="highlighter-rouge">NaN</code></td>
+    </tr>
+    <tr>
+      <td>ZMC</td>
+      <td>$\frac{10}{20}$</td>
+      <td>$\frac{10}{10}$</td>
+      <td>$\frac{2}{3}$</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The $F_1$ score is good when you want measure your classifier’s performance on catching rare events.</p>
+
+
+</div>
+
+
+    <footer>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <h4>Contact</h4>
+        <div>
+            Practical Data Science
+            &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+            <a href="mailto:gmanek@cs.cmu.edu">gmanek@cs.cmu.edu</a>
+        </div>
+    </div>
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">       <p class="theme-by text-muted">
+        Theme based on <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+    </div>
+    </div>
+    </div>
+</footer>
+  
+    
+
+
+
+
+
+
+  
+    <script src="/js/jquery-1.11.2.min.js"></script>
+  
+    <script src="/js/bootstrap.min.js"></script>
+  
+    <script src="/js/main.js"></script>
+  
+
+
+
+
+
+  
+  </body>
+</html>
